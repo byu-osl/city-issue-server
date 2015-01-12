@@ -2,28 +2,33 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-// var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+// var cookieParser = require('cookie-parser');
 
-var indexRouter = require('./routes/index');
-var requestsRouter = require('./routes/requests');
+mongoose.connect('mongodb://localhost/test');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function (callback) {
+    console.log("DB connected.")
+  // yay!
+});
 
 var app = express();
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-// Maybe needed later, came with boilerplate
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(cookieParser());
+var indexRouter = require('./routes/index');
+var requestsRouter = require('./routes/requests');
+var servicesRouter = require('./routes/services');
 
-// Static content
+app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(logger('dev'));
+app.use(bodyParser.urlencoded({type: 'application/x-www-form-urlencoded'}));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/requests', requestsRouter);
-// app.use('/users', users);
+app.use('/requests.json', requestsRouter);
+app.use('/services', servicesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -44,10 +49,7 @@ if (app.get('env') === 'development') {
 
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
+    res.send(err.message);
 });
 
 module.exports = app;
