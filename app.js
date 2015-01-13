@@ -1,10 +1,10 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
+var express    = require('express');
+var path       = require('path');
+var favicon    = require('serve-favicon');
+var logger     = require('morgan');
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-// var cookieParser = require('cookie-parser');
+var mongoose   = require('mongoose');
+var passport   = require('passport');
 
 // DB
 mongoose.connect('mongodb://localhost/city-issues');
@@ -26,11 +26,13 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({type: 'application/x-www-form-urlencoded'}));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// app.use(passport.authenticate());
+
 app.use('/', indexRouter);
 app.use('/requests.json', requestsRouter);
 app.use('/services', servicesRouter);
 
-// catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;

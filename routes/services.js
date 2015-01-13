@@ -1,10 +1,10 @@
 var express = require('express');
 var requests = express.Router();
+var Request = require('../models/request');
 
 // provide a list of acceptable 311 service request types and their associated service codes. 
-requests.get('/:requestID', function(req, res) {
-  var requestID = req.params.requestID;
-  res.send('You requested #'+requestID+'. We aren\'t really sure what to do what your request yet.');
+requests.get('/', function(req, res) {
+	
 });
 
 module.exports = requests;
