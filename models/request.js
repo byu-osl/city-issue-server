@@ -6,6 +6,7 @@ var requestSchema = new mongoose.Schema({
     description: String,
     device_id: Number,
     email: String,
+    end_date: Date,
     first_name: String,
     jurisdiction_id: Number,
     lat: String,
@@ -15,9 +16,16 @@ var requestSchema = new mongoose.Schema({
     phone: String,
     service_code: Number,
     service_request_id: Number,
+    start_date: Date,
+    status: String
 });
 
-requestSchema.statics.getAll = function(params){
+/* If a request in the DB does not have an end date, it should
+be treated as if the end date is today.
+    
+*/
+
+requestSchema.statics.buildQuery = function(params){
     var requestsQuery = this.find();
     var startDate = params.start_date;
     var endDate = params.end_date;
@@ -25,41 +33,31 @@ requestSchema.statics.getAll = function(params){
     // Can be multiple, separated by commas
     var requestIDs = params.service_request_id;
 
-    console.log("requestIDs: "+requestIDs);
-
     if (typeof requestIDs != 'undefined') {
-        console.log("Adding request IDs to the query.")
         requestIDs = requestIDs.split(',');
         requestsQuery = requestsQuery.where('service_request_id').in(requestIDs);
     }
 
     // Default to 90 days ago
     if (typeof startDate == 'undefined') {
-        console.log("No start date")
         startDate = new Date(new Date().setDate(new Date().getDate()-90))
     } else {
         startDate = new Date(params.start_date) ; 
     }
 
-    if (typeof endDate == 'undefined') {
-        console.log("No end date")
-        endDate = new Date(params.end_date) || new Date();
-    } else {
+    if (typeof endDate != 'undefined') {
         endDate = new Date(params.end_date)
+        requestsQuery = requestsQuery.where('end_date').lte(endDate)
     }
 
     var status = params.status || /.*/;
-    console.log("status: "+status)
 
-    requestsQuery = 
-        requestsQuery
-            .where('start_date').gt(startDate)
-            .where('end_date').lte(endDate)
-            .where('service_code').in(serviceCodes);
+    requestsQuery = requestsQuery
+        .where('start_date').gt(startDate)
+        .where('status').equals(status)
 
-    requestsQuery.exec(function(error, requests){
-        return requests;
-    });
+
+    return requestsQuery;
 }
 
 module.exports = mongoose.model('Request', requestSchema);

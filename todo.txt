@@ -4,9 +4,12 @@ Todo
 - 
 
 Questions.
-    Adding post for service type
+    311 spec
+        Adding post for service type
+        Adding, updating, deleting - seems like lots won't be set
     How does this work with Angular?
     Testing framework?
     What is CI?
     requestsRouter: tons of "typeof undefined" checks.
     Error handling
+    JShint?
