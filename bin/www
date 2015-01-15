@@ -31,5 +31,5 @@ function onError(error) {
 }
 
 function onListening() {
-  debug('Listening on port ' + server.address().port);
+  console.log('Listening on port ' + server.address().port);
 }

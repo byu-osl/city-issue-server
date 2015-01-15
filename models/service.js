@@ -1,19 +1,12 @@
 var mongoose = require('mongoose');
-var requestSchema = new mongoose.Schema({
-    jurisdiction_id: Number,
-    service_code: Number,
-    lat: String,
-    long: String,
-    address_string: String,
-    address_id: Number,
-    email: String,
-    device_id: Number,
-    account_id: Number,
-    first_name: String,
-    last_name: String,
-    phone: String,
-    description: String,
-    media_url: String,
+var serviceSchema = new mongoose.Schema({
+    service_code: String,
+    service_name: String,
+    description:  String,
+    metadata:     Boolean,
+    type:         String,
+    keywords:     String,
+    group:        String
 });
 
-module.exports = mongoose.model('Request', requestSchema);
+module.exports = mongoose.model('Service', serviceSchema);

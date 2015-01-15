@@ -1,0 +1,12 @@
+Todo
+- Add POST for services
+- Authentication
+- 
+
+Questions.
+    Adding post for service type
+    How does this work with Angular?
+    Testing framework?
+    What is CI?
+    requestsRouter: tons of "typeof undefined" checks.
+    Error handling
