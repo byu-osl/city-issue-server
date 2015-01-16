@@ -1,146 +1,109 @@
-This is just to help keep track of what has been done. Lines will be removed when they aren't needed anymore.
+This is just to help keep track of what has been done. Lines will be removed when they aren't needed anymore, or tacked onto the end if they are confusing.
 
 ==================================================================
- 	 
-    GET service_request_id from a token
-    Conditional	Yes - This call is only necessary if the response from POST Service Request contains a token
-    Purpose	Get the service_request_id from a temporary token. This is unnecessary if the response from creating a service request does not contain a token.
-    URL	[https://API endpoint]/tokens/[token id].[format]
-    Sample URL	https://api.city.gov/dev/v2/tokens/123456.xml?jurisdiction_id=city.gov
-    Formats	XML (JSON available if denoted by Service Discovery)
-    HTTP Method	GET
-    Requires API Key	No
-    Required Arguments
 
-    Field Name	Description	Notes & Requirements
-    jurisdiction_id	 	This is only required if the endpoint serves multiple jurisdictions
-    token	 	This is obtained from the POST Service Requests method
-    Response
+        GET Service Requests
+        Purpose	Query the current status of multiple requests
+        URL	https://[API endpoint]/requests.[format]
+        Sample URL	https://api.city.gov/dev/v2/requests.xml?start_date=2010-05-24T00:00:00Z&end_date=2010-06-24T00:00:00Z&status=open&jurisdiction_id=city.gov
+        Formats	XML (JSON available if denoted by Service Discovery)
+        HTTP Method	GET
+        Requires API Key	No
+        Required Arguments
 
-    Field Name	Description	Notes & Requirements
-    service_requests ⇊	 	 
-    request ↴	 	 
-    service_request_id	The unique ID for the service request created. This can be used to call the GET Service Request method.	 
-    token	The token ID used to make this call.	 
-    Possible Errors
+        Field Name	Description	Notes & Requirements
+        jurisdiction_id	 	This is only required if the endpoint serves multiple jurisdictions
+        Optional Arguments
 
-    The numbers represent the HTTP status code returned for each error type:
+        Field Name	Description	Notes & Requirements
+        service_request_id	To call multiple Service Requests at once, multiple service_request_id can be declared; comma delimited.	This overrides all other arguments.
+        service_code	Specify the service type by calling the unique ID of the service_code.	This defaults to all service codes when not declared; can be declared multiple times, comma delimited
+        start_date	Earliest datetime to include in search. When provided with end_date, allows one to search for requests which have a requested_datetime that matches a given range, but may not span more than 90 days.	When not specified, the range defaults to most recent 90 days. Must use w3 format, eg 2010-01-01T00:00:00Z.
+        end_date	Latest datetime to include in search. When provided with start_date, allows one to search for requests which have a requested_datetime that matches a given range, but may not span more than 90 days.	When not specified, the range defaults to most recent 90 days. Must use w3 format, eg 2010-01-01T00:00:00Z.
+        status	Allows one to search for requests which have a specific status. This defaults to all statuses; can be declared multiple times, comma delimited;	Options: open, closed
+        Response
 
-    404 - jurisdiction_id or token not found (specified in error response)
-    400 - jurisdiction_id or token was not provided (specified in error response)
-    400 - General Service error (Any failure during service query processing. Client will have to notify us)
-    Example Response
+        Field Name	Description	Notes & Requirements
+        service_requests ⇊	 	 
+        request ↴	 	 
+        service_request_id	The unique ID of the service request created.	 
+        status	The current status of the service request. 
 
-    XML
-    JSON
-    <?xml version="1.0" encoding="utf-8"?>
-    <service_requests>
-        <request>
-            <service_request_id>638344</service_request_id>
-            <token>12345</token>
-        </request>
-    </service_requests>
+        open: it has been reported. 
 
-GET Service Requests
-Purpose	Query the current status of multiple requests
-URL	https://[API endpoint]/requests.[format]
-Sample URL	https://api.city.gov/dev/v2/requests.xml?start_date=2010-05-24T00:00:00Z&end_date=2010-06-24T00:00:00Z&status=open&jurisdiction_id=city.gov
-Formats	XML (JSON available if denoted by Service Discovery)
-HTTP Method	GET
-Requires API Key	No
-Required Arguments
+        closed: it has been resolved.	Options: open, closed
+        status_notes	Explanation of why status was changed to current state or more details on current status than conveyed with status alone.	May not be returned
+        service_name	The human readable name of the service request type	 
+        service_code	The unique identifier for the service request type	 
+        description	A full description of the request or report submitted.	This may contain line breaks, but not html or code. Otherwise, this is free form text limited to 4,000 characters.
+        agency_responsible	The agency responsible for fulfilling or otherwise addressing the service request.	May not be returned
+        service_notice	Information about the action expected to fulfill the request or otherwise address the information reported.	May not be returned
+        requested_datetime	The date and time when the service request was made.	Returned in w3 format, eg 2010-01-01T00:00:00Z
+        updated_datetime	The date and time when the service request was last modified. For requests with status=closed, this will be the date the request was closed.	Returned in w3 format, eg 2010-01-01T00:00:00Z
+        expected_datetime	The date and time when the service request can be expected to be fulfilled. This may be based on a service-specific service level agreement.	May not be returned
+        address	Human readable address or description of location.	This should be provided from most specific to most general geographic unit, eg address number or cross streets, street name, neighborhood/district, city/town/village, county, postal code.
+        address_id	The internal address ID used by a jurisdictions master address repository or other addressing system.	 
+        zipcode	The postal code for the location of the service request.	 
+        lat	latitude using the (WGS84) projection.	 
+        long	longitude using the (WGS84) projection.	 
+        media_url	A URL to media associated with the request, eg an image.	A convention for parsing media from this URL has yet to be established, so currently it will be done on a case by case basis much like Twitter.com does. For example, if a jurisdiction accepts photos submitted via Twitpic.com, then clients can parse the page at the Twitpic URL for the image given the conventions of Twitpic.com. This could also be a URL to a media RSS feed where the clients can parse for media in a more structured way.
+        Response Volume
 
-Field Name	Description	Notes & Requirements
-jurisdiction_id	 	This is only required if the endpoint serves multiple jurisdictions
-Optional Arguments
+        Default query limit is a span of 90 days or first 1000 requests returned, whichever is smallest.
+        Possible Errors
 
-Field Name	Description	Notes & Requirements
-service_request_id	To call multiple Service Requests at once, multiple service_request_id can be declared; comma delimited.	This overrides all other arguments.
-service_code	Specify the service type by calling the unique ID of the service_code.	This defaults to all service codes when not declared; can be declared multiple times, comma delimited
-start_date	Earliest datetime to include in search. When provided with end_date, allows one to search for requests which have a requested_datetime that matches a given range, but may not span more than 90 days.	When not specified, the range defaults to most recent 90 days. Must use w3 format, eg 2010-01-01T00:00:00Z.
-end_date	Latest datetime to include in search. When provided with start_date, allows one to search for requests which have a requested_datetime that matches a given range, but may not span more than 90 days.	When not specified, the range defaults to most recent 90 days. Must use w3 format, eg 2010-01-01T00:00:00Z.
-status	Allows one to search for requests which have a specific status. This defaults to all statuses; can be declared multiple times, comma delimited;	Options: open, closed
-Response
+        The numbers represent the HTTP status code returned for each error type:
 
-Field Name	Description	Notes & Requirements
-service_requests ⇊	 	 
-request ↴	 	 
-service_request_id	The unique ID of the service request created.	 
-status	The current status of the service request. 
+        404 - jurisdiction_id not found (specified in error response)
+        400 - jurisdiction_id was not provided (specified in error response)
+        400 - General Service error (Any failure during service query processing. Client will have to notify us)
+        Example Response
 
-open: it has been reported. 
+        XML
+        JSON
+        <?xml version="1.0" encoding="utf-8"?>
+        <service_requests>
+            <request>
+                <service_request_id>638344</service_request_id>
+                <status>closed</status>
+                <status_notes>Duplicate request.</status_notes>
+                <service_name>Sidewalk and Curb Issues</service_name>
+                <service_code>006</service_code>
+                <description></description>
+                <agency_responsible></agency_responsible>
+                <service_notice></service_notice>
+                <requested_datetime>2010-04-14T06:37:38-08:00</requested_datetime>
+                <updated_datetime>2010-04-14T06:37:38-08:00</updated_datetime>
+                <expected_datetime>2010-04-15T06:37:38-08:00</expected_datetime>
+                <address>8TH AVE and JUDAH ST</address>
+                <address_id>545483</address_id>
+                <zipcode>94122</zipcode>
+                <lat>37.762221815</lat>
+                <long>-122.4651145</long>
+                <media_url>http://city.gov.s3.amazonaws.com/requests/media/638344.jpg </media_url>
+            </request>
+            <request>
+                <service_request_id>638349</service_request_id>
+                <status>open</status>
+                <status_notes></status_notes>
+                <service_name>Sidewalk and Curb Issues</service_name>
+                <service_code>006</service_code>
+                <description></description>
+                <agency_responsible></agency_responsible>
+                <service_notice></service_notice>
+                <requested_datetime>2010-04-19T06:37:38-08:00</requested_datetime>
+                <updated_datetime>2010-04-19T06:37:38-08:00</updated_datetime>
+                <expected_datetime>2010-04-19T06:37:38-08:00</expected_datetime>
+                <address>8TH AVE and JUDAH ST</address>
+                <address_id>545483</address_id>
+                <zipcode>94122</zipcode>
+                <lat>37.762221815</lat>
+                <long>-122.4651145</long>
+                <media_url>http://city.gov.s3.amazonaws.com/requests/media/638349.jpg </media_url>
+            </request>
+        </service_requests>
 
-closed: it has been resolved.	Options: open, closed
-status_notes	Explanation of why status was changed to current state or more details on current status than conveyed with status alone.	May not be returned
-service_name	The human readable name of the service request type	 
-service_code	The unique identifier for the service request type	 
-description	A full description of the request or report submitted.	This may contain line breaks, but not html or code. Otherwise, this is free form text limited to 4,000 characters.
-agency_responsible	The agency responsible for fulfilling or otherwise addressing the service request.	May not be returned
-service_notice	Information about the action expected to fulfill the request or otherwise address the information reported.	May not be returned
-requested_datetime	The date and time when the service request was made.	Returned in w3 format, eg 2010-01-01T00:00:00Z
-updated_datetime	The date and time when the service request was last modified. For requests with status=closed, this will be the date the request was closed.	Returned in w3 format, eg 2010-01-01T00:00:00Z
-expected_datetime	The date and time when the service request can be expected to be fulfilled. This may be based on a service-specific service level agreement.	May not be returned
-address	Human readable address or description of location.	This should be provided from most specific to most general geographic unit, eg address number or cross streets, street name, neighborhood/district, city/town/village, county, postal code.
-address_id	The internal address ID used by a jurisdictions master address repository or other addressing system.	 
-zipcode	The postal code for the location of the service request.	 
-lat	latitude using the (WGS84) projection.	 
-long	longitude using the (WGS84) projection.	 
-media_url	A URL to media associated with the request, eg an image.	A convention for parsing media from this URL has yet to be established, so currently it will be done on a case by case basis much like Twitter.com does. For example, if a jurisdiction accepts photos submitted via Twitpic.com, then clients can parse the page at the Twitpic URL for the image given the conventions of Twitpic.com. This could also be a URL to a media RSS feed where the clients can parse for media in a more structured way.
-Response Volume
 
-Default query limit is a span of 90 days or first 1000 requests returned, whichever is smallest.
-Possible Errors
-
-The numbers represent the HTTP status code returned for each error type:
-
-404 - jurisdiction_id not found (specified in error response)
-400 - jurisdiction_id was not provided (specified in error response)
-400 - General Service error (Any failure during service query processing. Client will have to notify us)
-Example Response
-
-XML
-JSON
-<?xml version="1.0" encoding="utf-8"?>
-<service_requests>
-    <request>
-        <service_request_id>638344</service_request_id>
-        <status>closed</status>
-        <status_notes>Duplicate request.</status_notes>
-        <service_name>Sidewalk and Curb Issues</service_name>
-        <service_code>006</service_code>
-        <description></description>
-        <agency_responsible></agency_responsible>
-        <service_notice></service_notice>
-        <requested_datetime>2010-04-14T06:37:38-08:00</requested_datetime>
-        <updated_datetime>2010-04-14T06:37:38-08:00</updated_datetime>
-        <expected_datetime>2010-04-15T06:37:38-08:00</expected_datetime>
-        <address>8TH AVE and JUDAH ST</address>
-        <address_id>545483</address_id>
-        <zipcode>94122</zipcode>
-        <lat>37.762221815</lat>
-        <long>-122.4651145</long>
-        <media_url>http://city.gov.s3.amazonaws.com/requests/media/638344.jpg </media_url>
-    </request>
-    <request>
-        <service_request_id>638349</service_request_id>
-        <status>open</status>
-        <status_notes></status_notes>
-        <service_name>Sidewalk and Curb Issues</service_name>
-        <service_code>006</service_code>
-        <description></description>
-        <agency_responsible></agency_responsible>
-        <service_notice></service_notice>
-        <requested_datetime>2010-04-19T06:37:38-08:00</requested_datetime>
-        <updated_datetime>2010-04-19T06:37:38-08:00</updated_datetime>
-        <expected_datetime>2010-04-19T06:37:38-08:00</expected_datetime>
-        <address>8TH AVE and JUDAH ST</address>
-        <address_id>545483</address_id>
-        <zipcode>94122</zipcode>
-        <lat>37.762221815</lat>
-        <long>-122.4651145</long>
-        <media_url>http://city.gov.s3.amazonaws.com/requests/media/638349.jpg </media_url>
-    </request>
-</service_requests>
 GET Service Request
 Purpose	Query the current status of an individual request
 URL	https://[API endpoint]/requests/[service_request_id].[format]
@@ -264,10 +227,14 @@ HTTP/1.1 403 Forbidden
 
 
 
-Not sure what to do with this yet:
+Not sure what to do with each of these yet:
 ======================================================
 Field Name  Description Notes & Requirements
 attribute   An array of key/value responses based on Service Definitions.   This takes the form of attribute[code]=value where multiple code/value pairs can be specified as well as multiple values for the same code in the case of a multivaluelist datatype (attribute[code1][]=value1&attribute[code1][]=value2&attribute[code1][]=value3) - see example. 
+
+
+
+
 
 
 
@@ -357,3 +324,50 @@ JSON
         </attribute>
     </attributes>
 </service_definition>
+
+
+
+
+
+
+
+
+
+GET service_request_id from a token
+    Conditional Yes - This call is only necessary if the response from POST Service Request contains a token
+    Purpose Get the service_request_id from a temporary token. This is unnecessary if the response from creating a service request does not contain a token.
+    URL [https://API endpoint]/tokens/[token id].[format]
+    Sample URL  https://api.city.gov/dev/v2/tokens/123456.xml?jurisdiction_id=city.gov
+    Formats XML (JSON available if denoted by Service Discovery)
+    HTTP Method GET
+    Requires API Key    No
+    Required Arguments
+
+    Field Name  Description Notes & Requirements
+    jurisdiction_id     This is only required if the endpoint serves multiple jurisdictions
+    token       This is obtained from the POST Service Requests method
+    Response
+
+    Field Name  Description Notes & Requirements
+    service_requests ⇊       
+    request ↴        
+    service_request_id  The unique ID for the service request created. This can be used to call the GET Service Request method.  
+    token   The token ID used to make this call.     
+    Possible Errors
+
+    The numbers represent the HTTP status code returned for each error type:
+
+    404 - jurisdiction_id or token not found (specified in error response)
+    400 - jurisdiction_id or token was not provided (specified in error response)
+    400 - General Service error (Any failure during service query processing. Client will have to notify us)
+    Example Response
+
+    XML
+    JSON
+    <?xml version="1.0" encoding="utf-8"?>
+    <service_requests>
+        <request>
+            <service_request_id>638344</service_request_id>
+            <token>12345</token>
+        </request>
+    </service_requests>
