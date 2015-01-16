@@ -10,14 +10,14 @@ mongoose.set('debug', true);
 mongoose.connect('mongodb://localhost/city-issues');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () {
+db.once('open', function dbConnected() {
     console.log('DB connected.');
 });
 
 // Configuration
 var app = express();
 app.set('view engine', 'jade');
-app.use(function(req, res, next){
+app.use(function logIncoming(req, res, next){
 	console.log('Request incoming!');
 	next();
 });
@@ -29,15 +29,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use(passport.authenticate());
 
 // Routing
+// TODO: requests should take /requests.json and /requests/ID.json
 var indexRouter = require('./routes/indexRouter');
 var requestsRouter = require('./routes/requestsRouter');
 var servicesRouter = require('./routes/servicesRouter');
 app.use('/', indexRouter);
-app.use('/requests.json', requestsRouter);
-app.use('/services.json', servicesRouter);
+app.use(/\/requests(.json)?/, requestsRouter);
+app.use(/\/services(.json)?/, servicesRouter);
 
 
-app.use(function(req, res, next) {
+app.use(function return404(req, res, next) {
 	console.log('404');
     var err = new Error('Not Found');
     err.status = 404;

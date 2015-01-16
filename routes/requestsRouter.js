@@ -8,8 +8,7 @@ var Request = require('../models/request');
 var Service = require('../models/service');
 
 // TODO: this is supposed to require an API key
-router.post('/', function(req, res) {
-	console.log('POST: requests.json');
+router.post('/', function saveRequest(req, res) {
 	// TODO: is this really how the start date should be done?
 	var requestedDate = new Date().toISOString();
 	var serviceCode = req.body.service_code;
@@ -19,7 +18,8 @@ router.post('/', function(req, res) {
 		return;
 	}
 
-	Service.find({service_code:serviceCode}).exec(function(error, services){
+	var query = Service.find({service_code:serviceCode});
+	query.exec(function checkServiceExistence(error, services){
 		if (services.length === 0) {
 			res.status(404).send('Incorrect service code.');
 			return;
@@ -67,7 +67,7 @@ router.post('/', function(req, res) {
 	});
 });
 
-router.get('/', function(req, res) {
+router.get('/', function findRequests(req, res) {
 	console.log('Fetching requests');
 	var requestsQuery = Request.buildQuery(req.body);
 	requestsQuery.exec(function(error, results){
@@ -79,11 +79,18 @@ router.get('/', function(req, res) {
 	});
 });
 
-// To query the status of a request
-router.get('/:requestID.json', function(req, res){
+// Should be /requests/:id.json
+router.get('/:requestID.json', function queryStatus(req, res){
+	console.log('Querying status.')
 	var requestID = req.body.service_request_id;
-	var request = Request.find({service_request_id : serviceRequestID});
-	res.send(request);
+	var query = Request.find({service_request_id : requestID});
+	query.exec(function(error, results){
+		if (error) {
+			res.send('There was an error querying the request status.');
+		} else {
+			res.send(results);
+		}
+	});
 });
 
 module.exports = router;

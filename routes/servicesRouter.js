@@ -7,7 +7,7 @@ var router = express.Router();
 var Service  = require('../models/service');
 
 // provide a list of acceptable 311 service request types and their associated service codes. 
-router.get('/', function(req, res) {
+router.get('/', function listServices(req, res) {
 	console.log('GET: /services');
 	Service.find().exec(function(error, services){
 		if (error){
