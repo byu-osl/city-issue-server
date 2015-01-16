@@ -1,0 +1,9 @@
+{
+    "maxerr"        : 50,       // {int} Maximum error before stopping
+
+    "node"          : true,    
+    "globals"       : {
+
+    },
+    "strict"    : false
+}

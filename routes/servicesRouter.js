@@ -1,19 +1,33 @@
-var express = require('express');
-var services = express.Router();
-var Service = require('../models/service');
+/*
+	route: services.json
+
+*/
+var express  = require('express');
+var router = express.Router();
+var Service  = require('../models/service');
 
 // provide a list of acceptable 311 service request types and their associated service codes. 
-services.get('/', function(req, res) {
-	res.send(Service.find())
+router.get('/', function(req, res) {
+	console.log('GET: /services');
+	Service.find().exec(function(error, services){
+		if (error){
+			res.send('Error finding service request types.');
+		} else {
+			res.send(services);
+		}
+	});
 });
 
-services.get(':serviceCode.json', function(req, res){
+
+router.get(':serviceCode.json', function(req, res){
+	console.log('GET: /services');
+
 	var serviceCode = req.params.serviceCode;
 	var service = Service.find({service_code: serviceCode});
-	res.send(service)
+	res.send(service);
 });
 
-module.exports = services;
+module.exports = router;
 
 // Example:
 // {

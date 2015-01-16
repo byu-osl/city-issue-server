@@ -4,12 +4,13 @@ Todo
 - 
 
 Questions.
-    311 spec
-        Adding post for service type
-        Adding, updating, deleting - seems like lots won't be set
-    How does this work with Angular?
-    Testing framework?
+    311 spec:
+        Shouldn't there be something in the spec for POSTing service request types? Or deleting entries? 
+    How does this work with Angular? If I'm always sending back JSON, where do the templates come from?
+    Should we be doing TDD? How does that work?
     What is CI?
-    requestsRouter: tons of "typeof undefined" checks.
-    Error handling
-    JShint?
+    requests model: tons of "typeof undefined" checks. Is there a better way?
+    Error handling?
+    How does authentication work?
+    Must we do XML?
+    
