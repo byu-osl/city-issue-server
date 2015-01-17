@@ -17,10 +17,6 @@ db.once('open', function dbConnected() {
 // Configuration
 var app = express();
 app.set('view engine', 'jade');
-app.use(function logIncoming(req, res, next){
-	console.log('Request incoming!');
-	next();
-});
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({type: 'application/x-www-form-urlencoded'}));
@@ -29,7 +25,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use(passport.authenticate());
 
 // Routing
-// TODO: requests should take /requests.json and /requests/ID.json
 var indexRouter = require('./routes/indexRouter');
 var requestsRouter = require('./routes/requestsRouter');
 var servicesRouter = require('./routes/servicesRouter');

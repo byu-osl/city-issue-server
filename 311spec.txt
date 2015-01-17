@@ -3,19 +3,9 @@ This is just to help keep track of what has been done. Lines will be removed whe
 ==================================================================
 
 GET Service Request
-URL	https://[API endpoint]/requests/[service_request_id].[format]
-Sample URL	https://api.city.gov/dev/v2/requests/123456.xml?jurisdiction_id=city.gov
-Formats	XML (JSON available if denoted by Service Discovery)
-HTTP Method	GET
-Requires API Key	No
 Required Arguments
 
 Field Name	Description	Notes & Requirements
-jurisdiction_id	 	This is only required if the endpoint serves multiple jurisdictions
-service_request_id	 	The service_request_id is specified in the main URL path rather than an added query string parameter.
-Optional Arguments
-
-None
 
 Response
 

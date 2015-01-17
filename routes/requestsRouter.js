@@ -14,22 +14,31 @@ router.post('/', function saveRequest(req, res) {
 	var serviceCode = req.body.service_code;
 
 	if (typeof serviceCode === 'undefined') {
-		res.status(400).send('No service code specified.');
+		res.status(400).send({
+			code: 400,
+			description: "A service code was not defined."
+		});
 		return;
 	}
 
 	var query = Service.find({service_code:serviceCode});
 	query.exec(function checkServiceExistence(error, services){
 		if (services.length === 0) {
-			res.status(404).send('Incorrect service code.');
+			res.status(404).send({
+				code: 404,
+				description: 'Couldn\'t find a service of that type. Wrong service code number.'
+			});
 			return;
 		}
 	});
 
-	// TODO: correct validation...
+	// TODO: what error message to send?
 	if (!hasLocationInfo(req.body)) {
 		console.log('Invalid request.');
-		res.send('Your request must have one of the following: latitude and longitude, address_string, or address_id.');
+		res.status(400).send({
+			code: 400,
+			description: 'Your request must have one of the following: latitude and longitude, address_string, or address_id.'
+		});
 		return;
 	}
 
@@ -52,10 +61,13 @@ router.post('/', function saveRequest(req, res) {
 	});
 
 	console.log('Saving...');
-	request.save(function(error, request, numberAffected){
+	request.save(function requestSaved(error, request, numberAffected){
 		console.log('Saved.');
 		if (error) {
-			res.send('There was an error in saving your request.');
+			res.status(500).send({
+				code: 500,
+				description: 'There was an error in saving your request.'
+			});
 		} else if (numberAffected > 0) {
 			// TODO: spec says service_request_id shouldn't be returned if a token is returned
 			res.send({
@@ -70,47 +82,54 @@ router.post('/', function saveRequest(req, res) {
 router.get('/', function findRequests(req, res) {
 	console.log('Fetching requests');
 	var requestsQuery = Request.buildQuery(req.body);
-	requestsQuery.exec(function(error, results){
+	requestsQuery.exec(function foundRequests(error, results){
 		if (error) {
-			res.send('There was an error while handling your request.');
+			res.status(500).send({
+				code: 500,
+				description: 'There was an error while searching for your request.'
+			});
 		} else {
-			res.send(results.slice(0,999).map(cleanUpGetResponses));
+			res.send(results.slice(0,999).map(cleanUpGetResponse));
 		}
 	});
 });
 
 // Should be /requests/:id.json
 router.get('/:requestID.json', function queryStatus(req, res){
-	console.log('Querying status.')
+	console.log('Querying status.');
 	var requestID = req.body.service_request_id;
 	var query = Request.find({service_request_id : requestID});
-	query.exec(function(error, results){
+	query.exec(function foundRequest(error, result){
 		if (error) {
-			res.send('There was an error querying the request status.');
+			res.status(500).send({
+				code: 500,
+				description: 'There was an error querying the request status.'
+			});
 		} else {
-			res.send(results);
+			res.send(cleanUpGetResponse(result));
 		}
 	});
 });
 
 module.exports = router;
 
-// Required for requests
+//  required for requests
 function hasLocationInfo(params) {
-	return ((typeof params.lat != 'undefined' && typeof params.long != 'undefined') ||  
+	return ((typeof params.lat != 'undefined' && 
+			 typeof params.long != 'undefined') ||  
 	    (typeof params.address_string != 'undefined') ||
 	    (typeof params.address_id != 'undefined'));
 }
 
 // Takes a request JSON object
 // Returns a JSON object with parts filtered out
-function cleanUpGetResponses(request) {
+function cleanUpGetResponse(request) {
 	var fieldsToDelete = [
 		'status_notes',
 		'agency_responsible',
 		'service_notice',
 		'expected_datetime'
-	]
+	];
 	fieldsToDelete.forEach(function deleteField(field){
 		delete request[field];
 	});

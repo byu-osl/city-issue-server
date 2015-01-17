@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var moment   = require('moment');
 var requestSchema = new mongoose.Schema({
     account_id: Number,         // the user who submitted the request
     address_id: Number,         // address of some external system
@@ -37,21 +38,22 @@ requestSchema.statics.buildQuery = function(params){
     var serviceCodes = params.service_code;
     var status = params.status;
 
-    // TODO: if given range is greater than 90 days, set to be the most
-    //   recent 90 days
     if (typeof startDate == 'undefined') {
-        startDate = new Date(new Date().setDate(new Date().getDate()-90)); // 90 days ago
+        startDate = moment().subtract(90, 'days');
     } else {
-        startDate = new Date(params.start_date) ; 
+        startDate = moment(params.start_date); 
     }
 
-    if (typeof serviceCode != 'undefined') {
+    if (typeof serviceCode != 'undefined') {    
         serviceCodes = serviceCodes.split(',');
         requestsQuery = requestsQuery.where('service_code').in(serviceCodes);
     }
 
     if (typeof endDate != 'undefined') {
         endDate = new Date(params.end_date);
+        if (startDate.diff(endDate, 'days') > 90) {
+            endDate = startDate.add(90, 'days').toDate();
+        }
         requestsQuery = requestsQuery.where('requested_datetime').lte(endDate);
     }
 
@@ -59,7 +61,7 @@ requestSchema.statics.buildQuery = function(params){
         requestsQuery = requestsQuery.where('status').equals(status);
     }
 
-    requestsQuery = requestsQuery.where('request_datetime').gt(startDate)
+    requestsQuery = requestsQuery.where('request_datetime').gt(startDate.toDate());
 
     // Overrides everything else if defined.
     if (typeof requestIDs != 'undefined') {
@@ -71,3 +73,6 @@ requestSchema.statics.buildQuery = function(params){
 };
 
 module.exports = mongoose.model('Request', requestSchema);
+
+// If the difference between the start and end > 90, set the end
+// to be 90 days after the start. Leave the start where it is.
