@@ -9,7 +9,6 @@ var Service = require('../models/service');
 
 // TODO: this is supposed to require an API key
 router.post('/', function saveRequest(req, res) {
-	// TODO: is this really how the start date should be done?
 	var requestedDate = new Date().toISOString();
 	var serviceCode = req.body.service_code;
 
