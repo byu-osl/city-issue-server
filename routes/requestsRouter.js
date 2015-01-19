@@ -8,7 +8,7 @@ var Request = require('../models/request');
 var Service = require('../models/service');
 
 // TODO: this is supposed to require an API key
-router.post('/', function saveRequest(req, res) {
+router.post('/', function saveRequest(req, res, next) {
 	var requestedDate = new Date().toISOString();
 	var serviceCode = req.body.service_code;
 
@@ -22,18 +22,23 @@ router.post('/', function saveRequest(req, res) {
 
 	var query = Service.find({service_code:serviceCode});
 	query.exec(function checkServiceExistence(error, services){
-		if (services.length === 0) {
-			res.status(404).send({
-				code: 404,
-				description: 'Couldn\'t find a service of that type. Wrong service code number.'
+		if (error) {
+			res.status(500).send({
+				code: 500,
+				description: 'Something went wrong while trying to see if you had a valid service code.'
 			});
+			return;
+		}
+		if (services.length === 0) {
+			// res.status(404).send({
+			// 	code: 404,
+			// 	description: 'Couldn\'t find a service of that type. Wrong service code number.'
+			// });
 			return;
 		}
 	});
 
-	// TODO: what error message to send?
 	if (!hasLocationInfo(req.body)) {
-		console.log('Invalid request.');
 		res.status(400).send({
 			code: 400,
 			description: 'Your request must have one of the following: latitude and longitude, address_string, or address_id.'
@@ -59,9 +64,7 @@ router.post('/', function saveRequest(req, res) {
 		status:       	    'open'
 	});
 
-	console.log('Saving...');
 	request.save(function requestSaved(error, request, numberAffected){
-		console.log('Saved.');
 		if (error) {
 			res.status(500).send({
 				code: 500,
@@ -79,7 +82,6 @@ router.post('/', function saveRequest(req, res) {
 });
 
 router.get('/', function findRequests(req, res) {
-	console.log('Fetching requests');
 	var requestsQuery = Request.buildQuery(req.body);
 	requestsQuery.exec(function foundRequests(error, results){
 		if (error) {
@@ -95,7 +97,6 @@ router.get('/', function findRequests(req, res) {
 
 // Should be /requests/:id.json
 router.get('/:requestID.json', function queryStatus(req, res){
-	console.log('Querying status.');
 	var requestID = req.body.service_request_id;
 	var query = Request.find({service_request_id : requestID});
 	query.exec(function foundRequest(error, result){

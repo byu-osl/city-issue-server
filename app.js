@@ -4,9 +4,13 @@ var favicon    = require('serve-favicon');
 var logger     = require('morgan');
 var bodyParser = require('body-parser');
 var mongoose   = require('mongoose');
+var indexRouter = require('./routes/indexRouter');
+var requestsRouter = require('./routes/requestsRouter');
+var servicesRouter = require('./routes/servicesRouter');
+var app = express();
 
 // Database
-mongoose.set('debug', true);
+// mongoose.set('debug', true);
 mongoose.connect('mongodb://localhost/city-issues');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -15,30 +19,23 @@ db.once('open', function dbConnected() {
 });
 
 // Configuration
-var app = express();
 app.set('view engine', 'jade');
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({type: 'application/x-www-form-urlencoded'}));
 app.use(express.static(path.join(__dirname, 'public')));
 
-//app.use(passport.authenticate());
-
 // Routing
-var indexRouter = require('./routes/indexRouter');
-var requestsRouter = require('./routes/requestsRouter');
-var servicesRouter = require('./routes/servicesRouter');
 app.use('/', indexRouter);
 app.use(/\/requests(.json)?/, requestsRouter);
 app.use(/\/services(.json)?/, servicesRouter);
 
-
-app.use(function return404(req, res, next) {
-	console.log('404');
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-});
+// app.use(function return404(req, res, next) {
+// 	console.log('404');
+//     var err = new Error('Not Found');
+//     err.status = 404;
+//     next(err);
+// });
 
 // if (app.get('env') === 'development') {
 // 	console.log('Dev block');
