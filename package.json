@@ -4,7 +4,7 @@
   "description": "A node.js implementation of the Open311 spec for issue tracking.",
   "main": "server.js",
   "scripts": {
-    "test": "mocha -b",
+    "test": "mocha -b -R dot",
     "start": "node ./bin/www"
   },
   "repository": {

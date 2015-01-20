@@ -30,12 +30,12 @@ app.use('/', indexRouter);
 app.use(/\/requests(.json)?/, requestsRouter);
 app.use(/\/services(.json)?/, servicesRouter);
 
-// app.use(function return404(req, res, next) {
-// 	console.log('404');
-//     var err = new Error('Not Found');
-//     err.status = 404;
-//     next(err);
-// });
+app.use(function return404(req, res, next) {
+    res.status(404).send({
+    	code: 404,
+    	description: 'Not found: missed all routers.'
+    })
+});
 
 // if (app.get('env') === 'development') {
 // 	console.log('Dev block');

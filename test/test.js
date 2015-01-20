@@ -17,13 +17,30 @@ describe('GET Service List', function(){
 				done();
 			});
 	});
+
+	it('returns valid services', function(done){
+		request.get('/services.json')
+			.expect(200)
+			.end(function(err, res){
+				res.body.should.be.an('array');
+				var service = res.body[0];
+				service.should.have.property('service_code');
+				service.should.have.property('service_name');
+				service.should.have.property('metadata');
+				done();
+			});
+	});
 });
 
 describe('GET Service Definition', function(){
-	it('rejects requests without service_codes', function (done){
-		request.get('/services.json').expect(400, done);
+	it('returns 404 for non-existent service codes', function (done){
+		request.get('/services/qqqqqldskjkljafsdlkjsad.json').expect(404, done);
 	});
-})
+
+	it('rejects requests without a service code defined', function(done){
+		request.get('/services').expect(400, done);
+	})
+});
 
 describe('Home page', function(){
 	it('should return "It\'s working!"', function (done){
@@ -32,7 +49,10 @@ describe('Home page', function(){
 });
 	
 describe('POST service request', function(){
-	this.timeout(5000);
+
+	// it('requires an api key', function (done){
+		
+	// })
 
 	it('rejects lat alone', function (done){
 		request.post('/requests.json').type('form').send({
@@ -83,5 +103,11 @@ describe('POST service request', function(){
 			res.body.service_request_id.should.match(/([a-f]|[0-9])+/);
 			done();
 		});
+	});
+});
+
+describe('The server', function(){
+	it('returns a 404 for not found pages', function (done){
+		request.get('/whatever/asdfsadjksdfa.json').expect(404, done);
 	});
 });
