@@ -1,6 +1,7 @@
 var assert = require('assert');
 var server = require('../bin/www');
 var request = require('supertest');
+var should = require('chai').should();
 
 request = request('http://localhost:3000');
 
@@ -10,6 +11,7 @@ describe('Home page', function(){
 	});
 });
 	
+// Pretty much finished
 describe('POST service request', function(){
 	this.timeout(5000);
 
@@ -48,7 +50,19 @@ describe('POST service request', function(){
 		}).expect(200, done);
 	});
 
-	it.skip('saves good requests', function (done){
-		
+	it('requires a service code', function(done){
+		request.post('/requests.json').type('form').send({
+			address_id: 400
+		}).expect(400, done);
+	})
+
+	it('saves good requests', function (done){
+		request.post('/requests.json').type('form').send({
+			address_id: 400,
+			service_code: 123
+		}).expect(200, function(err, res){
+			res.body.service_request_id.should.match(/([a-f]|[0-9])+/);
+			done();
+		});
 	});
 });
