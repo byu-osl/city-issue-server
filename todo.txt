@@ -1,3 +1,4 @@
 Todo
 - Authentication
-    
+- Wire up Angular/routing
+- Deal with 500 errors    

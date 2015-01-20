@@ -1,3 +1,6 @@
+// Each describe call matches up with one of the API methods listed
+// on http://wiki.open311.org/GeoReport_v2/
+
 var assert = require('assert');
 var server = require('../bin/www');
 var request = require('supertest');
@@ -5,13 +8,29 @@ var should = require('chai').should();
 
 request = request('http://localhost:3000');
 
+describe('GET Service List', function(){
+	it('returns a list of services', function (done){
+		request.get('/services.json')
+			.expect(200)
+			.end(function(err, res){
+				res.body.should.be.an('array');
+				done();
+			});
+	});
+});
+
+describe('GET Service Definition', function(){
+	it('rejects requests without service_codes', function (done){
+		request.get('/services.json').expect(400, done);
+	});
+})
+
 describe('Home page', function(){
 	it('should return "It\'s working!"', function (done){
 		request.get('/').expect("It\'s working!", done);
 	});
 });
 	
-// Pretty much finished
 describe('POST service request', function(){
 	this.timeout(5000);
 
@@ -50,11 +69,11 @@ describe('POST service request', function(){
 		}).expect(200, done);
 	});
 
-	it('requires a service code', function(done){
+	it('requires a service code', function (done){
 		request.post('/requests.json').type('form').send({
 			address_id: 400
 		}).expect(400, done);
-	})
+	});
 
 	it('saves good requests', function (done){
 		request.post('/requests.json').type('form').send({

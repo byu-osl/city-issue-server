@@ -18,12 +18,19 @@ router.get('/', function listServices(req, res) {
 	});
 });
 
-
 router.get(':serviceCode.json', function(req, res){
 	console.log('GET: /services');
-
 	var serviceCode = req.params.serviceCode;
+	console.log("serviceCode: "+serviceCode);
+	if (typeof serviceCode === 'undefined') {
+		res.status(400).send({
+			code: 400,
+			description: 'You need to provide a service code to search for.'
+		})
+	}
 	var service = Service.find({service_code: serviceCode});
+
+
 	res.send(service);
 });
 
