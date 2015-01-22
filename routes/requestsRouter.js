@@ -13,36 +13,22 @@ router.post('/', function saveRequest(req, res, next) {
 	var serviceCode = req.body.service_code;
 
 	if (typeof serviceCode === 'undefined') {
-		res.status(400).send({
-			code: 400,
-			description: "A service code was not defined."
-		});
+		res.send400('A service code was not defined.');
 		return;
 	}
 
-	var query = Service.find({service_code:serviceCode});
-	query.exec(function checkServiceExistence(error, services){
-		if (error) {
-			res.status(500).send({
-				code: 500,
-				description: 'Something went wrong while trying to see if you had a valid service code.'
-			});
-			return;
+	Service.checkExistence(serviceCode, function (err, serviceExists){
+		if (err) {
+			res.send500('Something went wrong while trying to see if you had a valid service code.');
 		}
-		if (services.length === 0) {
-			// res.status(404).send({
-			// 	code: 404,
-			// 	description: 'Couldn\'t find a service of that type. Wrong service code number.'
-			// });
-			return;
+		if (!serviceExists){
+			res.send404('Couldn\'t find a service of that type. Wrong service code.');
 		}
+		return;
 	});
 
 	if (!hasLocationInfo(req.body)) {
-		res.status(400).send({
-			code: 400,
-			description: 'Your request must have one of the following: latitude and longitude, address_string, or address_id.'
-		});
+		res.send400('Your request must have one of the following: latitude and longitude, address_string, or address_id.');
 		return;
 	}
 
@@ -66,10 +52,8 @@ router.post('/', function saveRequest(req, res, next) {
 
 	request.save(function requestSaved(error, request, numberAffected){
 		if (error) {
-			res.status(500).send({
-				code: 500,
-				description: 'There was an error in saving your request.'
-			});
+			res.send500('There was an error in saving your request.');
+			throw new Error(error);
 		} else if (numberAffected > 0) {
 			// TODO: spec says service_request_id shouldn't be returned if a token is returned
 			res.send({
@@ -85,10 +69,7 @@ router.get('/', function findRequests(req, res) {
 	var requestsQuery = Request.buildQuery(req.body);
 	requestsQuery.exec(function foundRequests(error, results){
 		if (error) {
-			res.status(500).send({
-				code: 500,
-				description: 'There was an error while searching for your request.'
-			});
+			res.send500('There was an error while searching for your request.');
 		} else {
 			res.send(results.slice(0,999).map(cleanUpGetResponse));
 		}
@@ -101,10 +82,7 @@ router.get('/:requestID.json', function queryStatus(req, res){
 	var query = Request.find({service_request_id : requestID});
 	query.exec(function foundRequest(error, result){
 		if (error) {
-			res.status(500).send({
-				code: 500,
-				description: 'There was an error querying the request status.'
-			});
+			res.send500('There was an error querying the request status.')
 		} else {
 			res.send(cleanUpGetResponse(result));
 		}

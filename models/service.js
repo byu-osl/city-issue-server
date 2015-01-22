@@ -14,4 +14,21 @@ var serviceSchema = new mongoose.Schema({
     type:  {type: String, enum:['realtime','batch', 'blackbox']}
 });
 
+serviceSchema.statics.checkExistence = function(serviceCode, callback) {
+    var serviceExists;
+    this.find({service_code:serviceCode})
+        .exec(function (error, results){
+            if (error) {
+                callback(error);
+                return;
+            }
+            if (results.length === 0) {
+                serviceExists = false;
+            } else {
+                serviceExists = true;
+            }
+            callback(null, serviceExists);
+        });
+}
+
 module.exports = mongoose.model('Service', serviceSchema);

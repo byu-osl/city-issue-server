@@ -7,6 +7,7 @@ var mongoose   = require('mongoose');
 var indexRouter = require('./routes/indexRouter');
 var requestsRouter = require('./routes/requestsRouter');
 var servicesRouter = require('./routes/servicesRouter');
+
 var app = express();
 
 // Database
@@ -20,6 +21,7 @@ db.once('open', function dbConnected() {
 
 // Configuration
 app.set('view engine', 'jade');
+app.use(require('./lib/customizeResponse'));
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({type: 'application/x-www-form-urlencoded'}));
@@ -34,7 +36,7 @@ app.use(function return404(req, res, next) {
     res.status(404).send({
     	code: 404,
     	description: 'Not found: missed all routers.'
-    })
+    });
 });
 
 // if (app.get('env') === 'development') {

@@ -17,7 +17,7 @@ var requestSchema = new mongoose.Schema({
     long: String,               // of the location
     phone: String,              // of the submitter
     requested_datetime: Date,   // time requested
-    service_code: Number,       // type of service needed
+    service_code: String,       // type of service needed
     service_name: String,       // type of service needed (human readable)
     service_notice: String,     // about how it should be fixed
     service_request_id: Number, // unique request id
