@@ -1,16 +1,33 @@
 // Each describe call matches up with one of the API methods listed
 // on http://wiki.open311.org/GeoReport_v2/
+process.env.PORT = 3001;
+process.env.DB   = 'mongodb://localhost/city-issues-TEST';
 
-var assert  = require('assert');
-var server  = require('../bin/www');
-var request = require('supertest');
-var chai    = require('chai');
-var should  = chai.should();
-var expect  = chai.expect;
-var should  = require('chai').should();
+var assert   = require('assert');
+var server   = require('../bin/www');
+var request  = require('supertest');
+var chai     = require('chai');
+var should   = chai.should();
+var expect   = chai.expect;
+var should   = require('chai').should();
+var mongoose = require('mongoose');
+var Request  = require('../models/request');
+var Service  = require('../models/service');
+var mongoose = require('mongoose');
+var connection = server.connection;
 
+before(function (done){
+	populateLeDatabase(connection.db, done);
+	request = request('http://localhost:3001');
+});
 
-request = request('http://localhost:3000');
+after(function (){
+	connection.db.dropDatabase();
+});
+
+describe('GET Service Requests', function(){
+	
+});
 
 describe('GET Service List', function(){
 	it('returns a list of services', function (done){
@@ -143,3 +160,13 @@ describe('The server', function(){
 		request.get('/whatever/asdfsadjksdfa.json').expect(404, done);
 	});
 });
+
+function populateLeDatabase(db, done){
+	new Service({description: 'Requests to fix potholes', metadata: false, keywords: 'roads', group: 'infrastructure', service_code: 1, service_name: 'potholes', type:  'realtime'})
+		.save();
+	new Service({description: 'Fix streetlamps', metadata: false, keywords: 'lights', group: 'infrastructure', service_code: 2, service_name: 'streetlight', type:  'realtime'})
+		.save();
+	new Request({account_id: 123, address_string: 'address', address_id: 4, device_id: 5, description: 'desc', email: 'email', first_name: 'Chris', last_name: 'Anderson', lat: '2432', long: '2342342', media_url: undefined, phone: '24232234', service_code: 1, requested_datetime: new Date().toISOString(), status: 'open'}).save();
+	new Request({account_id: 123, address_string: 'address', address_id: 4, device_id: 5, description: 'desc', email: 'email', first_name: 'Chris', last_name: 'Anderson', lat: '2432', long: '2342342', media_url: undefined, phone: '24232234', service_code: 2, requested_datetime: new Date().toISOString(), status: 'open'}).save();
+	done();
+}

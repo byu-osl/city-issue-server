@@ -18,6 +18,8 @@ router.get('/', function listServices(req, res) {
 	Service.find().exec(function(error, services){
 		if (error){
 			res.send('Error finding service request types.');
+		} else if (services.length === 0) {
+			res.send404('Could not find any services.');
 		} else {
 			res.send(services);
 		}

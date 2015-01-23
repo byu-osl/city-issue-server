@@ -12,12 +12,13 @@ var app = express();
 
 // Database
 // mongoose.set('debug', true);
+var dbPath = process.env.DB || 'mongodb://localhost/city-issues';
+console.log("dbPath: "+dbPath);
 mongoose.connect('mongodb://localhost/city-issues');
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function dbConnected() {
-    console.log('DB connected.');
-});
+
+app.connection = mongoose.connection;
+app.connection.on('error', console.error.bind(console, 'connection error:'));
+//app.connection.once('open', function dbConnected() {});
 
 // Configuration
 app.set('view engine', 'jade');

@@ -36,4 +36,5 @@ function onListening() {
   console.log('Listening on port ' + server.address().port);
 }
 
-module.exports = server;
+// Exporting the app so Mocha can access it.
+module.exports = app;
