@@ -16,6 +16,9 @@ var Service  = require('../models/service');
 var mongoose = require('mongoose');
 var connection = server.connection;
 
+var requestID1;
+var requestID2;
+
 before(function (done){
 	populateLeDatabase(connection.db, done);
 	request = request('http://localhost:3001');
@@ -26,14 +29,30 @@ after(function (){
 });
 
 describe('GET Service Requests', function(){
-	
+	it('must have less than 1000 results', function (done){
+		request.get('/requests.json')
+			.expect(200).end(function (err, res){
+				res.body.length.should.be.below(1000);
+				done();
+			});
+	});
+
+	it('returns the right number of requests', function (done){  
+		request.get('/requests.json').type('form').send({
+			service_request_id: requestID1+','+requestID2
+		}).expect(200).end(function (err, res){
+			res.body.length.should.equal(2);
+			done();
+		});
+
+	});
+
 });
 
 describe('GET Service List', function(){
 	it('returns a list of services', function (done){
 		request.get('/services.json')
-			.expect(200)
-			.end(function(err, res){
+			.expect(200).end(function(err, res){
 				res.body.should.be.an('array');
 				done();
 			});
@@ -41,8 +60,7 @@ describe('GET Service List', function(){
 
 	it('returns valid services', function (done){
 		request.get('/services.json')
-			.expect(200)
-			.end(function(err, res){
+			.expect(200).end(function(err, res){
 				res.body.should.be.an('array');
 				var service = res.body[0];
 				service.should.have.property('service_code');
@@ -73,7 +91,7 @@ describe('POST service request', function(){
 
 	var validCode = '1';
 
-	var validJSON = {
+	var validRequestJSON = {
 		service_code: validCode,
 		address_id: 1
 	};
@@ -132,7 +150,7 @@ describe('POST service request', function(){
 	it('saves good requests', function (done){
 		request.post('/requests.json')
 			.type('form')
-			.send(validJSON).expect(200, function(err, res){
+			.send(validRequestJSON).expect(200, function(err, res){
 				res.body.service_request_id.should.match(/([a-f]|[0-9])+/);
 				done();
 			});
@@ -140,7 +158,7 @@ describe('POST service request', function(){
 
 	it('should not return service_notice or account_id', function (done){
 		request.post('/requests.json').type('form')
-			.send(validJSON).expect(200, function(err, res){
+			.send(validRequestJSON).expect(200, function(err, res){
 				expect(res.body.service_notice).to.be.undefined();
 				expect(res.body.account_id).to.be.undefined();
 				done();
@@ -166,7 +184,13 @@ function populateLeDatabase(db, done){
 		.save();
 	new Service({description: 'Fix streetlamps', metadata: false, keywords: 'lights', group: 'infrastructure', service_code: 2, service_name: 'streetlight', type:  'realtime'})
 		.save();
-	new Request({account_id: 123, address_string: 'address', address_id: 4, device_id: 5, description: 'desc', email: 'email', first_name: 'Chris', last_name: 'Anderson', lat: '2432', long: '2342342', media_url: undefined, phone: '24232234', service_code: 1, requested_datetime: new Date().toISOString(), status: 'open'}).save();
-	new Request({account_id: 123, address_string: 'address', address_id: 4, device_id: 5, description: 'desc', email: 'email', first_name: 'Chris', last_name: 'Anderson', lat: '2432', long: '2342342', media_url: undefined, phone: '24232234', service_code: 2, requested_datetime: new Date().toISOString(), status: 'open'}).save();
-	done();
+	new Request({account_id: 123, address_string: 'address', address_id: 4, device_id: 5, description: 'desc', email: 'email', first_name: 'Chris', last_name: 'Anderson', lat: '2432', long: '2342342', media_url: undefined, phone: '24232234', service_code: 1, requested_datetime: new Date().toISOString(), status: 'open'})
+		.save(function (err, request){
+			requestID1 = request._id;
+		});
+	new Request({account_id: 123, address_string: 'address', address_id: 4, device_id: 5, description: 'desc', email: 'email', first_name: 'Chris', last_name: 'Anderson', lat: '2432', long: '2342342', media_url: undefined, phone: '24232234', service_code: 2, requested_datetime: new Date().toISOString(), status: 'open'})
+		.save(function (err, request){
+			requestID2 = request._id;
+			done();
+		});
 }

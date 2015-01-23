@@ -1,16 +1,16 @@
 var mongoose = require('mongoose');
 var moment   = require('moment');
 var requestSchema = new mongoose.Schema({
-    account_id: Number,         // the user who submitted the request
+    account_id: String,         // the user who submitted the request
     address_id: Number,         // address of some external system
     address_string: String,     // description of location of the issue
     agency_responsible: String, // who needs to fulfill it
     description: String,        // description of the request
-    device_id: Number,          // unique ID of the device that submitted the request
+    device_id: String,          // unique ID of the device that submitted the request
     email: String,              // of the submitter
     expected_datetime: Date,    // when it's expected to be fulfilled
     first_name: String,         // of the submitter
-    jurisdiction_id: Number,    // unique city identifier
+    jurisdiction_id: String,    // unique city identifier
     lat: String,                // of the location
     last_name: String,          // of the submitter
     media_url: String,          // image/etc. associate with the request
@@ -20,7 +20,7 @@ var requestSchema = new mongoose.Schema({
     service_code: String,       // type of service needed
     service_name: String,       // type of service needed (human readable)
     service_notice: String,     // about how it should be fixed
-    service_request_id: Number, // unique request id
+    service_request_id: String, // unique request id
     status: {type: String, enum: ['open', 'closed']},
     status_notes: String,       // reason for the status
     updated_datetime: Date,     // last modified
@@ -66,8 +66,8 @@ requestSchema.statics.buildQuery = function(params){
     // Overrides everything else if defined.
     if (typeof requestIDs != 'undefined') {
         requestIDs = requestIDs.split(',');
-        requestsQuery = this.find().where('service_request_id').in(requestIDs);
-    }
+        requestsQuery = this.find().where('_id').in(requestIDs);
+    } 
 
     return requestsQuery;
 };

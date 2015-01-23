@@ -3,7 +3,7 @@
 
 */
 var express  = require('express');
-var router = express.Router();
+var router   = express.Router();
 var Service  = require('../models/service');
 
 // provide a list of acceptable 311 service request types and their associated service codes. 
