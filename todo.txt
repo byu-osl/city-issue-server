@@ -1,7 +1,6 @@
 Todo
-- Authentication
+- Authentication. How do I set up API key stuff?
 - Wire up Angular/routing
-- Deal with 500 errors
 
 Questions
 - Will this ever be used for multiple jurisdictions?    

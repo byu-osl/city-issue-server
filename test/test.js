@@ -28,6 +28,22 @@ after(function (){
 	connection.db.dropDatabase();
 });
 
+describe('GET Service Request', function (){
+	it('returns 404 for an unfound id', function (done){
+		request.get('/requests/123456781234567812345678.json').expect(404, done);
+	});
+	it('returns a request', function (done){
+		request.get('/requests/'+requestID1+'.json')
+			.expect(200)
+			.end(function (err, res){
+				res.body.length.should.equal(1);
+				res.body[0].should.have.property('_id');
+				res.body[0].should.have.property('status');
+				done();
+			});
+	});
+});
+
 describe('GET Service Requests', function(){
 	it('must have less than 1000 results', function (done){
 		request.get('/requests.json')
@@ -44,7 +60,6 @@ describe('GET Service Requests', function(){
 			res.body.length.should.equal(2);
 			done();
 		});
-
 	});
 
 });
@@ -87,7 +102,7 @@ describe('Home page', function(){
 	});
 });
 	
-describe('POST service request', function(){
+describe('POST Service Request', function(){
 
 	var validCode = '1';
 
@@ -96,15 +111,12 @@ describe('POST service request', function(){
 		address_id: 1
 	};
 
-
-	// it('requires an api key', function (done){
-		/*
-			Somehow they request one
-			I generate it, store it in the DB
-			somehow they use it when their application requests json
-
-		*/
-	// })
+	it.skip('requires an api key', function (done){
+		request.post('/requests.json').type('form').send({
+			service_code: validCode,
+			address_id: 1
+		}).expect(403, done);
+	});
 
 	it('rejects lat alone', function (done){
 		request.post('/requests.json').type('form').send({

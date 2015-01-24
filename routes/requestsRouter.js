@@ -6,6 +6,7 @@ var express = require('express');
 var router  = express.Router();
 var Request = require('../models/request');
 var Service = require('../models/service');
+var mongoose = require('mongoose');
 
 router.get('/:requestID.json', queryStatus);
 router.get('/', findRequests);
@@ -14,11 +15,17 @@ router.post('/', validatePOSTParameters, saveRequest);
 module.exports = router;
 
 function queryStatus(req, res){
-	var requestID = req.body.service_request_id;
-	var query = Request.find({service_request_id : requestID});
-	query.exec(function foundRequest(error, result){
+	var requestID = req.params.requestID;
+	if (!validObjectID(requestID)) {
+		res.send400('Invalid request ID format.');
+		return;
+	}
+	var query = Request.find({_id : requestID}, function (error, result){
 		if (error) {
+			console.log(error);
 			res.send500('There was an error querying the request status.');
+		} else if (result.length === 0) {
+			res.send404('Could not find the request you were looking for.');
 		} else {
 			res.send(cleanUpGetResponse(result));
 		}
@@ -64,25 +71,9 @@ function validatePOSTParameters(req, res, next) {
 }
 
 function saveRequest(req, res, next) {
-	var requestedDate = new Date().toISOString();
-
-	var request = new Request({
-		account_id:         req.body.account_id,
-		address_string:     req.body.address_string,
-		address_id:         req.body.address_id,
-		device_id:          req.body.device_id,
-		description:        req.body.description,
-		email:              req.body.email,
-		first_name:         req.body.first_name,
-		last_name:          req.body.last_name,
-		lat: 		        req.body.lat,
-		long: 		        req.body.long,
-		media_url:          req.body.media_url,
-		phone:              req.body.phone,
-		service_code:       req.body.service_code,
-		requested_datetime: requestedDate,
-		status:       	    'open'
-	});
+	var request = new Request(req.body);
+	request.requested_datetime = new Date().toISOString();
+	request.status = 'open';
 
 	request.save(function requestSaved(error, request, numberAffected){
 		if (error) {
@@ -120,4 +111,9 @@ function cleanUpGetResponse(request) {
 		delete request[field];
 	});
 	return request;
+}
+
+function validObjectID(id) {
+	// 24 characters, a-f, 0-9
+	return /([a-f]|\d){24}/.test(id);
 }

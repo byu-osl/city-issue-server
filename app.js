@@ -1,10 +1,10 @@
-var express    = require('express');
-var path       = require('path');
-var favicon    = require('serve-favicon');
-var logger     = require('morgan');
-var bodyParser = require('body-parser');
-var mongoose   = require('mongoose');
-var indexRouter = require('./routes/indexRouter');
+var express        = require('express');
+var path           = require('path');
+var favicon        = require('serve-favicon');
+var logger         = require('morgan');
+var bodyParser     = require('body-parser');
+var mongoose       = require('mongoose');
+var indexRouter    = require('./routes/indexRouter');
 var requestsRouter = require('./routes/requestsRouter');
 var servicesRouter = require('./routes/servicesRouter');
 
@@ -24,7 +24,7 @@ app.connection.on('error', console.error.bind(console, 'connection error:'));
 app.set('view engine', 'jade');
 app.use(require('./lib/customizeResponse'));
 app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
+// app.use(logger('dev')); // Logs which requests come in, ms response time
 app.use(bodyParser.urlencoded({type: 'application/x-www-form-urlencoded'}));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -36,7 +36,7 @@ app.use(/\/services(.json)?/, servicesRouter);
 app.use(function return404(req, res, next) {
     res.status(404).send({
     	code: 404,
-    	description: 'Not found: missed all routers.'
+    	description: 'Page not found.'
     });
 });
 
