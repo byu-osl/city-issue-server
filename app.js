@@ -1,6 +1,5 @@
 var express        = require('express');
 var path           = require('path');
-var favicon        = require('serve-favicon');
 var logger         = require('morgan');
 var bodyParser     = require('body-parser');
 var mongoose       = require('mongoose');
@@ -23,7 +22,6 @@ app.connection.on('error', console.error.bind(console, 'connection error:'));
 // Configuration
 app.set('view engine', 'jade');
 app.use(require('./lib/customizeResponse'));
-app.use(favicon(__dirname + '/public/favicon.ico'));
 // app.use(logger('dev')); // Logs which requests come in, ms response time
 app.use(bodyParser.urlencoded({type: 'application/x-www-form-urlencoded'}));
 app.use(express.static(path.join(__dirname, 'public')));

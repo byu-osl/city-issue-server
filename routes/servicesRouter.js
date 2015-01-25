@@ -21,7 +21,7 @@ router.get('/', function listServices(req, res) {
 		} else if (services.length === 0) {
 			res.send404('Could not find any services.');
 		} else {
-			res.send(services);
+			res.send({services: services});
 		}
 	});
 });
