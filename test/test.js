@@ -33,7 +33,7 @@ describe('GET Service Request', function (){
 		request.get('/requests/'+requestID1+'.json')
 			.expect(200)
 			.end(function (err, res){
-                var requests = res.body.service_requests;
+                var requests = res.body;
 				requests.length.should.equal(1);
 				requests[0].should.have.property('_id');
 				requests[0].should.have.property('status');
@@ -46,8 +46,8 @@ describe('GET Service Requests', function(){
 	it('must have less than 1000 results', function (done){
 		request.get('/requests.json')
 			.expect(200).end(function (err, res){
-				res.body.service_requests.length.should.be.below(1000);
-				res.body.service_requests.length.should.be.above(0);
+				res.body.length.should.be.below(1000);
+				res.body.length.should.be.above(0);
 				done();
 			});
 	});
@@ -56,7 +56,7 @@ describe('GET Service Requests', function(){
 		request.get('/requests.json').type('form').send({
 			service_request_id: requestID1+','+requestID2
 		}).expect(200).end(function (err, res){
-            var requests = res.body.service_requests;
+            var requests = res.body;
 			requests.length.should.equal(2);
 			done();
 		});
@@ -68,7 +68,7 @@ describe('GET Service List', function(){
 	it('returns a list of services', function (done){
 		request.get('/services.json')
 			.expect(200).end(function(err, res){
-				res.body.services.should.be.an('array');
+				res.body.should.be.an('array');
 				done();
 			});
 	});
@@ -76,7 +76,7 @@ describe('GET Service List', function(){
 	it('returns valid services', function (done){
 		request.get('/services.json')
 			.expect(200).end(function(err, res){
-                var services = res.body.services;
+                var services = res.body;
 				services.should.be.an('array');
 				var service = services[0];
 				service.should.have.property('service_code');
@@ -158,7 +158,7 @@ describe('POST Service Request', function(){
 		request.post('/requests.json')
 			.type('form')
 			.send(validRequestJSON).expect(200, function(err, res){
-				res.body.service_requests.request.service_request_id.should.match(/([a-f]|[0-9])+/);
+				res.body[0].service_request_id.should.match(/([a-f]|[0-9])+/);
 				done();
 			});
 	});

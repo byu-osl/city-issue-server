@@ -21,7 +21,7 @@ router.get('/', function listServices(req, res) {
 		} else if (services.length === 0) {
 			res.send404('Could not find any services.');
 		} else {
-			res.send({services: services});
+			res.send(services);
 		}
 	});
 });
@@ -35,7 +35,7 @@ router.get(':serviceCode.json', function getServiceDescription(req, res){
 		if (result.length === 0) {
 			res.send404('Could not find a service with that code.');
 		} else {
-			res.send({service_definition: result});
+			res.send(result);
 		}
 	});
 });

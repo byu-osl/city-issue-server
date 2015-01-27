@@ -21,14 +21,11 @@ function queryStatus(req, res){
 	}
 	Request.find({_id : requestID}, function (error, result){
 		if (error) {
-			console.log(error);
 			res.send500('There was an error querying the request status.');
 		} else if (result.length === 0) {
 			res.send404('Could not find the request you were looking for.');
 		} else {
-			res.send({
-				service_requests: cleanUpGetResponse(result) // weird that the spec says service_requests even though it is singular...
-			});
+			res.send(cleanUpGetResponse(result));
 		}
 	});
 }
@@ -37,12 +34,9 @@ function findRequests(req, res) {
 	var requestsQuery = Request.buildQuery(req.body);
 	requestsQuery.exec(function foundRequests(error, results){
 		if (error) {
-			console.log(error);
 			res.send500('There was an error while searching for your request.');
 		} else {
-			res.send({
-				service_requests: results.slice(0,999).map(cleanUpGetResponse)
-			});
+			res.send(results.slice(0,999).map(cleanUpGetResponse));
 		}
 	});
 }
@@ -61,7 +55,6 @@ function validatePOSTParameters(req, res, next) {
 
 	Service.checkExistence(serviceCode, function (err, serviceExists){
 		if (err) {
-			console.log(err);
 			res.send500('Something went wrong while trying to see if you had a valid service code.');
 			return;
 		}
@@ -84,11 +77,9 @@ function saveRequest(req, res) {
 			throw new Error(error);
 		} else if (numberAffected > 0) {
 			// TODO: spec says service_request_id shouldn't be returned if a token is returned
-			res.send({service_requests: {
-				request: {
-					service_request_id: request._id
-				}
-			}});
+			res.send([{
+				service_request_id: request._id
+			}]);
 		} else {
 			res.send('Request not saved.');
 		}
