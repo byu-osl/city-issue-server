@@ -6,7 +6,6 @@ var express = require('express');
 var router  = express.Router();
 var Request = require('../models/request');
 var Service = require('../models/service');
-var mongoose = require('mongoose');
 
 router.get('/:requestID.json', queryStatus);
 router.get('/', findRequests);
@@ -15,19 +14,21 @@ router.post('/', validatePOSTParameters, saveRequest);
 module.exports = router;
 
 function queryStatus(req, res){
-	var requestID = req.params.requestID;
+    var requestID = req.params.requestID;
 	if (!validObjectID(requestID)) {
 		res.send400('Invalid request ID format.');
 		return;
 	}
-	var query = Request.find({_id : requestID}, function (error, result){
+	Request.find({_id : requestID}, function (error, result){
 		if (error) {
 			console.log(error);
 			res.send500('There was an error querying the request status.');
 		} else if (result.length === 0) {
 			res.send404('Could not find the request you were looking for.');
 		} else {
-			res.send(cleanUpGetResponse(result));
+			res.send({
+				service_requests: cleanUpGetResponse(result) // weird that the spec says service_requests even though it is singular...
+			});
 		}
 	});
 }
@@ -39,7 +40,9 @@ function findRequests(req, res) {
 			console.log(error);
 			res.send500('There was an error while searching for your request.');
 		} else {
-			res.send(results.slice(0,999).map(cleanUpGetResponse));
+			res.send({
+				service_requests: results.slice(0,999).map(cleanUpGetResponse)
+			});
 		}
 	});
 }
@@ -70,7 +73,7 @@ function validatePOSTParameters(req, res, next) {
 	});
 }
 
-function saveRequest(req, res, next) {
+function saveRequest(req, res) {
 	var request = new Request(req.body);
 	request.requested_datetime = new Date().toISOString();
 	request.status = 'open';
@@ -81,9 +84,11 @@ function saveRequest(req, res, next) {
 			throw new Error(error);
 		} else if (numberAffected > 0) {
 			// TODO: spec says service_request_id shouldn't be returned if a token is returned
-			res.send({
-				service_request_id: request._id
-			});
+			res.send({service_requests: {
+				request: {
+					service_request_id: request._id
+				}
+			}});
 		} else {
 			res.send('Request not saved.');
 		}

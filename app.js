@@ -1,6 +1,6 @@
 var express        = require('express');
 var path           = require('path');
-var logger         = require('morgan');
+//var logger         = require('morgan');
 var bodyParser     = require('body-parser');
 var mongoose       = require('mongoose');
 var indexRouter    = require('./routes/indexRouter');
@@ -23,7 +23,7 @@ app.connection.on('error', console.error.bind(console, 'connection error:'));
 app.set('view engine', 'jade');
 app.use(require('./lib/customizeResponse'));
 // app.use(logger('dev')); // Logs which requests come in, ms response time
-app.use(bodyParser.urlencoded({type: 'application/x-www-form-urlencoded'}));
+app.use(bodyParser.urlencoded({type: 'application/x-www-form-urlencoded', extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routing
@@ -31,7 +31,7 @@ app.use('/', indexRouter);
 app.use(/\/requests(.json)?/, requestsRouter);
 app.use(/\/services(.json)?/, servicesRouter);
 
-app.use(function return404(req, res, next) {
+app.use(function return404(req, res) {
     res.status(404).send({
     	code: 404,
     	description: 'Page not found.'

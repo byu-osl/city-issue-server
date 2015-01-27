@@ -29,7 +29,6 @@ var requestSchema = new mongoose.Schema({
 
 // Takes req.body as the parameter
 // returns a built query to be executed
-// 
 requestSchema.statics.buildQuery = function(params){
     var requestsQuery = this.find();
     var startDate = params.start_date; //  lower bound for requested_datetime
@@ -61,7 +60,7 @@ requestSchema.statics.buildQuery = function(params){
         requestsQuery = requestsQuery.where('status').equals(status);
     }
 
-    requestsQuery = requestsQuery.where('request_datetime').gt(startDate.toDate());
+    requestsQuery = requestsQuery.where('requested_datetime').gt(startDate.toDate());
 
     // Overrides everything else if defined.
     if (typeof requestIDs != 'undefined') {

@@ -3,24 +3,20 @@
 process.env.PORT = 3001;
 process.env.DB   = 'mongodb://localhost/city-issues-TEST';
 
-var assert   = require('assert');
 var server   = require('../bin/www');
 var request  = require('supertest');
 var chai     = require('chai');
-var should   = chai.should();
 var expect   = chai.expect;
-var should   = require('chai').should();
-var mongoose = require('mongoose');
 var Request  = require('../models/request');
 var Service  = require('../models/service');
-var mongoose = require('mongoose');
 var connection = server.connection;
+require('chai').should();
 
 var requestID1;
 var requestID2;
 
 before(function (done){
-	populateLeDatabase(connection.db, done);
+	populateLeDatabase(done);
 	request = request('http://localhost:3001');
 });
 
@@ -29,16 +25,18 @@ after(function (){
 });
 
 describe('GET Service Request', function (){
-	it('returns 404 for an unfound id', function (done){
+	it('returns 404 for an non-existent id', function (done){
 		request.get('/requests/123456781234567812345678.json').expect(404, done);
 	});
+
 	it('returns a request', function (done){
 		request.get('/requests/'+requestID1+'.json')
 			.expect(200)
 			.end(function (err, res){
-				res.body.length.should.equal(1);
-				res.body[0].should.have.property('_id');
-				res.body[0].should.have.property('status');
+                var requests = res.body.service_requests;
+				requests.length.should.equal(1);
+				requests[0].should.have.property('_id');
+				requests[0].should.have.property('status');
 				done();
 			});
 	});
@@ -48,7 +46,8 @@ describe('GET Service Requests', function(){
 	it('must have less than 1000 results', function (done){
 		request.get('/requests.json')
 			.expect(200).end(function (err, res){
-				res.body.length.should.be.below(1000);
+				res.body.service_requests.length.should.be.below(1000);
+				res.body.service_requests.length.should.be.above(0);
 				done();
 			});
 	});
@@ -57,7 +56,8 @@ describe('GET Service Requests', function(){
 		request.get('/requests.json').type('form').send({
 			service_request_id: requestID1+','+requestID2
 		}).expect(200).end(function (err, res){
-			res.body.length.should.equal(2);
+            var requests = res.body.service_requests;
+			requests.length.should.equal(2);
 			done();
 		});
 	});
@@ -68,7 +68,7 @@ describe('GET Service List', function(){
 	it('returns a list of services', function (done){
 		request.get('/services.json')
 			.expect(200).end(function(err, res){
-				res.body.should.be.an('array');
+				res.body.services.should.be.an('array');
 				done();
 			});
 	});
@@ -76,8 +76,9 @@ describe('GET Service List', function(){
 	it('returns valid services', function (done){
 		request.get('/services.json')
 			.expect(200).end(function(err, res){
-				res.body.should.be.an('array');
-				var service = res.body[0];
+                var services = res.body.services;
+				services.should.be.an('array');
+				var service = services[0];
 				service.should.have.property('service_code');
 				service.should.have.property('service_name');
 				service.should.have.property('metadata');
@@ -95,21 +96,15 @@ describe('GET Service Definition', function(){
 		request.get('/services').expect(400, done);
 	});
 });
-
-describe('Home page', function(){
-	it('should return "It\'s working!"', function (done){
-		request.get('/').expect("It\'s working!", done);
-	});
-});
 	
 describe('POST Service Request', function(){
 
 	var validCode = '1';
 
-	var validRequestJSON = {
-		service_code: validCode,
-		address_id: 1
-	};
+    var validRequestJSON = {
+        service_code: validCode,
+        address_id: 1
+    };
 
 	it.skip('requires an api key', function (done){
 		request.post('/requests.json').type('form').send({
@@ -163,7 +158,7 @@ describe('POST Service Request', function(){
 		request.post('/requests.json')
 			.type('form')
 			.send(validRequestJSON).expect(200, function(err, res){
-				res.body.service_request_id.should.match(/([a-f]|[0-9])+/);
+				res.body.service_requests.request.service_request_id.should.match(/([a-f]|[0-9])+/);
 				done();
 			});
 	});
@@ -191,7 +186,7 @@ describe('The server', function(){
 	});
 });
 
-function populateLeDatabase(db, done){
+function populateLeDatabase(done){
 	new Service({description: 'Requests to fix potholes', metadata: false, keywords: 'roads', group: 'infrastructure', service_code: 1, service_name: 'potholes', type:  'realtime'})
 		.save();
 	new Service({description: 'Fix streetlamps', metadata: false, keywords: 'lights', group: 'infrastructure', service_code: 2, service_name: 'streetlight', type:  'realtime'})
