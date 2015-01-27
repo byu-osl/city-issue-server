@@ -1,4 +1,4 @@
-{
+  {
   "name": "city-issue-server",
   "version": "0.0.0",
   "description": "A node.js implementation of the Open311 spec for issue tracking.",
