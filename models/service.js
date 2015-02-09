@@ -29,6 +29,6 @@ serviceSchema.statics.checkExistence = function(serviceCode, callback) {
             }
             callback(null, serviceExists);
         });
-}
+};
 
 module.exports = mongoose.model('Service', serviceSchema);

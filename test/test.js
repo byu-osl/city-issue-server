@@ -61,7 +61,6 @@ describe('GET Service Requests', function(){
 			done();
 		});
 	});
-
 });
 
 describe('GET Service List', function(){

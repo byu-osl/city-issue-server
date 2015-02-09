@@ -15,7 +15,7 @@ router.get('/', function listServices(req, res) {
 		return;
 	}
 
-	Service.find().exec(function (error, services){
+	Service.find(function (error, services){
 		if (error){
 			res.send('Error finding service request types.');
 		} else if (services.length === 0) {
