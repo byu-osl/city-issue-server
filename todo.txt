@@ -1,6 +1,4 @@
 Todo
 - Authentication. How do I set up API key stuff?
-- Wire up Angular/routing
-
-Questions
-- Will this ever be used for multiple jurisdictions?    
+- How will they add services?
+- Will this ever be used for multiple jurisdictions?
