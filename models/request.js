@@ -29,7 +29,7 @@ var requestSchema = new mongoose.Schema({
 
 // Takes req.body as the parameter
 // returns a built query to be executed
-requestSchema.statics.buildQuery = function(params){
+requestSchema.statics.findRequests = function(params, callback){
     var requestsQuery = this.find();
     var startDate = params.start_date; //  lower bound for requested_datetime
     var endDate = params.end_date;     // upper bound for requested_datetime
@@ -66,9 +66,9 @@ requestSchema.statics.buildQuery = function(params){
     if (typeof requestIDs != 'undefined') {
         requestIDs = requestIDs.split(',');
         requestsQuery = this.find().where('_id').in(requestIDs);
-    } 
+    }
 
-    return requestsQuery;
+    requestsQuery.exec(callback);
 };
 
 module.exports = mongoose.model('Request', requestSchema);

@@ -31,14 +31,13 @@ function queryStatus(req, res){
 }
 
 function findRequests(req, res) {
-	var requestsQuery = Request.buildQuery(req.body);
-	requestsQuery.exec(function foundRequests(error, results){
-		if (error) {
-			res.send500('There was an error while searching for your request.');
-		} else {
-			res.send(results.slice(0,999).map(cleanUpGetResponse));
-		}
-	});
+	Request.findRequests(req.body, function (err, results) {
+        if (err) {
+            res.send500('There was an error while searching for your request.');
+        } else {
+            res.send(results.slice(0,999).map(cleanUpGetResponse));
+        }
+    });
 }
 
 function validatePOSTParameters(req, res, next) {
