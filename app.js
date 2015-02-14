@@ -8,20 +8,25 @@ var requestsRouter = require('./routes/requestsRouter');
 var servicesRouter = require('./routes/servicesRouter');
 
 var app = express();
+app.use(require('./lib/customizeResponse'));
+
 
 // Database
 // mongoose.set('debug', true);
 var dbPath = process.env.DB || 'mongodb://localhost/city-issues';
 console.log("dbPath: "+dbPath);
-mongoose.connect('mongodb://localhost/city-issues');
 
+mongoose.connect('mongodb://localhost/city-issues');
 app.connection = mongoose.connection;
-app.connection.on('error', console.error.bind(console, 'connection error:'));
+app.connection.on('error', function (error) {
+    console.log(error);
+    console.log('Error connecting to DB. Is MongoDB running? (sudo service mongod start)');
+    console.log('Try "sudo service mongod start".If mongod is an unrecognized service, you will need to install MongoDB.');
+});
 //app.connection.once('open', function dbConnected() {});
 
 // Configuration
 app.set('view engine', 'jade');
-app.use(require('./lib/customizeResponse'));
 // app.use(logger('dev')); // Logs which requests come in, ms response time
 app.use(bodyParser.urlencoded({type: 'application/x-www-form-urlencoded', extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
