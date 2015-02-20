@@ -1,0 +1,16 @@
+#UserSection {
+	border-top: 1px solid gray;
+	border-bottom: 1px solid gray;
+}
+
+#AdminSection {
+
+}
+
+#UploadedImage {
+}
+
+.form-horizontal .form-group {
+	margin-left: 0px;
+	margin-right: 0px;
+}

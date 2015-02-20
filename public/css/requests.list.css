@@ -1,0 +1,19 @@
+#RequestListWrapper {
+}
+
+#search-block {
+	display: inline-block;
+}
+
+
+.request-list-item {
+	border-bottom: 1px solid #ddd;
+	padding: 13px;
+	cursor: pointer;
+	display:block;
+	margin-bottom:3px;
+}
+
+ul#RequestList {
+	padding: 0px;
+}

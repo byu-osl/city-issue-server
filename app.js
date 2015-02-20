@@ -28,8 +28,8 @@ app.connection.on('error', function (error) {
 // Configuration
 app.set('view engine', 'jade');
 // app.use(logger('dev')); // Logs which requests come in, ms response time
-app.use(bodyParser.urlencoded({type: 'application/x-www-form-urlencoded', extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({type: 'application/x-www-form-urlencoded', extended: true}));
 
 // Routing
 app.use('/', indexRouter);
