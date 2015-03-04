@@ -10,4 +10,5 @@ Todo
 
 - Travis CI
 - Spin up remote server so Josh can hit it
-- get Angular tutorial done
+- loadDb doesn't quit
+- Load services into combo box.

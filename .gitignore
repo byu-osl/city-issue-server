@@ -35,4 +35,6 @@ npm-debug.log
 
 old_public/
 
-.idea/
+.idea/*
+
+.module-cache/
