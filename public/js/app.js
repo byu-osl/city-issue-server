@@ -36,7 +36,7 @@ var RequestForm = React.createClass({
                 <LocationSection ref='location'/>
                 <DescriptionSection ref='description'/>
                 <CategorySection ref='category'/>
-                <input type='submit' className='btn btn-fault'>Submit</input>
+                <input type='submit' className='btn btn-fault'></input>
             </form>
         </div>
     )}
