@@ -1,6 +1,7 @@
 'use strict';
 
 var api = new serverAPI();
+var LocationSection = require('LocationSection');
 
 var RequestForm = React.createClass({
 
@@ -42,54 +43,7 @@ var RequestForm = React.createClass({
     )}
 });
 
-var LocationSection = React.createClass({
-    getInitialState: function () {
-        return {
-            location: '',
-            usedDetection: false
-        };
-    },
-
-    getLocation:   function () {return this.state.location; },
-    getLat:        function () {return this.state.lat; },
-    getLong:       function () {return this.state.long; },
-    usedDetection: function () {return this.state.usedDetection; },
-
-    setLocation: function (positionData) {
-        var lat = positionData.coords.latitude;
-        var long = positionData.coords.longitude;
-        var output = 'latitude: ' + lat + ', longitude: ' + long;
-        this.setState({location:output});
-        this.setState({
-            lat:lat, 
-            long:long, 
-            location: output,
-            usedDetection: true
-        });
-    },
-
-    handleLocationClick: function (event) {
-        event.preventDefault();
-        navigator.geolocation.getCurrentPosition(this.setLocation, null, {enableHighAccuracy:true});
-    },
-
-    handleChange: function (event) {
-        this.setState({location:event.target.value});
-    },
-
-    render: function() {return(
-        <div className='form-group'>
-            <div>
-                <label>Location</label>
-                <button className='btn btn-default btn-xs location-button' onClick={this.handleLocationClick}>
-                    <span className='glyphicon glyphicon-map-marker'/>
-                    detect my location
-                </button>
-            </div>
-            <input name='location' className='form-control' type='text' value={this.state.location} onChange={this.handleChange}/>
-        </div>
-    )}
-});
+var LocationSection = 
 
 var DescriptionSection = React.createClass({
     getDescription: function (){return this.state.description },
@@ -122,6 +76,13 @@ var DescriptionSection = React.createClass({
 });
 
 var CategorySection = React.createClass({
+
+    getInitialState: function () {
+        return {
+            categories: []  
+        };
+    },
+
     loadCategories: function (data) {
         console.log('Loaded categories: ')
         console.log(data)
@@ -131,25 +92,30 @@ var CategorySection = React.createClass({
         api.getCategories(this.loadCategories);
     },
 
-    render: function() {return(
-        <div className='form-group'>
-            <label>Category</label>
-            <div className="dropdown">
-                <button className="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
-                    other
-                    <span className="caret"></span>
-                </button>
-                <ul className="dropdown-menu" role="menu">
-                    <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">Action</a></li>
-                    <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">Another action</a></li>
-                    <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">Something else here</a></li>
-                    <li role="presentation" className="divider"></li>
-                    <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">Separated link</a></li>
-                </ul>
+    render: function() {
+
+        return (
+            <div className='form-group'>
+                <label>Category</label>
+                <div className="dropdown">
+                    <button className="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
+                        other
+                        <span className="caret"></span>
+                    </button>
+                    <ul className="dropdown-menu" role="menu">
+                        {categories}
+                    </ul>
+                </div>
             </div>
-        </div>
-    )}
+        );
+    }
 });
+
+var Category = React.createClass({
+    render: function(){return(
+        <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">{this.props.name}</a></li>
+    )}
+})
 
 React.render(<RequestForm />, $('.app-container')[0]);
 
