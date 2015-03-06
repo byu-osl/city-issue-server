@@ -1,9 +1,11 @@
-function serverAPI () {}
+function ServerAPI () {}
 
-serverAPI.prototype.postRequest = function (data, callback) {
+ServerAPI.prototype.postRequest = function (data, callback) {
     $.post('/requests.json', data, callback);
 }
 
-serverAPI.prototype.getCategories = function (callback) {
+ServerAPI.prototype.getCategories = function (callback) {
      $.get('/services.json', callback);
- }
+}
+
+module.exports = ServerAPI;

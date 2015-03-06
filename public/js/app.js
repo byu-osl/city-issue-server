@@ -1,13 +1,14 @@
 'use strict';
 
-var api = new serverAPI();
-var LocationSection = require('LocationSection');
-
+var api = require('./server-api');
+var LocationSection = require('./LocationSection');
+var CategorySection = require('./CategorySection');
+ 
 var RequestForm = React.createClass({
 
     submitForm: function (event) {
         event.preventDefault();
-
+ 
         var long;
         var lat;
 
@@ -28,6 +29,7 @@ var RequestForm = React.createClass({
         });
     },
 
+
     render: function () {return (
         <div>
             <div className="row">
@@ -43,10 +45,8 @@ var RequestForm = React.createClass({
     )}
 });
 
-var LocationSection = 
-
 var DescriptionSection = React.createClass({
-    getDescription: function (){return this.state.description },
+    getDescription: function (){return this.state.description},
 
     getInitialState: function () {
         return {
@@ -73,43 +73,7 @@ var DescriptionSection = React.createClass({
                 placeholder='Additional location details, severity, etc.'></textarea>
         </div>
     )}
-});
-
-var CategorySection = React.createClass({
-
-    getInitialState: function () {
-        return {
-            categories: []  
-        };
-    },
-
-    loadCategories: function (data) {
-        console.log('Loaded categories: ')
-        console.log(data)
-    },
-
-    componentDidMount: function () {
-        api.getCategories(this.loadCategories);
-    },
-
-    render: function() {
-
-        return (
-            <div className='form-group'>
-                <label>Category</label>
-                <div className="dropdown">
-                    <button className="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
-                        other
-                        <span className="caret"></span>
-                    </button>
-                    <ul className="dropdown-menu" role="menu">
-                        {categories}
-                    </ul>
-                </div>
-            </div>
-        );
-    }
-});
+}); 
 
 var Category = React.createClass({
     render: function(){return(
