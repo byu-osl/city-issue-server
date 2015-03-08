@@ -38,17 +38,24 @@ gulp.task('watch', function() {
       .pipe(gulp.dest(path.DEST_SRC))
       console.log('Updated');
   })
-    .bundle()
+    .bundle().on('error', function(err) {
+      console.log(err.message)
+      this.end();
+    })
     .pipe(source(path.OUT))
     .pipe(gulp.dest(path.DEST_SRC));
 });
 
 gulp.task('build', function(){
-  browserify({
+  var b = browserify({
     entries: [path.ENTRY_POINT],
     transform: [reactify],
-  })
-    .bundle()
+  });
+
+  return b.bundle().on('error', function(err) {
+      console.log(err.message)
+      this.end();
+    })
     .pipe(source(path.MINIFIED_OUT))
     .pipe(streamify(uglify(path.MINIFIED_OUT)))
     .pipe(gulp.dest(path.DEST_BUILD));

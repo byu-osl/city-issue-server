@@ -5,22 +5,26 @@ var CategorySection = React.createClass({
 
     getInitialState: function () {
         return {
-            categories: []  
+            categories: []
         };
     },
 
-    loadCategories: function (data) {
-        console.log('Loaded categories: ')
-        console.log(data)
+    loadCategories: function (categories) {
+        var newElements = [];
+        categories.forEach(function(category, index){
+            newElements.push(<Category name={category.service_name}/>);
+        })
+        debugger;
+        this.setState({
+            categories: newElements
+        })
     },
 
     componentDidMount: function () {
-    	debugger;
         api.getCategories(this.loadCategories);
     },
  
     render: function() {
-        var categories = {};
         return (
             <div className='form-group'>
                 <label>Category</label>
@@ -30,12 +34,20 @@ var CategorySection = React.createClass({
                         <span className="caret"></span>
                     </button>
                     <ul className="dropdown-menu" role="menu">
-                        {categories}
+                        {this.state.categories}
                     </ul>
                 </div>
             </div>
         );
     }
 });
+
+var Category = React.createClass({
+    render: function() {
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">{this.props.name}</a></li>
+    }
+})
+
+
 
 module.exports = CategorySection;

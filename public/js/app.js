@@ -1,11 +1,12 @@
 'use strict';
 
 var api = require('./server-api');
+api = new api();
 var LocationSection = require('./LocationSection');
 var CategorySection = require('./CategorySection');
+var DescriptionSection = require('./DescriptionSection');
  
 var RequestForm = React.createClass({
-
     submitForm: function (event) {
         event.preventDefault();
  
@@ -29,7 +30,6 @@ var RequestForm = React.createClass({
         });
     },
 
-
     render: function () {return (
         <div>
             <div className="row">
@@ -45,36 +45,6 @@ var RequestForm = React.createClass({
     )}
 });
 
-var DescriptionSection = React.createClass({
-    getDescription: function (){return this.state.description},
-
-    getInitialState: function () {
-        return {
-              description: ''
-        };
-    },
-
-    handleChange: function (){
-        this.setState({description:event.target.value})
-    },
-
-    render: function() {return(
-        <div className='form-group'>
-            <label>Description</label>
-            <button className='btn btn-default btn-xs location-button'>
-                <span className='glyphicon glyphicon-camera'/>
-                take a picture
-            </button>
-            <textarea 
-                name='description' 
-                className='form-control' 
-                value={this.state.description} 
-                onChange={this.handleChange}
-                placeholder='Additional location details, severity, etc.'></textarea>
-        </div>
-    )}
-}); 
-
 var Category = React.createClass({
     render: function(){return(
         <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">{this.props.name}</a></li>
@@ -82,5 +52,3 @@ var Category = React.createClass({
 })
 
 React.render(<RequestForm />, $('.app-container')[0]);
-
-///////////////////////////////
