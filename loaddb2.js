@@ -10,12 +10,12 @@ db.once('open', function dbConnected() {
 });
 
 new Service({
-    description:  'Requests to fix potholes',
+    description:  'streetlight problems',
     metadata:     false,
     keywords:     'roads',
     group:        'infrastructure',
-    service_code: 1,
-    service_name: 'potholes',
+    service_code: 2,
+    service_name: 'streetlights',
     type:  'realtime'
 }).save(function (){
         console.log('service saved.');

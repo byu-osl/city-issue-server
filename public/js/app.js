@@ -15,6 +15,7 @@ var RequestForm = React.createClass({
 
         var description = this.refs.description.getDescription();
         var location = this.refs.location.getLocation();
+        var category = this.refs.category.getSelectedCategory();
 
         if (this.refs.location.usedDetection) {
             long = this.refs.location.getLong();
@@ -23,7 +24,8 @@ var RequestForm = React.createClass({
 
         api.postRequest({
             lat:lat,
-            long:long
+            long:long,
+            service_code: category
         }, function (data){
             console.log('Saved!');
             console.log(data);
