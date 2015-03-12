@@ -10,8 +10,6 @@
 	- [Frontend](#frontend)
 * [Contributing](#contributing)
 * [Troubleshooting](#troubleshooting)
-* [Appendix](#appendix)
-	- Working in Node
 
 ## Introduction
 
@@ -23,10 +21,6 @@ This readme is quite optimistic: since the project is in its early stages, some 
 
 - issue reporting
 	- geolocation
-	- picture taking
-- administrative features
-	- add service types (issue categories)
-	- comment on issues
 
 ## Installation
 
@@ -68,15 +62,17 @@ Node is a platform used to build server-side applications in JavaScript. Here's 
 	console.log('Server running at http://127.0.0.1:1337/');
 ```
 
-Express is used to organize your server code. [app.js](app.js)
+Express is used to organize your server code.
 
 #### Mongoose and MongoDB
+
+Mongoose is a layer between you and MongoDB. It's how you save incoming requests.
 
 ### Frontend
 
 #### React
 
-[React](http://facebook.github.io/react/) is a library to help you organize your front end, *including your HTML*. It helps you to think of portions of your 
+[React](http://facebook.github.io/react/) is a library to help you organize your frontend. It encourages you to separate your application into different components composed of JS *and* HTML in a language called JSX.
 
 ### Testing
 
@@ -91,14 +87,12 @@ Before pushing to the repo, make sure your code passes:
 * [jsxhint](https://github.com/STRML/JSXHint)
 * Mocha tests (using `npm test`)
 
-### What's next
-- administrative portion
-- push notifications?
-- Travis CI
-- 
+### Needs
 
+* administrative section
+* submit issue by picture
+* optional account creation at issue submission
+* form validation
+* push notifications?
 
 ## Troubleshooting
-
-## Appendix
-
