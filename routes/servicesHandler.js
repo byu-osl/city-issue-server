@@ -29,7 +29,9 @@ router.get('/', function listServices(req, res) {
 router.get(':serviceCode.json', function getServiceDescription(req, res){
 	var serviceCode = req.params.serviceCode;
 
-	if (typeof serviceCode === 'undefined') res.send400('You need to provide a service code to search for.');
+	if (typeof serviceCode === 'undefined') {
+		res.send400('You need to provide a service code to search for.');
+	}
 
 	Service.find({service_code: serviceCode}, function (err, result){
 		if (result.length === 0) {

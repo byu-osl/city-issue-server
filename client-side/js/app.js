@@ -32,25 +32,29 @@ var RequestForm = React.createClass({
         });
     },
 
-    render: function () {return (
-        <div>
-            <div className="row">
-                <h1>Submit an issue</h1>
+    render: function () {
+        return (
+            <div>
+                <div className='row'>
+                    <h1>Submit an issue</h1>
+                </div>
+                <form className='request-form' onSubmit={this.submitForm}>
+                    <LocationSection ref='location'/>
+                    <DescriptionSection ref='description'/>
+                    <CategorySection ref='category'/>
+                    <input type='submit' className='btn btn-fault'></input>
+                </form>
             </div>
-            <form className='request-form' onSubmit={this.submitForm}>
-                <LocationSection ref='location'/>
-                <DescriptionSection ref='description'/>
-                <CategorySection ref='category'/>
-                <input type='submit' className='btn btn-fault'></input>
-            </form>
-        </div>
-    )}
+        );
+    }
 });
 
 var Category = React.createClass({
-    render: function(){return(
-        <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">{this.props.name}</a></li>
-    )}
-})
+    render: function(){
+        return (
+            <li role='presentation'><a role='menuitem' tabIndex='-1' href='#'>{this.props.name}</a></li>
+        );
+    }
+});
 
 React.render(<RequestForm />, $('.app-container')[0]);

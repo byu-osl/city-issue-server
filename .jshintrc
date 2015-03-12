@@ -1,9 +1,19 @@
 {
-    "maxerr"        : 50,       // {int} Maximum error before stopping
 
-    "node"          : true,    
-    "globals"       : {
+  	"globals": {
+    	"React": false,
+    	"$"	   : false
+	},
 
-    },
-    "strict"    : false
+    "maxerr"    : 50,       // {int} Maximum error before stopping
+    "strict"    : false,
+    "curly"     : true,
+    "eqeqeq"    : true,
+    "indent"    : 4,
+    "newcap"    : true,
+
+    "node"      : true,    
+    "browserify": true,
+    "jquery"    : true,
+    "mocha"     : true
 }

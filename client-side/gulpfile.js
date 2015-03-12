@@ -35,11 +35,11 @@ gulp.task('watch', function() {
   return watcher.on('update', function () {
     watcher.bundle()
       .pipe(source(path.OUT))
-      .pipe(gulp.dest(path.DEST_SRC))
+      .pipe(gulp.dest(path.DEST_SRC));
       console.log('Updated');
   })
     .bundle().on('error', function(err) {
-      console.log(err.message)
+      console.log(err.message);
       this.end();
     })
     .pipe(source(path.OUT))
@@ -53,7 +53,7 @@ gulp.task('build', function(){
   });
 
   return b.bundle().on('error', function(err) {
-      console.log(err.message)
+      console.log(err.message);
       this.end();
     })
     .pipe(source(path.MINIFIED_OUT))

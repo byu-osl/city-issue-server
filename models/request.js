@@ -37,18 +37,18 @@ requestSchema.statics.findRequests = function(params, callback){
     var serviceCodes = params.service_code;
     var status = params.status;
 
-    if (typeof startDate == 'undefined') {
+    if (typeof startDate === 'undefined') {
         startDate = moment().subtract(90, 'days');
     } else {
         startDate = moment(params.start_date); 
     }
 
-    if (typeof serviceCode != 'undefined') {    
+    if (typeof serviceCode !== 'undefined') {    
         serviceCodes = serviceCodes.split(',');
         requestsQuery = requestsQuery.where('service_code').in(serviceCodes);
     }
 
-    if (typeof endDate != 'undefined') {
+    if (typeof endDate !== 'undefined') {
         endDate = new Date(params.end_date);
         if (startDate.diff(endDate, 'days') > 90) {
             endDate = startDate.add(90, 'days').toDate();
@@ -56,14 +56,14 @@ requestSchema.statics.findRequests = function(params, callback){
         requestsQuery = requestsQuery.where('requested_datetime').lte(endDate);
     }
 
-    if (typeof status != 'undefined') {
+    if (typeof status !== 'undefined') {
         requestsQuery = requestsQuery.where('status').equals(status);
     }
 
     requestsQuery = requestsQuery.where('requested_datetime').gt(startDate.toDate());
 
     // Overrides everything else if defined.
-    if (typeof requestIDs != 'undefined') {
+    if (typeof requestIDs !== 'undefined') {
         requestIDs = requestIDs.split(',');
         requestsQuery = this.find().where('_id').in(requestIDs);
     }

@@ -27,7 +27,7 @@ new Request({account_id: 123, address_string: 'address', address_id: 4, device_i
         new Request({account_id: 123, address_string: 'address', address_id: 4, device_id: 5, description: 'desc', email: 'email', first_name: 'Chris', last_name: 'Anderson', lat: '2432', long: '2342342', media_url: undefined, phone: '24232234', service_code: 2, requested_datetime: new Date().toISOString(), status: 'open'})
         .save(function (err, request){
             console.log('request saved');
-            console.log('All done!')
+            console.log('All done!');
             process.exit(0);
         });
     });

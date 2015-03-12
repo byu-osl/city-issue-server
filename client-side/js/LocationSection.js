@@ -1,3 +1,4 @@
+
 // LocationSection of the form
 module.exports = React.createClass({
     getInitialState: function () {
@@ -34,16 +35,18 @@ module.exports = React.createClass({
         this.setState({location:event.target.value});
     },
 
-    render: function() {return(
-        <div className='form-group'>
-            <div>
-                <label>Location</label>
-                <button className='btn btn-default btn-xs location-button' onClick={this.handleLocationClick}>
-                    <span className='glyphicon glyphicon-map-marker'/>
-                    detect my location
-                </button>
+    render: function () {
+        return (
+            <div className='form-group'>
+                <div>
+                    <label>Location</label>
+                    <button className='btn btn-default btn-xs location-button' onClick={this.handleLocationClick}>
+                        <span className='glyphicon glyphicon-map-marker'/>
+                        detect my location
+                    </button>
+                </div>
+                <input name='location' className='form-control' type='text' value={this.state.location} onChange={this.handleChange}/>
             </div>
-            <input name='location' className='form-control' type='text' value={this.state.location} onChange={this.handleChange}/>
-        </div>
-    )}
+        );
+    }
 });
