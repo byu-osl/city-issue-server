@@ -2,9 +2,9 @@ var express        = require('express');
 var path           = require('path');
 var bodyParser     = require('body-parser');
 var mongoose       = require('mongoose');
-var indexRouter    = require('./routes/indexRouter');
-var requestsRouter = require('./routes/requestsRouter');
-var servicesRouter = require('./routes/servicesRouter');
+var indexHandler    = require('./routes/indexHandler');
+var requestsHandler = require('./routes/requestsHandler');
+var servicesHandler = require('./routes/servicesHandler');
 
 var app = express();
 app.use(require('./utility/customizeResponse'));
@@ -24,9 +24,9 @@ app.connection.on('error', function (error) {
 app.use(express.static(path.join(__dirname, 'client-side')));
 app.use(bodyParser.urlencoded({type: 'application/x-www-form-urlencoded', extended: true}));
 
-app.use('/', indexRouter);
-app.use(/\/requests(.json)?/, requestsRouter);
-app.use(/\/services(.json)?/, servicesRouter);
+app.use('/', indexHandler);
+app.use(/\/requests(.json)?/, requestsHandler);
+app.use(/\/services(.json)?/, servicesHandler);
 
 app.use(function return404(req, res) {
     res.status(404).send({

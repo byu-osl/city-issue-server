@@ -48,9 +48,10 @@ After that, you can hit the homepage at [http://localhost:3000/](http://localhos
 
 The intent of this section is to give you some intution about how the application fits together. Here's what happens when a user submits an issue request:
 
-- the client-side code packs up all of the user input into a POST request, and sends it to the server
-- the first file it hits is [app.js](app.js), which is where the meat of the server code is. The server itself is initialized in [server.js](server.js).
-- 
+* the client-side code packs up all of the user input into a POST request, and [sends it to the server](https://github.com/byu-osl/city-issue-server/blob/91d028777761815ce4814f8ec081179809a9cfdb/client-side/js/app.js#L25).
+* the first file it hits is [app.js](app.js), which is where the meat of the server code is. The server itself is initialized in [server.js](server.js).
+* The request is [routed](https://github.com/byu-osl/city-issue-server/blob/91d028777761815ce4814f8ec081179809a9cfdb/app.js#L27) according to its URL.
+* The request and response pass through a bunch of *middleware*. Middleware are a series of functions that the request and response objects pass through. 
 
 ### Backend
 
