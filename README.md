@@ -8,16 +8,18 @@
 * [Walkthrough](#walkthrough)
 	- [Backend](#backend)
 	- [Frontend](#frontend)
-* Contributing
-	- Continuous integration
+* [Contributing](#contributing)
+* [Troubleshooting](#troubleshooting)
 * [Appendix](#appendix)
 	- Working in Node
 
 ## Introduction
 
-The city issue tracker provides a way for citizens to submit issues (e.g. graffiti, a streetlight is out) and be in a close feedback loop with the city. It is written in [Node](https://nodejs.org/) using [Express](http://expressjs.com/), [Mongoose (Mongo)](http://mongoosejs.com/index.html), and [React](http://facebook.github.io/react/).
+The city issue tracker provides a way for citizens to submit issues (e.g. graffiti, a streetlight is out) and be in a close feedback loop with the city. It is written in [Node](https://nodejs.org/) using [Express](http://expressjs.com/), [Mongoose (MongoDB)](http://mongoosejs.com/index.html), and [React](http://facebook.github.io/react/).
 
-### Features (forthcoming, some of them)
+This README is quite *optimistic*. Since the project is in its early stages, some of this is a todo list rather than documentation for existing code.
+
+### Features
 
 - issue reporting
 	- geolocation
@@ -58,3 +60,24 @@ Node is a platform used to build server-side applications in JavaScript. Here's 
 	}).listen(1337, '127.0.0.1');
 	console.log('Server running at http://127.0.0.1:1337/');
 ```
+
+Express is used to organize your server code.
+
+#### Mongoose and MongoDB
+
+### Frontend
+
+#### React
+
+[React](http://facebook.github.io/react/) is a library to help you organize your front end, *including your HTML*. It helps you to think of portions of your 
+
+#### Bootstrap
+
+## Contributing
+
+
+
+## Troubleshooting
+
+## Appendix
+

@@ -10,5 +10,3 @@ Todo
 
 - Travis CI
 - Spin up remote server so Josh can hit it
-- loadDb doesn't quit
-- Load services into combo box.

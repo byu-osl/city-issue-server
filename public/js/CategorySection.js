@@ -6,7 +6,7 @@ var CategorySection = React.createClass({
     categoryClicked: function(event) {
         this.setState({
             selectedCategory: $('input', event.currentTarget).val()
-        })
+        });
     },
 
     getInitialState: function () {
@@ -21,7 +21,7 @@ var CategorySection = React.createClass({
     receivedCategories: function (categories) {
         this.setState({
             categories: categories
-        })
+        });
     },
 
     componentDidMount: function () {
