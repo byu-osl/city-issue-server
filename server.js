@@ -1,6 +1,6 @@
 "use strict";
 
-var app = require('../app');
+var app = require('./app');
 var debug = require('debug')('app:server');
 var http = require('http');
 

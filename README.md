@@ -49,7 +49,7 @@ After that, you can hit the homepage at [http://localhost:3000/](http://localhos
 The intent of this section is to give you some intution about how the application fits together. Here's what happens when a user submits an issue request:
 
 - the client-side code packs up all of the user input into a POST request, and sends it to the server
-- the first file it hits is [app.js](app.js), which is where the meat of the server code is. The server itself is initialized in [bin/www](bin).
+- the first file it hits is [app.js](app.js), which is where the meat of the server code is. The server itself is initialized in [server.js](server.js).
 - 
 
 ### Backend

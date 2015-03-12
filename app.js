@@ -7,7 +7,7 @@ var requestsRouter = require('./routes/requestsRouter');
 var servicesRouter = require('./routes/servicesRouter');
 
 var app = express();
-app.use(require('./lib/customizeResponse'));
+app.use(require('./utility/customizeResponse'));
 
 // mongoose.set('debug', true);
 var dbPath = process.env.DB || 'mongodb://localhost/city-issues';
@@ -21,7 +21,7 @@ app.connection.on('error', function (error) {
     console.log('Try "sudo service mongod start". If mongod is an unrecognized service, you will need to install MongoDB.');
 });
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'client-side')));
 app.use(bodyParser.urlencoded({type: 'application/x-www-form-urlencoded', extended: true}));
 
 app.use('/', indexRouter);

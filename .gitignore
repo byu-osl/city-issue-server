@@ -39,4 +39,4 @@ old_public/
 
 .module-cache/
 
-public/dist/src/build.js
+client-side/dist/src/build.js

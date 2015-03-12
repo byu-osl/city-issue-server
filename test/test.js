@@ -3,7 +3,7 @@
 process.env.PORT = 3001;
 process.env.DB   = 'mongodb://localhost/city-issues-TEST';
 
-var server   = require('../bin/www');
+var server   = require('../server.js');
 var request  = require('supertest');
 var chai     = require('chai');
 var expect   = chai.expect;
