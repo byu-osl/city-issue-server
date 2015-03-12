@@ -1,6 +1,6 @@
 # City Issue Tracker
 
-## Contents
+[![Build Status](https://travis-ci.org/byu-osl/city-issue-server.svg?branch=master)](https://travis-ci.org/byu-osl/city-issue-server)
 
 * [Introduction](#introduction)
 	- [Features](#features)
@@ -17,7 +17,7 @@
 
 The city issue tracker provides a way for citizens to submit issues (e.g. graffiti, a streetlight is out) and be in a close feedback loop with the city. It is written in [Node](https://nodejs.org/) using [Express](http://expressjs.com/), [Mongoose (MongoDB)](http://mongoosejs.com/index.html), and [React](http://facebook.github.io/react/).
 
-This README is quite *optimistic*. Since the project is in its early stages, some of this is a todo list rather than documentation for existing code.
+This readme is quite optimistic: since the project is in its early stages, some of this is a todo list rather than documentation for existing code.
 
 ### Features
 
@@ -30,7 +30,7 @@ This README is quite *optimistic*. Since the project is in its early stages, som
 
 ## Installation
 
-Install [Node.js](https://nodejs.org/) and [MongoDB](http://docs.mongodb.org/manual/installation/). After that,
+Install [Node.js](https://nodejs.org/) and [MongoDB](http://docs.mongodb.org/manual/installation/)(and make sure it's running!). After that,
 
 	git clone (clone url) && cd city-issue-server
 
@@ -42,9 +42,15 @@ Start the server:
 
 	npm start
 
-After that, it should be running at [http://localhost:3000/](http://localhost:3000/).
+After that, you can hit the homepage at [http://localhost:3000/](http://localhost:3000/).
 
 ## Walkthrough
+
+The intent of this section is to give you some intution about how the application fits together. Here's what happens when a user submits an issue request:
+
+- the client-side code packs up all of the user input into a POST request, and sends it to the server
+- the first file it hits is [app.js](app.js), which is where the meat of the server code is. The server itself is initialized in [bin/www](bin).
+- 
 
 ### Backend
 
@@ -53,15 +59,15 @@ After that, it should be running at [http://localhost:3000/](http://localhost:30
 Node is a platform used to build server-side applications in JavaScript. Here's a short example from [Node's website](https://nodejs.org/):
 
 ```javascript
-	var http = require('http');
-	http.createServer(function (req, res) {
-	  res.writeHead(200, {'Content-Type': 'text/plain'});
-	  res.end('Hello World\n');
-	}).listen(1337, '127.0.0.1');
-	console.log('Server running at http://127.0.0.1:1337/');
+var http = require('http');
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('Hello World\n');
+}).listen(1337, '127.0.0.1');
+console.log('Server running at http://127.0.0.1:1337/');
 ```
 
-Express is used to organize your server code.
+Express is used to organize your server code. [app.js](app.js)
 
 #### Mongoose and MongoDB
 
@@ -71,10 +77,19 @@ Express is used to organize your server code.
 
 [React](http://facebook.github.io/react/) is a library to help you organize your front end, *including your HTML*. It helps you to think of portions of your 
 
+### Testing
+
+Testing is done using Mocha.
+
 #### Bootstrap
 
 ## Contributing
 
+### What's next
+- administrative portion
+- push notifications?
+- Travis CI
+- 
 
 
 ## Troubleshooting
