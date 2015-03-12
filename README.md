@@ -5,11 +5,9 @@
 * [Introduction](#introduction)
 	- [Features](#features)
 * [Installation](#installation)
-* Walkthrough
-	- Overview
-	- Back end
-	- Front end
-	- Test suite
+* [Walkthrough](#walkthrough)
+	- [Backend](#backend)
+	- [Frontend](#frontend)
 * Contributing
 	- Continuous integration
 * [Appendix](#appendix)
@@ -42,4 +40,21 @@ Start the server:
 
 	npm start
 
-After that, it should be running at http://localhost:3000/!
+After that, it should be running at [http://localhost:3000/](http://localhost:3000/).
+
+## Walkthrough
+
+### Backend
+
+#### Node.js, Express.js
+
+Node is a platform used to build server-side applications in JavaScript. Here's a short example from [Node's website](https://nodejs.org/):
+
+```javascript
+	var http = require('http');
+	http.createServer(function (req, res) {
+	  res.writeHead(200, {'Content-Type': 'text/plain'});
+	  res.end('Hello World\n');
+	}).listen(1337, '127.0.0.1');
+	console.log('Server running at http://127.0.0.1:1337/');
+```
