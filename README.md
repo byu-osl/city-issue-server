@@ -76,7 +76,7 @@ Mongoose is a layer between you and MongoDB. It's how you save incoming requests
 
 ### Testing
 
-Testing is done using Mocha.
+Testing is done using Mocha. 
 
 #### Bootstrap
 

@@ -87,10 +87,10 @@ function saveRequest(req, res) {
 
 //  required for requests
 function hasLocationInfo(params) {
-	return ((typeof params.lat != 'undefined' && 
-			 typeof params.long != 'undefined') ||  
-	    (typeof params.address_string != 'undefined') ||
-	    (typeof params.address_id != 'undefined'));
+	return ((typeof params.lat !== 'undefined' && 
+			 typeof params.long !== 'undefined') ||  
+	    (typeof params.address_string !== 'undefined') ||
+	    (typeof params.address_id !== 'undefined'));
 }
 
 // Takes a request JSON object
