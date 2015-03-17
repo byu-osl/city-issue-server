@@ -39,7 +39,7 @@ Npm tries to use [node supervisor](https://github.com/isaacs/node-supervisor) to
 
 #### Frontend workflow
 
-The project is separated into different modules, and you can use <pre>require(*file without extension*)</pre> to gain access to the module. Browserify is what resolves dependencies. Gulp watches files for changes, and then compiles everything into build.js, which is the main file you include in [index.html](client-side/index.html). Start with this:
+The project is separated into different modules, and you can use <code>require(*file without extension*)</code> to gain access to the module. Browserify is what resolves dependencies. Gulp watches files for changes, and then compiles everything into build.js, which is the main file you include in [index.html](client-side/index.html). Start with this:
 	
 	cd client-side
 	gulp
@@ -70,7 +70,7 @@ Node is a platform used to build server-side applications in JavaScript. Here's 
 	console.log('Server running at http://127.0.0.1:1337/');
 ```
 
-Express is used to organize your server code. If you look in [app.js](app.js), you'll see <code>app.use(*path*,*middleware*)</code> all over. `app.use` accepts a callback which takes two parameters: `req` and `res`. <pre>[req](http://expressjs.com/4x/api.html#request)</pre> is the request object and <pre>[res](http://expressjs.com/4x/api.html#response)</pre> is the response object. Routers (like [these handlers](https://github.com/byu-osl/city-issue-server/blob/df461f5672b59b7f06b44cecfddd924d3f5045cc/app.js#L27-29)) are where the meat of your application is.
+Express is used to organize your server code. If you look in [app.js](app.js), you'll see <code>app.use(*path*,*middleware*)</code> all over. `app.use` accepts a callback which takes two parameters: `req` and `res`. <code>[req](http://expressjs.com/4x/api.html#request)</code> is the request object and <code>[res](http://expressjs.com/4x/api.html#response)</code> is the response object. Routers (like [these handlers](https://github.com/byu-osl/city-issue-server/blob/df461f5672b59b7f06b44cecfddd924d3f5045cc/app.js#L27-29)) are where the meat of your application is.
 
 
 #### Mongoose and MongoDB
