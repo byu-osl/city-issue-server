@@ -13,7 +13,7 @@
 
 ## Introduction
 
-The city issue tracker provides a way for citizens to submit issues (e.g. graffiti, a streetlight is out) and be in a close feedback loop with the city. It is written in [Node](https://nodejs.org/) using [Express](http://expressjs.com/), [Mongoose (MongoDB)](http://mongoosejs.com/index.html), and [React](http://facebook.github.io/react/).
+The city issue tracker provides a way for citizens to submit issues (e.g. graffiti, a streetlight is out) and be in a close feedback loop with the city. It is written in [Node](https://nodejs.org/) using [Express](http://expressjs.com/), [Mongoose (MongoDB)](http://mongoosejs.com/index.html), and [React](http://facebook.github.io/react/). This readme assumes you know very little about Node, etc.
 
 ### Features
 
@@ -23,19 +23,26 @@ The city issue tracker provides a way for citizens to submit issues (e.g. graffi
 
 ## Installation and workflow
 
+**tl;dr:** run `git clone https://github.com/byu-osl/city-issue-server.git && cd city-issue-server && npm install && npm install -g gulp && npm start` followed by `node load-database.js`
+
 Install [Node.js](https://nodejs.org/) and [MongoDB](http://docs.mongodb.org/manual/installation/)(and make sure it's running!). After that, run this in your terminal:
 
 	git clone https://github.com/byu-osl/city-issue-server.git && cd city-issue-server
 
-Install your dependencies using npm (this may take 2-3 minutes):
+*All terminal commands should be from the city-issue-server directory from now on*. Install your dependencies using npm (this may take a minute or two, and may require using sudo):
 
 	npm install
+	npm install -g gulp
 
-That could take 2-3 minutes. Start the server:
+Start the server:
 
 	npm start
 
-Npm tries to use [node supervisor](https://github.com/isaacs/node-supervisor) to run, and falls back to `node server.js` if you don't have it installed. After that, you can hit the homepage at [http://localhost:3000/](http://localhost:3000/).
+Npm tries to use [node supervisor](https://github.com/isaacs/node-supervisor) to run, and falls back to `node server.js` if you don't have it installed. After that, you can hit the homepage at [http://localhost:3000/](http://localhost:3000/). **Note**: you won't see anything on the homepage until you run `gulp`. See the next section for details.
+
+After the server is running:
+
+	node load-database.js
 
 #### Frontend workflow
 

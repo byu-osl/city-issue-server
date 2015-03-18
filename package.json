@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha -b",
-    "start": "sh start.sh"
+    "start": "sh start.sh",
+    "gulp": "gulp"
   },
   "repository": {
     "type": "git",
