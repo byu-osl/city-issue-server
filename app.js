@@ -11,7 +11,7 @@ app.use(require('./utility/customizeResponse'));
 
 // mongoose.set('debug', true);
 var dbPath = process.env.DB || 'mongodb://localhost/city-issues';
-console.log("dbPath: "+dbPath);
+console.log("dbPath: " + dbPath);
 
 mongoose.connect('mongodb://localhost/city-issues');
 app.connection = mongoose.connection;
