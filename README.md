@@ -5,10 +5,10 @@
 * [Introduction](#introduction)
 	- [Features](#features)
 * [Installation](#installation)
+* [Contributing](#contributing)
 * [Walkthrough](#walkthrough)
 	- [Backend](#backend)
 	- [Frontend](#frontend)
-* [Contributing](#contributing)
 * [Troubleshooting](#troubleshooting)
 
 ## Introduction
@@ -40,7 +40,7 @@ Start the server:
 
 Npm tries to use [node supervisor](https://github.com/isaacs/node-supervisor) to run, and falls back to `node server.js` if you don't have it installed. After that, you can hit the homepage at [http://localhost:3000/](http://localhost:3000/). **Note**: you won't see anything on the homepage until you run `gulp`. See the next section for details.
 
-After the server is running:
+After the server is running, populate the database with a few dummy items:
 
 	node load-database.js
 
@@ -52,6 +52,26 @@ The project is separated into different modules, and you can use <code>require(*
 	gulp
 
 Gulp is now watching your files, and rebuilds whenever you save a file.
+
+## Contributing
+
+Before pushing to the repo, make sure your code passes:
+
+* [jsxhint](https://github.com/STRML/JSXHint)
+* Mocha tests (using `npm test`)
+
+### Needs
+
+[] administrative section
+[] email notifications
+[] submit issue by picture
+[] optional account creation at issue submission
+[] form validation
+[] push notifications?
+[] code coverage
+[] front end testing
+[] production concatenation/minifcation
+[] ES6 front end and backend
 
 ## Walkthrough
 
@@ -85,7 +105,7 @@ Express is used to organize your server code. If you look in [app.js](app.js), y
 
 #### Testing
 
-The main test file is (test.js)
+Testing is done using Mocha and a few different libraries. The main test file is [test.js](test/test.js). Right now, the only tests that are written send GET and POST requests to the different endpoints and verify that the right information came back.
 
 ### Frontend
 
@@ -95,26 +115,10 @@ The main test file is (test.js)
 
 #### Bootstrap
 
+[Bootstrap](http://getbootstrap.com/) is an extremely popular, responsive HTML/CSS framework. Try to stick to using default Bootstrap classes - we can modify them later.
+
 ### Testing
 
-Testing is done using Mocha. 
-
-## Contributing
-
-Before pushing to the repo, make sure your code passes:
-
-* [jsxhint](https://github.com/STRML/JSXHint)
-* Mocha tests (using `npm test`)
-
-### Needs
-
-* administrative section
-* submit issue by picture
-* optional account creation at issue submission
-* form validation
-* push notifications?
-* code coverage
-* front end testing
-* production concatenation/minifcation
+No front end tests are set up, ATM. Feel free to recommend testing strategies; Facebook uses something called [Jest](https://facebook.github.io/jest/) to test React apps, so that's probably what we'll go with.
 
 ## Troubleshooting
