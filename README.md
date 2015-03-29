@@ -6,7 +6,7 @@
 	- [Features](#features)
 * [Installation](#installation)
 * [Contributing](#contributing)
-* [Walkthrough](#walkthrough)
+* [Overview](#overview)
 	- [Backend](#backend)
 	- [Frontend](#frontend)
 * [Troubleshooting](#troubleshooting)
@@ -15,7 +15,7 @@
 
 The city issue tracker provides a way for citizens to submit issues (e.g. graffiti, a streetlight is out) and be in a close feedback loop with the city. It is written in [Node](https://nodejs.org/) using [Express](http://expressjs.com/), [Mongoose (MongoDB)](http://mongoosejs.com/index.html), and [React](http://facebook.github.io/react/). It implements (and will augment) the [Open311 specification](http://wiki.open311.org/GeoReport_v2/), and is under the direction of [Daniel Zappala](https://github.com/zappala) of BYU. 
 
-This readme assumes you know very little about Node, etc.
+This readme assumes you know very little about Node, React, etc.
 
 ### Features
 
@@ -25,7 +25,7 @@ This readme assumes you know very little about Node, etc.
 
 ## Installation and workflow
 
-Install [Node.js](https://nodejs.org/) and [MongoDB](http://docs.mongodb.org/manual/installation/)(and make sure it's running!). After that, run this in your terminal:
+Install [Node.js](https://nodejs.org/) and [MongoDB](http://docs.mongodb.org/manual/installation/) (make sure it is running: run `mongo` in the terminal, and then `version()`. If Mongo is running, you will get a version number). After that, run this in your terminal:
 
 	git clone https://github.com/byu-osl/city-issue-server.git && cd city-issue-server
 
@@ -38,29 +38,35 @@ Start the server:
 
 	npm start
 
-Npm tries to use [node supervisor](https://github.com/isaacs/node-supervisor) to run, and falls back to `node server.js` if you don't have it installed. After that, you can hit the homepage at [http://localhost:3000/](http://localhost:3000/). **Note**: you won't see anything on the homepage until you run `gulp`. See the next section for details.
+After a little bit, you should see a line that says `Listening on port 3000`. You can now hit the homepage at [http://localhost:3000/](http://localhost:3000/). **Note**: you won't see anything on the homepage besides the navigation until you run Gulp. See [frontend workflow](#frontend workflow) for details. 
+
+Your server will be running from that terminal window, so you will have to open a new terminal tab or window for further commands.
 
 After the server is running, populate the database with a few dummy items:
 
 	node load-database.js
 
+Remember, you need to run Gulp to see anything show up on the homepage. One last note: `npm start` tries to use [node-supervisor](https://github.com/isaacs/node-supervisor) to start the server. Supervisor will watch your files and restart the server whenever you make changes, and falls back to `node server.js` if you don't have it installed.
+
 #### Frontend workflow
 
-The project is separated into different modules, and you can use <code>require(*file without extension*)</code> to gain access to the module. Browserify is what resolves dependencies. Gulp watches files for changes, and then compiles everything into build.js, which is the main file you include in [index.html](client-side/index.html). Start with this:
+The project is separated into different modules, and you can use <code>require(*file without extension*)</code> to gain access to the module. Browserify is what resolves dependencies. Gulp watches your files for changes, and then compiles everything into build.js, which is the main file you include in [index.html](client-side/index.html). Start with this:
 	
 	cd client-side
 	gulp
 
-Gulp is now watching your files, and rebuilds whenever you save a file.
+Gulp is now watching your files. Whenever you make a changein a JavaScript/JSX file, it will resolve all of the dependencies (beginning at app.js), and throw everything into dist/build.js.
 
 ## Contributing
+
+Make sure you read the **[overview](#overview)** before you start coding. It will help you get a high-level understanding of the application.
 
 Before pushing to the repo, make sure your code passes:
 
 * [jsxhint](https://github.com/STRML/JSXHint)
-* Mocha tests (using `npm test`)
+* Mocha tests (using `npm test` from the root directory)
 
-### Todo
+### Todo list
 
 Ranked by priority:
 - [ ] administrative section for city employees
@@ -77,9 +83,9 @@ Ranked by priority:
 - [ ] push notifications?
 - [ ] ES6 integration: frontend and backend
 
-## Walkthrough
+## Overview
 
-The intent of this section is to give you some intution about how the application fits together. Here's what happens when a user submits an issue request:
+The intent of this section is to give you some intution about how the application fits together. Here's what happens when a user submits an issue request (not to be confused with an HTTP request):
 
 * the client-side code packs up all of the user input into a POST request, and [sends it to the server](https://github.com/byu-osl/city-issue-server/blob/91d028777761815ce4814f8ec081179809a9cfdb/client-side/js/app.js#L25).
 * the first file it hits is [app.js](app.js), where the meat of the server code is. The server itself is initialized in [server.js](server.js).
@@ -108,7 +114,7 @@ city-issue-server                  // main directory
 │   │   └── server-api.js          // Object that interacts with the server
 │   └── vendor                     // directory containing 3rd-party files
 ├── load-database.js               // use this to load dummy data in the DB
-├── models                         // Mongoose models - request, service, user
+├── models                         // Mongoose models - issue request, service, user
 ├── node_modules                   // don't modify: npm manages this
 ├── package.json                   // npm project configuration
 ├── README.md                      // this document (inception)
@@ -123,7 +129,7 @@ city-issue-server                  // main directory
 
 #### Node.js, Express.js
 
-Node is a platform used to build server-side applications in JavaScript. Here's a short example from [Node's website](https://nodejs.org/):
+Node is a platform typically used to build server-side applications in JavaScript. Here's a short example from [Node's website](https://nodejs.org/):
 
 ```javascript
 	var http = require('http');
@@ -138,7 +144,7 @@ Express is used to organize your server code. If you look in [app.js](app.js), y
 
 #### Mongoose and MongoDB
 
-[Mongoose](http://mongoosejs.com/docs/guide.html) is the *M* in MVC. You use it to interact with the database: saving requests, searching, deleting, etc. 
+[Mongoose](http://mongoosejs.com/docs/guide.html) is the *M* in MVC. You use it to interact with the database: saving issue requests, searching, deleting, etc. We use several Mongoose [models](models) to represent objects in the application. You instantiate those models in the [routes directory files](routes) and work with them there.
 
 #### Testing
 
@@ -152,11 +158,23 @@ Testing is done using Mocha and a few different libraries. The main test file is
 
 #### Bootstrap
 
-[Bootstrap](http://getbootstrap.com/) is an extremely popular, responsive HTML/CSS framework. Try to stick to using default Bootstrap classes - we can modify them later.
+[Bootstrap](http://getbootstrap.com/) is an extremely popular, responsive HTML/CSS framework. Stick to default Bootstrap classes - we can customize them later.
 
 ### Testing
 
-No front end tests are set up, ATM. Feel free to recommend testing strategies; Facebook uses something called [Jest](https://facebook.github.io/jest/) to test React apps, so that's probably what we'll go with.
+No front end tests are set up at the moment. Feel free to recommend testing strategies; Facebook uses something called [Jest](https://facebook.github.io/jest/) to test React apps, so that's probably what we'll go with.
+
+### Example: implementing a new feature
+
+Here is an overview of how you might add a field to the issue request form. Starting server-side:
+
+- For this feature, you need to make changes in [requestsHandler.js](routes/requestsHandler.js), and [the request model](models/request.js).
+- Add the field you want to the [schema](https://github.com/byu-osl/city-issue-server/blob/17d05d5950880dcbfe5b02b887665b6ccc983896/models/request.js#L3) of the request.
+- Add any validation logic in [saveRequest()](https://github.com/byu-osl/city-issue-server/blob/17d05d5950880dcbfe5b02b887665b6ccc983896/routes/requestsHandler.js#L68).
+- Write a React component for that portion of the form.
+	+ Create a new file, and follow the pattern of the other components of the form. Make sure to write a getter to expose state to the parent component.
+- Head over to the client-side [app.js](client-side/js/app.js). The entry point for the request form is here. `require` your new component at the top of the file, and add a reference to it in the `render` function of the form.
+- In RequestForm's `submitForm`, get the new field, and add it to the POST.
 
 ## Troubleshooting
 
@@ -167,4 +185,3 @@ The biggest problem I've seen is when `npm install` explodes. I think you'll typ
 	npm ERR! code EACCES
 
 To fix this, prepend sudo to your command: <code>*sudo* npm install</code> and that should take care of it.
-
