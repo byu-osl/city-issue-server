@@ -59,7 +59,7 @@ Gulp is now watching your files. Whenever you make a changein a JavaScript/JSX f
 
 ## Contributing
 
-Make sure you read the **[overview](#overview)** before you start coding. It will help you get a high-level understanding of the application.
+Make sure you read the [overview](#overview) before you start coding. It will help you get a high-level understanding of the application.
 
 Before pushing to the repo, make sure your code passes:
 
@@ -97,7 +97,7 @@ The intent of this section is to give you some intution about how the applicatio
 ```
 city-issue-server                  // main directory
 ├── 311spec.txt                    // kept sort of as a todo list from the
-│									  Open311 spec
+│									    Open311 spec
 ├── app.js                         // main server file
 ├── client-side                    // public files for the client
 │   ├── css                        // css
@@ -154,11 +154,11 @@ Testing is done using Mocha and a few different libraries. The main test file is
 
 #### React
 
-[React](http://facebook.github.io/react/) is a library to help you organize your frontend. It encourages you to separate your application into different components composed of JS *and* HTML in a language called JSX.
+[React](http://facebook.github.io/react/) is a library to help you organize your frontend. It encourages you to separate your application into different components composed of JS *and* HTML in a language called JSX. We use a JSX transformer that transforms JSX into JS in the browser. This will change when the app is used in production.
 
 #### Bootstrap
 
-[Bootstrap](http://getbootstrap.com/) is an extremely popular, responsive HTML/CSS framework. Stick to default Bootstrap classes - we can customize them later.
+[Bootstrap](http://getbootstrap.com/) is an extremely popular, responsive HTML/CSS framework. It has a series of components and layouts you can use; you might say its API is a series of CSS classes. Use Bootstrap classes and components before 
 
 ### Testing
 
@@ -171,7 +171,7 @@ Here is an overview of how you might add a field to the issue request form. Star
 - For this feature, you need to make changes in [requestsHandler.js](routes/requestsHandler.js), and [the request model](models/request.js).
 - Add the field you want to the [schema](https://github.com/byu-osl/city-issue-server/blob/17d05d5950880dcbfe5b02b887665b6ccc983896/models/request.js#L3) of the request.
 - Add any validation logic in [saveRequest()](https://github.com/byu-osl/city-issue-server/blob/17d05d5950880dcbfe5b02b887665b6ccc983896/routes/requestsHandler.js#L68).
-- Write a React component for that portion of the form.
+- Write a React component for that portion of the form. This is where your HTML will go.
 	+ Create a new file, and follow the pattern of the other components of the form. Make sure to write a getter to expose state to the parent component.
 - Head over to the client-side [app.js](client-side/js/app.js). The entry point for the request form is here. `require` your new component at the top of the file, and add a reference to it in the `render` function of the form.
 - In RequestForm's `submitForm`, get the new field, and add it to the POST.
