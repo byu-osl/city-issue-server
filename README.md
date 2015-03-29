@@ -32,7 +32,9 @@ Install [Node.js](https://nodejs.org/) and [MongoDB](http://docs.mongodb.org/man
 *All terminal commands should be from the city-issue-server directory from now on*. Install your dependencies using npm (this may take a minute or two, and may require using sudo):
 
 <code>npm install</code>
+
 <code>sudo npm install **-g** gulp</code>
+
 <code>sudo npm install **-g** supervisor</code>
 
 Start the server:
