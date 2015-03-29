@@ -31,14 +31,17 @@ Install [Node.js](https://nodejs.org/) and [MongoDB](http://docs.mongodb.org/man
 
 *All terminal commands should be from the city-issue-server directory from now on*. Install your dependencies using npm (this may take a minute or two, and may require using sudo):
 
-	npm install
-	sudo npm install -g gulp
+<pre>
+npm install
+sudo npm install **-g** gulp
+sudo npm install **-g** supervisor
+</pre>
 
 Start the server:
 
 	npm start
 
-After a little bit, you should see a line that says `Listening on port 3000`. You can now hit the homepage at [http://localhost:3000/](http://localhost:3000/). **Note**: you won't see anything on the homepage besides the navigation until you run Gulp. See [frontend workflow](#frontend workflow) for details. 
+After a little bit, you should see a line that says `Listening on port 3000`. You can now hit the homepage at [http://localhost:3000/](http://localhost:3000/). **Note**: you won't see anything on the homepage besides the navigation until you run Gulp. That will be covered in [frontend workflow](#frontend workflow).
 
 Your server will be running from that terminal window, so you will have to open a new terminal tab or window for further commands.
 
@@ -50,7 +53,7 @@ Remember, you need to run Gulp to see anything show up on the homepage. One last
 
 #### Frontend workflow
 
-The project is separated into different modules, and you can use <code>require(*file without extension*)</code> to gain access to the module. Browserify is what resolves dependencies. Gulp watches your files for changes, and then compiles everything into build.js, which is the main file you include in [index.html](client-side/index.html). Start with this:
+The project is separated into different modules, and within a JS file you can use <code>require(*file (including path) without extension*)</code> to gain access to the module. Browserify is what resolves dependencies. Gulp watches your files for changes, and then compiles everything into build.js, which is the main file you include in [index.html](client-side/index.html). Start with this:
 	
 	cd client-side
 	gulp
@@ -61,10 +64,11 @@ Gulp is now watching your files. Whenever you make a changein a JavaScript/JSX f
 
 Make sure you read the [overview](#overview) before you start coding. It will help you get a high-level understanding of the application.
 
-Before pushing to the repo, make sure your code passes:
+You can look at the todo list below for ideas of how to contribute. After you've finished your feature, write a test for it (in [test.js](test/test.js), and test your code using `npm test` from the root directory. 
 
-* [jsxhint](https://github.com/STRML/JSXHint)
-* Mocha tests (using `npm test` from the root directory)
+This project also uses [JSXHint](https://github.com/STRML/JSXHint). Every JS/JSX file should pass JSXHint.
+
+After that, [submit a pull request](https://help.github.com/articles/using-pull-requests/). Thanks for helping out! Feel free to [submit an issue](https://github.com/byu-osl/city-issue-server/issues/new) for any confusion you might have.
 
 ### Todo list
 
@@ -79,7 +83,9 @@ Ranked by priority:
 - [ ] submit issue by picture
 - [ ] set up frontend testing
 - [ ] production concatenation/minifcation
+- [ ] create GitHub issues for each of these todo items
 - [ ] code coverage
+- [ ] pre-commit hooks for jsxhint
 - [ ] push notifications?
 - [ ] ES6 integration: frontend and backend
 
@@ -94,10 +100,10 @@ The intent of this section is to give you some intution about how the applicatio
 
 ### File structure
 
-```
+<pre>
 city-issue-server                  // main directory
 ├── 311spec.txt                    // kept sort of as a todo list from the
-│									    Open311 spec
+│									    [Open311](http://wiki.open311.org/GeoReport_v2/) spec
 ├── app.js                         // main server file
 ├── client-side                    // public files for the client
 │   ├── css                        // css
@@ -123,7 +129,7 @@ city-issue-server                  // main directory
 ├── start.sh                       // used by npm start: starts the server
 ├── test                           // server-side tests
 └── utility                        // custom extras for the server
-```
+</pre>
 
 ### Backend
 
