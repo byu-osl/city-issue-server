@@ -33,7 +33,9 @@ Install [Node.js](https://nodejs.org/) and [MongoDB](http://docs.mongodb.org/man
 
 <code>
 npm install
+
 sudo npm install **-g** gulp
+
 sudo npm install **-g** supervisor
 </code>
 
