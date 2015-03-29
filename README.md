@@ -4,7 +4,7 @@
 
 * [Introduction](#introduction)
 	- [Features](#features)
-* [Installation and workflow](#installation)
+* [Installation and workflow](#installation-and-workflow)
 * [Contributing](#contributing)
 * [Overview](#overview)
 	- [Backend](#backend)
@@ -13,11 +13,13 @@
 
 ## Introduction
 
-The city issue tracker provides a way for citizens to submit issues (e.g. graffiti, a streetlight is out) and be in a close feedback loop with the city. It is written in [Node](https://nodejs.org/) using [Express](http://expressjs.com/), [Mongoose (MongoDB)](http://mongoosejs.com/index.html), and [React](http://facebook.github.io/react/). It implements (and will augment) the [Open311 specification](http://wiki.open311.org/GeoReport_v2/), and is under the direction of [Daniel Zappala](https://github.com/zappala) of BYU. 
+The City Issue Tracker provides a way for citizens to submit issues (e.g. graffiti, a streetlight is out) and receive status updates from the city. It is written in [Node](https://nodejs.org/) using [Express](http://expressjs.com/), [Mongoose](http://mongoosejs.com/index.html), and [React](http://facebook.github.io/react/). It implements (and will augment) the [Open311 specification](http://wiki.open311.org/GeoReport_v2/), and is under the direction of [Daniel Zappala](https://github.com/zappala) of BYU. 
 
 This readme assumes you know very little about Node, React, etc.
 
 ### Features
+
+[Todo list](#todo-list) below.
 
 - issue reporting
 	+ Geolocation
@@ -41,27 +43,23 @@ Start the server:
 
 <code>npm start</code>
 
-After a little bit, you should see a line that says `Listening on port 3000`. You can now hit the homepage at [http://localhost:3000/](http://localhost:3000/). **Note**: you won't see anything on the homepage besides the navigation until you run Gulp. That will be covered in [frontend workflow](#frontend workflow).
+`npm start` uses node-supervisor to watch your files. It restarts the server on every change so you don't have to. After a little bit, you should see a line that says `Listening on port 3000`. You can now hit the homepage at [http://localhost:3000/](http://localhost:3000/). **Note**: you won't see anything on the homepage besides the navigation until you run Gulp; that will be covered in the frontend workflow section.
 
-Your server will be running from that terminal window, so you will have to open a new terminal tab or window for further commands.
-
-After the server is running, populate the database with a few dummy items:
+Your server will be running from that terminal window, so you will have to open a new terminal tab or window for further commands. After the server is running, populate the database with a few dummy items:
 
 <code>node load-database.js</code>
 
-Remember, you need to run Gulp to see anything show up on the homepage. One last note: `npm start` tries to use [node-supervisor](https://github.com/isaacs/node-supervisor) to start the server. Supervisor will watch your files and restart the server whenever you make changes, and falls back to `node server.js` if you don't have it installed.
+After that is done, you can get your frontend environment set up.
 
 #### Frontend workflow
 
-The project is separated into different modules, and within a JS file you can use <code>require(*file (including path) without extension*)</code> to gain access to the module. Browserify is what resolves dependencies. Gulp watches your files for changes, and then compiles everything into build.js, which is the main file you include in [index.html](client-side/index.html). Start with this:
-	
+The entry point of the application is [app.js](client-side/js/app.js). That file depends on a couple other modules, indicated by <code>require(*file (including path) without extension*)</code> towards the beginning of the file. Gulp manages those dependencies (via Browserify) and rebuilds everything into build.js whenever you make a change. Using Gulp is easy:
+
 <code>cd client-side</code>
 
 <code>gulp</code>
 
-Gulp is now watching your files. Whenever you make a changein a JavaScript/JSX file, it will resolve all of the dependencies (beginning at app.js), and throw everything into dist/build.js.
-
----
+Gulp is now watching your files. Whenever you make a change in a JavaScript/JSX file, it will resolve all of the dependencies and throw everything into dist/build.js.
 
 ## Contributing
 
@@ -84,7 +82,9 @@ Ranked by priority:
 - [ ] optional account creation at issue submission
 - [ ] form validation
 - [ ] submit issue by picture
+- [ ] Flux architecture, React router
 - [ ] set up frontend testing
+- [ ] rename the two app.js files
 - [ ] production concatenation/minifcation
 - [ ] Detect if a port is in use - use a different one if necessary
 - [ ] create GitHub issues for each of these todo items
@@ -93,11 +93,9 @@ Ranked by priority:
 - [ ] push notifications?
 - [ ] ES6 integration: frontend and backend
 
-----
-
 ## Overview
 
-The intent of this section is to give you some intution about how the application fits together. Here's what happens when a user submits an issue request (not to be confused with an HTTP request):
+The intent of this section is to give you some intuition about how the application fits together. Here's what happens when a user submits an issue request (not to be confused with an HTTP request):
 
 * the client-side code packs up all of the user input into a POST request, and [sends it to the server](https://github.com/byu-osl/city-issue-server/blob/91d028777761815ce4814f8ec081179809a9cfdb/client-side/js/app.js#L25).
 * the first file it hits is [app.js](app.js), where the meat of the server code is. The server itself is initialized in [server.js](server.js).
@@ -109,7 +107,7 @@ The intent of this section is to give you some intution about how the applicatio
 <pre>
 city-issue-server                  // main directory
 ├── 311spec.txt                    // kept sort of as a todo list from the
-│									    [Open311](http://wiki.open311.org/GeoReport_v2/) spec
+│									    Open311 spec (http://wiki.open311.org/GeoReport_v2/)
 ├── app.js                         // main server file
 ├── client-side                    // public files for the client
 │   ├── css                        // css
@@ -117,7 +115,7 @@ city-issue-server                  // main directory
 │   ├── gulpfile.js                // Gulp configuration
 │   ├── index.html                 // main html file
 │   ├── js                         // js
-│   │   ├── app.js                 // main js file
+│   │   ├── app.js                 // main client-side file
 │   │   ├── CategorySection.js     // request submission React component
 │   │   ├── DescriptionSection.js  // request submission React component
 │   │   ├── LocationSection.js     // request submission React component
@@ -160,17 +158,17 @@ Express is used to organize your server code. If you look in [app.js](app.js), y
 
 #### Testing
 
-Testing is done using Mocha and a few different libraries. The main test file is [test.js](test/test.js). Right now, the only tests that are written send GET and POST requests to the different endpoints and verify that the right information came back.
+Testing is done using Mocha and a few different libraries. The main test file is [test.js](test/test.js). Right now, the only tests that are written send GET and POST requests to the different endpoints and verify that the right information came back. Tests should be written for additional endpoints.
 
 ### Frontend
 
 #### React
 
-[React](http://facebook.github.io/react/) is a library to help you organize your frontend. It encourages you to separate your application into different components composed of JS *and* HTML in a language called JSX. We use a JSX transformer that transforms JSX into JS in the browser. This will change when the app is used in production.
+[React](http://facebook.github.io/react/) is a library to help you organize your frontend. It encourages you to separate your application into different components composed of JS *and* HTML in a language called JSX. We use a JSX transformer that transforms JSX into JS in the browser. This will change when the app is used in production. 
 
 #### Bootstrap
 
-[Bootstrap](http://getbootstrap.com/) is an extremely popular, responsive HTML/CSS framework. It has a series of components and layouts you can use; you might say its API is a series of CSS classes. Use Bootstrap classes and components before 
+[Bootstrap](http://getbootstrap.com/) is an extremely popular, responsive HTML/CSS framework. It has a series of components and layouts you can use; you might say its API is a series of CSS classes. Use Bootstrap classes and components before writing your own HTML/CSS from scratch.
 
 ### Testing
 
@@ -181,14 +179,12 @@ No front end tests are set up at the moment. Feel free to recommend testing stra
 Here is a overview of how you might add a field to the issue request form. Starting server-side:
 
 - For this feature, you need to make changes in [requestsHandler.js](routes/requestsHandler.js), and [the request model](models/request.js).
-- Add the field you want to the [schema](https://github.com/byu-osl/city-issue-server/blob/17d05d5950880dcbfe5b02b887665b6ccc983896/models/request.js#L3) of the request.
+- Add the field you want to the issue request [schema](https://github.com/byu-osl/city-issue-server/blob/17d05d5950880dcbfe5b02b887665b6ccc983896/models/request.js#L3).
 - Add any validation logic in [saveRequest()](https://github.com/byu-osl/city-issue-server/blob/17d05d5950880dcbfe5b02b887665b6ccc983896/routes/requestsHandler.js#L68).
 - Write a React component for that portion of the form. This is where your HTML will go.
-	+ Create a new file, and follow the pattern of the other components of the form. Make sure to write a getter to expose state to the parent component.
-- Head over to the client-side [app.js](client-side/js/app.js). The entry point for the request form is here. `require` your new component at the top of the file, and add a reference to it in the `render` function of the form.
-- In RequestForm's `submitForm`, get the new field, and add it to the POST.
-
----
+	+ Create a new file, and follow the pattern of the other components of the form. Make sure to write a getter to expose state to the parent component (avoid using jQuery to interact with the DOM as much as possible).
+- Head over to the client-side [app.js](client-side/js/app.js). The entry point for the request form is here. `require` the component you made at the top of the file, and add a reference to it in the `render` function of the form.
+- In RequestForm's `submitForm`, get the new field, and add it to the POST request.
 
 ## Troubleshooting
 
@@ -199,3 +195,4 @@ The biggest problem I've seen is when `npm install` explodes. I think you'll typ
 	npm ERR! code EACCES
 
 To fix this, prepend sudo to your command: <code>*sudo* npm install</code> and that should take care of it.
+
