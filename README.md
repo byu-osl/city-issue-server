@@ -4,7 +4,7 @@
 
 * [Introduction](#introduction)
 	- [Features](#features)
-* [Installation](#installation)
+* [Installation and workflow](#installation)
 * [Contributing](#contributing)
 * [Overview](#overview)
 	- [Backend](#backend)
@@ -27,7 +27,7 @@ This readme assumes you know very little about Node, React, etc.
 
 Install [Node.js](https://nodejs.org/) and [MongoDB](http://docs.mongodb.org/manual/installation/) (make sure it is running: run `mongo` in the terminal, and then `version()`. If Mongo is running, you will get a version number). After that, run this in your terminal:
 
-	git clone https://github.com/byu-osl/city-issue-server.git && cd city-issue-server
+<code>git clone https://github.com/byu-osl/city-issue-server.git && cd city-issue-server</code>
 
 *All terminal commands should be from the city-issue-server directory from now on*. Install your dependencies using npm (this may take a minute or two, and may require using sudo):
 
@@ -39,7 +39,7 @@ Install [Node.js](https://nodejs.org/) and [MongoDB](http://docs.mongodb.org/man
 
 Start the server:
 
-	npm start
+<code>npm start</code>
 
 After a little bit, you should see a line that says `Listening on port 3000`. You can now hit the homepage at [http://localhost:3000/](http://localhost:3000/). **Note**: you won't see anything on the homepage besides the navigation until you run Gulp. That will be covered in [frontend workflow](#frontend workflow).
 
@@ -47,7 +47,7 @@ Your server will be running from that terminal window, so you will have to open 
 
 After the server is running, populate the database with a few dummy items:
 
-	node load-database.js
+<code>node load-database.js</code>
 
 Remember, you need to run Gulp to see anything show up on the homepage. One last note: `npm start` tries to use [node-supervisor](https://github.com/isaacs/node-supervisor) to start the server. Supervisor will watch your files and restart the server whenever you make changes, and falls back to `node server.js` if you don't have it installed.
 
@@ -55,10 +55,13 @@ Remember, you need to run Gulp to see anything show up on the homepage. One last
 
 The project is separated into different modules, and within a JS file you can use <code>require(*file (including path) without extension*)</code> to gain access to the module. Browserify is what resolves dependencies. Gulp watches your files for changes, and then compiles everything into build.js, which is the main file you include in [index.html](client-side/index.html). Start with this:
 	
-	cd client-side
-	gulp
+<code>cd client-side</code>
+
+<code>gulp</code>
 
 Gulp is now watching your files. Whenever you make a changein a JavaScript/JSX file, it will resolve all of the dependencies (beginning at app.js), and throw everything into dist/build.js.
+
+---
 
 ## Contributing
 
@@ -83,11 +86,14 @@ Ranked by priority:
 - [ ] submit issue by picture
 - [ ] set up frontend testing
 - [ ] production concatenation/minifcation
+- [ ] Detect if a port is in use - use a different one if necessary
 - [ ] create GitHub issues for each of these todo items
 - [ ] code coverage
 - [ ] pre-commit hooks for jsxhint
 - [ ] push notifications?
 - [ ] ES6 integration: frontend and backend
+
+----
 
 ## Overview
 
@@ -172,7 +178,7 @@ No front end tests are set up at the moment. Feel free to recommend testing stra
 
 ### Example: implementing a new feature
 
-Here is an overview of how you might add a field to the issue request form. Starting server-side:
+Here is a overview of how you might add a field to the issue request form. Starting server-side:
 
 - For this feature, you need to make changes in [requestsHandler.js](routes/requestsHandler.js), and [the request model](models/request.js).
 - Add the field you want to the [schema](https://github.com/byu-osl/city-issue-server/blob/17d05d5950880dcbfe5b02b887665b6ccc983896/models/request.js#L3) of the request.
@@ -181,6 +187,8 @@ Here is an overview of how you might add a field to the issue request form. Star
 	+ Create a new file, and follow the pattern of the other components of the form. Make sure to write a getter to expose state to the parent component.
 - Head over to the client-side [app.js](client-side/js/app.js). The entry point for the request form is here. `require` your new component at the top of the file, and add a reference to it in the `render` function of the form.
 - In RequestForm's `submitForm`, get the new field, and add it to the POST.
+
+---
 
 ## Troubleshooting
 
