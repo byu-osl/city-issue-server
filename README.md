@@ -53,17 +53,21 @@ After that is done, you can get your frontend environment set up.
 
 #### Frontend workflow
 
-The entry point of the application is [app.js](client-side/js/app.js). That file depends on a couple other modules, indicated by <code>require(*file (including path) without extension*)</code> towards the beginning of the file. Gulp manages those dependencies (via Browserify) and rebuilds everything into build.js whenever you make a change. Using Gulp is easy:
+The entry point of the application is [app.js](client-side/js/app.js). That file depends on a couple other modules, indicated by <code>require(*file (including path) without extension*)</code> towards the beginning of the file. Gulp manages those dependencies (via Browserify) and rebuilds everything into build.js whenever you make a change. To get started with Gulp:
 
 <code>cd client-side</code>
 
 <code>gulp</code>
 
-Gulp is now watching your files. Whenever you make a change in a JavaScript/JSX file, it will resolve all of the dependencies and throw everything into dist/build.js.
+Gulp is now watching your files. Whenever you make a change in a JavaScript/JSX file, it will resolve all of the dependencies and throw everything into dist/build.js. Now, [http://localhost:3000/](http://localhost:3000/) should look something like this:
+
+URL format https://raw.github.com/{USERNAME}/{REPOSITORY}/{BRANCH}/{PATH}
+
+![Issue tracker screenshot](https://raw.github.com/byu-osl/city-issue-server/master/screenshot.png)
 
 ## Contributing
 
-Make sure you read the [overview](#overview) before you start coding. It will help you get a high-level understanding of the application.
+If you would like help getting a high-level understanding of the application, you can read the [overview](#overview).
 
 You can look at the todo list below for ideas of how to contribute. After you've finished your feature, write a test for it (in [test.js](test/test.js), and test your code using `npm test` from the root directory. 
 
@@ -86,7 +90,7 @@ Ranked by priority:
 - [ ] set up frontend testing
 - [ ] rename the two app.js files
 - [ ] production concatenation/minifcation
-- [ ] Detect if a port is in use - use a different one if necessary
+- [ ] detect if a port is in use - use a different one if necessary
 - [ ] create GitHub issues for each of these todo items
 - [ ] code coverage
 - [ ] pre-commit hooks for jsxhint
