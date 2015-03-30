@@ -43,13 +43,11 @@ Start the server:
 
 <code>npm start</code>
 
-`npm start` uses node-supervisor to watch your files. It restarts the server on every change so you don't have to. After a little bit, you should see a line that says `Listening on port 3000`. You can now hit the homepage at [http://localhost:3000/](http://localhost:3000/). **Note**: you won't see anything on the homepage besides the navigation until you run Gulp; that will be covered in the frontend workflow section.
-
-Your server will be running from that terminal window, so you will have to open a new terminal tab or window for further commands. After the server is running, populate the database with a few dummy items:
+`npm start` uses node-supervisor to watch your files. This is optional, but really nice: it restarts the server on every change so you don't have to. After a little bit, you should see a line that says `Listening on port 3000`. You can now hit the homepage at [http://localhost:3000/](http://localhost:3000/). Your server will be running from that terminal window, so you will have to open a new terminal tab or window for further commands. After the server is running, populate the database with a few dummy items:
 
 <code>node load-database.js</code>
 
-After that is done, you can get your frontend environment set up.
+ **Note**: you won't see anything on the homepage besides the navigation until you run Gulp; that will be covered in the next section.
 
 #### Frontend workflow
 
@@ -60,8 +58,6 @@ The entry point of the application is [app.js](client-side/js/app.js). That file
 <code>gulp</code>
 
 Gulp is now watching your files. Whenever you make a change in a JavaScript/JSX file, it will resolve all of the dependencies and throw everything into dist/build.js. Now, [http://localhost:3000/](http://localhost:3000/) should look something like this:
-
-URL format https://raw.github.com/{USERNAME}/{REPOSITORY}/{BRANCH}/{PATH}
 
 ![Issue tracker screenshot](https://raw.github.com/byu-osl/city-issue-server/master/screenshot.png)
 
@@ -120,9 +116,9 @@ city-issue-server                  // main directory
 │   ├── index.html                 // main html file
 │   ├── js                         // js
 │   │   ├── app.js                 // main client-side file
-│   │   ├── CategorySection.js     // request submission React component
-│   │   ├── DescriptionSection.js  // request submission React component
-│   │   ├── LocationSection.js     // request submission React component
+│   │   ├── CategorySection.js     // issue request form React component
+│   │   ├── DescriptionSection.js  // issue request form React component
+│   │   ├── LocationSection.js     // issue request form React component
 │   │   ├── navbar.js              // 
 │   │   ├── reactdemo.jsx          // temporary React demo for reference
 │   │   └── server-api.js          // Object that interacts with the server
