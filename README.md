@@ -13,7 +13,7 @@
 
 ## Introduction
 
-The City Issue Tracker provides a way for citizens to submit issues (e.g. graffiti, a streetlight is out) and receive status updates from the city. It is written in [Node](https://nodejs.org/) using [Express](http://expressjs.com/), [Mongoose](http://mongoosejs.com/index.html), and [React](http://facebook.github.io/react/). It implements (and will augment) the [Open311 specification](http://wiki.open311.org/GeoReport_v2/), and is under the direction of [Daniel Zappala](https://github.com/zappala) of BYU. 
+The City Issue Tracker provides a way for citizens to submit issues (e.g. graffiti, a streetlight is out) and receive status updates from the city. It is written in <a href="https://nodejs.org/" target="_blank">Node</a> using [Express](http://expressjs.com/), [Mongoose](http://mongoosejs.com/index.html), and [React](http://facebook.github.io/react/). It implements (and will augment) the [Open311 specification](http://wiki.open311.org/GeoReport_v2/), and is under the direction of [Daniel Zappala](https://github.com/zappala) of BYU. 
 
 This readme assumes you know very little about Node, React, etc.
 
