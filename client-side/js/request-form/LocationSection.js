@@ -1,10 +1,15 @@
+'use strict';
 
 // LocationSection of the form
 module.exports = React.createClass({
+
+    isValid: function() {return this.state.isValid},
+
     getInitialState: function () {
         return {
             location: '',
-            usedDetection: false
+            usedDetection: false,
+            isValid: false
         };
     },
 
@@ -17,12 +22,17 @@ module.exports = React.createClass({
         var lat = positionData.coords.latitude;
         var long = positionData.coords.longitude;
         var output = 'latitude: ' + lat + ', longitude: ' + long;
-        this.setState({location:output});
+
+        this.setState({
+            location:output
+        });
+
         this.setState({
             lat:lat, 
             long:long, 
             location: output,
-            usedDetection: true
+            usedDetection: true,
+            isValid: true
         });
     },
 
@@ -32,7 +42,20 @@ module.exports = React.createClass({
     },
 
     handleChange: function (event) {
-        this.setState({location:event.target.value});
+        if (event.target.value.length === 0) {
+            this.setState({isValid: false});
+        } else {
+            this.setState({isValid: true});
+        }
+
+        this.setState({
+            location:event.target.value,
+            usedDetection: false
+        });
+    },
+
+    markInvalid: function() {
+
     },
 
     render: function () {
@@ -40,7 +63,9 @@ module.exports = React.createClass({
             <div className='form-group'>
                 <div>
                     <label>Location</label>
-                    <button className='btn btn-default btn-xs location-button' onClick={this.handleLocationClick}>
+                    <button 
+                        className='btn btn-default btn-xs location-button' 
+                        onClick={this.handleLocationClick}>
                         <span className='glyphicon glyphicon-map-marker'/>
                         detect my location
                     </button>

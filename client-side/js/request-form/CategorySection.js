@@ -1,18 +1,24 @@
-var api = require('./server-api');
+'use strict';
+
+var api = require('../server-api');
 api = new api();
 
 var CategorySection = React.createClass({
 
+    isValid: function() {return this.state.isValid},
+
     categoryClicked: function(event) {
         this.setState({
-            selectedCategory: $('input', event.currentTarget).val()
+            selectedCategory: $('input', event.currentTarget).val(),
+            isValid: true
         });
     },
 
     getInitialState: function () {
         return {
             categories: [],
-            selectedCategory: ''
+            selectedCategory: '',
+            isValid: false
         };
     },
 
@@ -26,6 +32,10 @@ var CategorySection = React.createClass({
 
     componentDidMount: function () {
         api.getCategories(this.receivedCategories);
+    },
+
+    markInvalid: function () {
+
     },
  
     render: function() {

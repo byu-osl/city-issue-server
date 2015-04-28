@@ -14,15 +14,21 @@ var path = {
   DEST: 'dist',
   DEST_BUILD: 'dist/build',
   DEST_SRC: 'dist/src',
-  ENTRY_POINT: './js/app.js'
+  ENTRY_POINT: './js/client-main.js'
 };
 
-gulp.task('copy', function(){
+gulp.on('error', function(err) {
+      console.log(err.message);
+      this.end();
+    }).task('copy', function(){
   gulp.src(path.HTML)
     .pipe(gulp.dest(path.DEST));
 });
 
-gulp.task('watch', function() {
+gulp.on('error', function(err) {
+      console.log(err.message);
+      this.end();
+    }).task('watch', function() {
   gulp.watch(path.HTML, ['copy']);
 
   var watcher  = watchify(browserify({
@@ -46,7 +52,10 @@ gulp.task('watch', function() {
     .pipe(gulp.dest(path.DEST_SRC));
 });
 
-gulp.task('build', function(){
+gulp.on('error', function(err) {
+      console.log(err.message);
+      this.end();
+    }).task('build', function(){
   var b = browserify({
     entries: [path.ENTRY_POINT],
     transform: [reactify],
@@ -61,7 +70,10 @@ gulp.task('build', function(){
     .pipe(gulp.dest(path.DEST_BUILD));
 });
 
-gulp.task('replaceHTML', function(){
+gulp.on('error', function(err) {
+      console.log(err.message);
+      this.end();
+    }).task('replaceHTML', function(){
   gulp.src(path.HTML)
     .pipe(htmlreplace({
       'js': 'build/' + path.MINIFIED_OUT
@@ -69,6 +81,12 @@ gulp.task('replaceHTML', function(){
     .pipe(gulp.dest(path.DEST));
 });
 
-gulp.task('production', ['replaceHTML', 'build']);
+gulp.on('error', function(err) {
+      console.log(err.message);
+      this.end();
+    }).task('production', ['replaceHTML', 'build']);
 
-gulp.task('default', ['watch']);
+gulp.on('error', function(err) {
+      console.log(err.message);
+      this.end();
+    }).task('default', ['watch']);

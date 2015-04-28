@@ -1,35 +1,55 @@
 'use strict';
 
-var api = require('./server-api');
-api = new api();
+var ServerAPI = require('../server-api');
+var _ = require('../_');
+var serverAPI = new ServerAPI();
 var LocationSection = require('./LocationSection');
 var CategorySection = require('./CategorySection');
 var DescriptionSection = require('./DescriptionSection');
  
 var RequestForm = React.createClass({
     submitForm: function (event) {
-        event.preventDefault();
+        event.preventDefault()
+
+        if (!this.validateForm()) {
+            return;
+        }
  
-        var long;
+        var long; 
         var lat;
 
-        var description = this.refs.description.getDescription();
-        var location = this.refs.location.getLocation();
-        var category = this.refs.category.getSelectedCategory();
+        var location    = this.refs.location.getLocation();
 
         if (this.refs.location.usedDetection) {
             long = this.refs.location.getLong();
             lat  = this.refs.location.getLat();
         }
 
-        api.postRequest({
+        serverAPI.postRequest({
+            address_string: this.refs.location.usedDetection ? '' : location,
+            description: this.refs.description.getDescription(),
             lat:lat,
             long:long,
-            service_code: category
+            media_url: this.refs.description.getImage(),
+            service_code: this.refs.category.getSelectedCategory()
         }, function (data){
             console.log('Saved!');
             console.log(data);
         });
+    },
+
+    validateForm: function() {
+        var passing = true;
+
+        _.forEach(this.refs, function(ref){
+            debugger;
+            if (ref.isValid === false) {
+                passing = false;
+                ref.markInvalid();
+            }
+        });
+
+        return true;
     },
 
     render: function () {
@@ -49,12 +69,4 @@ var RequestForm = React.createClass({
     }
 });
 
-var Category = React.createClass({
-    render: function(){
-        return (
-            <li role='presentation'><a role='menuitem' tabIndex='-1' href='#'>{this.props.name}</a></li>
-        );
-    }
-});
-
-React.render(<RequestForm />, $('.app-container')[0]);
+module.exports = RequestForm;

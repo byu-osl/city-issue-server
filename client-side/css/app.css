@@ -1,14 +1,25 @@
 .navbar-default {
   background-color: #F3F3E1;
 }
+
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
   background-color: #e2e2b6;
 }
+
 .location-button {
   margin-left: 10px;
 }
+
 .form-group .glyphicon {
   margin-right: 5px;
+}
+
+input, textarea {
+	max-width: 600px;
+}
+
+.picture-input {
+	display: none !important;
 }

@@ -5,8 +5,9 @@
     	"$"	   : false
 	},
 
+    "asi"       : true,
     "maxerr"    : 50,       // {int} Maximum error before stopping
-    "strict"    : false,
+    "strict"    : true,
     "curly"     : true,
     "eqeqeq"    : true,
     "indent"    : 4,
