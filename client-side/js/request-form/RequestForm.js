@@ -41,15 +41,11 @@ var RequestForm = React.createClass({
     validateForm: function() {
         var passing = true;
 
-        _.forEach(this.refs, function(ref){
-            debugger;
-            if (ref.isValid === false) {
-                passing = false;
-                ref.markInvalid();
-            }
+        _.forEach(this.refs, function (ref) {
+            passing = passing && ref.validate();
         });
 
-        return true;
+        return passing;
     },
 
     render: function () {

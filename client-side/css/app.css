@@ -8,18 +8,28 @@
   background-color: #e2e2b6;
 }
 
-.location-button {
-  margin-left: 10px;
-}
 
 .form-group .glyphicon {
   margin-right: 5px;
 }
 
-input, textarea {
-	max-width: 600px;
+.request-form img {
+	max-width: 100%;
+	border: rgb(208, 208, 208) solid 1px;
+	margin-top: 10px;
 }
 
 .picture-input {
 	display: none !important;
+}
+
+.image-container {
+	text-align: center;
+}
+
+/* Bootstrap overrides */
+
+.row {
+	margin-right: 0px;
+	margin-left: 0px; 
 }

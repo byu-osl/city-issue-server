@@ -5,7 +5,7 @@ api = new api();
 
 var CategorySection = React.createClass({
 
-    isValid: function() {return this.state.isValid},
+    validate: function() {return this.state.isValid},
 
     categoryClicked: function(event) {
         this.setState({
@@ -34,10 +34,6 @@ var CategorySection = React.createClass({
         api.getCategories(this.receivedCategories);
     },
 
-    markInvalid: function () {
-
-    },
- 
     render: function() {
         return (
             <div className='form-group'>

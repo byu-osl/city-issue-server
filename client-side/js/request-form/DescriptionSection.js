@@ -1,8 +1,13 @@
 'use strict';
+var styles = require('../styles');
 
 var DescriptionSection = React.createClass({
 
-    isValid: function() {return this.state.isValid},
+    validate: function() {
+        var isValid = this.state.description.length > 0 || this.getImage().length > 0
+        this.setState({isValid:isValid});
+        return isValid;
+    },
 
     getDescription: function () {return this.state.description},
 
@@ -10,19 +15,20 @@ var DescriptionSection = React.createClass({
         return  {
               description: '',
               image: '',
-              isValid: false
+              isValid: undefined
         };
     },
 
-    getImage: function () {return this.state.image},
+    getImage: function () {
+        return React.getDOMNode(this.refs.preview).src
+    },
 
     handleChange: function () {
-        var value = event.target.value;
-        if (value.length === 0 && this.getImage().length === 0) {
-            this.setState({isValid:false});
-        } else {
-            this.setState({isValid:true});
+        if (typeof this.state.isValid !== 'undefined') {
+            this.validate();
         }
+
+        var value = event.target.value;
         this.setState({description:event.target.value});
     },
 
@@ -35,35 +41,60 @@ var DescriptionSection = React.createClass({
 
         reader.onloadend = function() {
             React.findDOMNode(self.refs.preview).src = reader.result;
-            self.state.image = reader.result;
-            this.setState({isValid:true});
+            $('button.close').show();
+            self.setState({isValid:true});
         };
 
         reader.readAsDataURL(file); 
     },
 
-    markInvalid: function () {
-
+    closeImage: function () {
+        React.findDOMNode(this.refs.preview).src = '';
+        $('button.close').hide();
     },
 
     render: function() {
+        var validationState = '';
+
+        var buttonStyle = {
+            marginLeft: '10px'
+        };
+
+        if (this.state.isValid === false) {
+            validationState = ' has-error';
+        }
+
+        if (this.state.isValid === true) {
+            validationState += ' has-success';
+         }
+
         return (
             <div className='form-group'>
-                <label>Description</label>
-                <button 
-                    className='btn btn-default btn-xs location-button' 
-                    onClick={this.handlePictureClick}>
-                    <span className='glyphicon glyphicon-camera'/>
-                    take a picture
-                </button>
-                <input onChange={this.handleImage} className='picture-input' type="file" accept="image/*" capture="camera"/>
-                <img ref='preview'/>
-                <textarea 
-                    name='description' 
-                    className='form-control' 
-                    value={this.state.description} 
-                    onChange={this.handleChange}
-                    placeholder='Additional location details, severity, etc.'></textarea>
+                <div className='row'>
+
+                    <div className={'col-md-6' + validationState}>
+                        <label className='control-label'>Description</label>
+                        <button 
+                            style={buttonStyle}
+                            className='btn btn-default btn-xs' 
+                            onClick={this.handlePictureClick}>
+                            <span className='glyphicon glyphicon-camera'/>
+                            upload / take a picture
+                        </button>
+                        <input onChange={this.handleImage} className='picture-input' type="file" accept="image/*" capture="camera"/>
+                        <textarea 
+                            name='description' 
+                            className='form-control' 
+                            value={this.state.description} 
+                            onChange={this.handleChange}
+                            onBlur={this.validate}
+                            placeholder='Additional location details, severity, etc.'></textarea>
+                    </div>
+                    <div className="col-md-6 image-container">
+                        <button style={styles.hidden} onClick={this.closeImage} type="button" className="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <img ref='preview'/>
+                    </div>
+                </div>
             </div>
         );
     }

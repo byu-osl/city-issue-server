@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose   = require('mongoose');
 var Request = require('./models/request');
 var Service = require('./models/service');
@@ -16,6 +18,18 @@ new Service({
     group:        'infrastructure',
     service_code: 2,
     service_name: 'streetlights',
+    type:  'realtime'
+}).save(function (){
+        console.log('service saved.');
+    });
+
+new Service({
+    description:  'pothole problems',
+    metadata:     false,
+    keywords:     'roads',
+    group:        'infrastructure',
+    service_code: 2,
+    service_name: 'potholes',
     type:  'realtime'
 }).save(function (){
         console.log('service saved.');

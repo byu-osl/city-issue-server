@@ -1,5 +1,7 @@
 'use strict';
 
+React.getDOMNode = React.findDOMNode;
+
 var RequestForm = require('./request-form/RequestForm');
 var AdminPage   = require('./admin/AdminPage.js');
 

@@ -3,13 +3,17 @@
 // LocationSection of the form
 module.exports = React.createClass({
 
-    isValid: function() {return this.state.isValid},
+    validate: function() {
+        var isValid = this.state.location.length > 0;
+        this.setState({isValid:isValid});
+        return isValid;
+    },
 
     getInitialState: function () {
         return {
             location: '',
             usedDetection: false,
-            isValid: false
+            isValid: undefined
         };
     },
 
@@ -42,10 +46,8 @@ module.exports = React.createClass({
     },
 
     handleChange: function (event) {
-        if (event.target.value.length === 0) {
-            this.setState({isValid: false});
-        } else {
-            this.setState({isValid: true});
+        if (typeof this.state.isValid !== 'undefined') {
+            this.validate();
         }
 
         this.setState({
@@ -54,23 +56,43 @@ module.exports = React.createClass({
         });
     },
 
-    markInvalid: function() {
-
-    },
-
     render: function () {
+        var validationState = '';
+        var buttonStyle = {
+          marginLeft: '10px'
+        }
+
+        if (this.state.isValid === false) {
+            validationState += ' has-error';
+        }
+
+        if (this.state.isValid === true) {
+            validationState += ' has-success';
+         }
+
         return (
-            <div className='form-group'>
-                <div>
-                    <label>Location</label>
-                    <button 
-                        className='btn btn-default btn-xs location-button' 
-                        onClick={this.handleLocationClick}>
-                        <span className='glyphicon glyphicon-map-marker'/>
-                        detect my location
-                    </button>
+            <div className="row">
+                <div className={'form-group col-md-6' + validationState}>
+                    <div>
+                        <label className='control-label'>Location</label>
+                        <button 
+                            style={buttonStyle}
+                            className='btn btn-default btn-xs location-button' 
+                            onClick={this.handleLocationClick}>
+                            <span className='glyphicon glyphicon-map-marker'/>
+                            detect my location
+                        </button>
+                    </div>
+                    <input 
+                        ref='input' 
+                        name='location' 
+                        className='form-control' 
+                        type='text' 
+                        value={this.state.location} 
+                        onChange={this.handleChange}
+                        onBlur={this.validate
+                    }/>
                 </div>
-                <input name='location' className='form-control' type='text' value={this.state.location} onChange={this.handleChange}/>
             </div>
         );
     }
