@@ -9,8 +9,21 @@ var DescriptionSection = require('./DescriptionSection');
 var Email = require('./Email');
 var Phone = require('./Phone');
 var Name = require('./Name');
+var Password = require('./Password');
+var styles = require('../styles');
  
 var RequestForm = React.createClass({
+
+    getInitialState: function () {
+        return {
+            creatingAccount: false
+        }
+    },
+
+    toggleAccountCreation: function () {
+        this.setState({creatingAccount:!this.state.creatingAccount});
+    },
+
     submitForm: function (event) {
         event.preventDefault()
         var long; 
@@ -55,18 +68,27 @@ var RequestForm = React.createClass({
     },
 
     render: function () {
+        var passwordStyle = 
+            this.state.creatingAccount === true ? styles.visible : styles.hidden;
+
         return (
             <div>
                 <div className='row'>
                     <h1>Submit an issue</h1>
                 </div>
-                <form className='request-form' onSubmit={this.submitForm}>
+                <form className='request-form col-md-6' onSubmit={this.submitForm}>
                     <LocationSection ref='location'/>
                     <DescriptionSection ref='description'/>
                     <CategorySection ref='category'/>
                     <Email ref='email'/>
                     <Name ref='name'/>
                     <Phone ref='phone'/>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" onChange={this.toggleAccountCreation}/> Create an account (save your information for the next time you submit an issue)
+                        </label>
+                    </div>
+                    <Password style={passwordStyle} ref='password'/>
                     <input type='submit' className='btn btn-fault'></input>
                 </form>
             </div>

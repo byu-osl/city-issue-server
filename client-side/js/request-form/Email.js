@@ -22,8 +22,10 @@ var Email = React.createClass({
 	render: function () {
 		return (
 			<div>
-				<label htmlFor="email">Email</label>
-				<input type='text'
+				<label className='control-label' htmlFor="email">Email</label>
+				<input 
+					className='form-control'
+					type='text'
 					name='email'
 					onChange={this.handleChange}
 					value={this.state.email}

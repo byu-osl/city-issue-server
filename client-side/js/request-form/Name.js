@@ -31,15 +31,20 @@ var Name = React.createClass({
 	render: function () {
 		return (
 			<div>
-				<label htmlFor="email">Email</label>
-				<input type='text'
+				<label className='control-label' htmlFor="firstName">First Name</label>
+				<input 
+					className='form-control'
+					type='text'
 					name='firstName'
 					onChange={this.firstNameChange}
 					value={this.state.firstName}
 				/>
-				<input type='text'
-					name='firstName'
-					onChange={this.handleChange}
+				<label className='control-label' htmlFor="lastName">Last Name</label>
+				<input 
+					className='form-control'
+					type='text'
+					name='lastName'
+					onChange={this.lastNameChange}
 					value={this.state.lastName}
 				/>
 			</div>

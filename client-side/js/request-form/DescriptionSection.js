@@ -47,7 +47,13 @@ var DescriptionSection = React.createClass({
     
     handlePictureClick: function () {$('.picture-input').click()},
     getDescription: function () {return this.state.description},
-    getImage: function () {return React.getDOMNode(this.refs.preview).src },
+    getImage: function () {
+        if (this.refs.preview) {
+            return React.getDOMNode(this.refs.preview).getAttribute('src');
+        } else {
+            return ''
+        }
+    },
 
     render: function() {
         var validationState = '';
@@ -64,12 +70,15 @@ var DescriptionSection = React.createClass({
 
         if (this.state.isValid === true) {
             validationState += ' has-success';
-         }
+        }
+
+        var imageContainerStyle = 
+            this.getImage().length > 0 ? styles.visible : styles.hidden;
 
         return (
             <div className='form-group'>
                 <div className='row'>
-                    <div className={'col-md-6' + validationState}>
+                    <div className={validationState}>
                         <p style={errorStyle} className='bg-warning'>Please add an image or description.</p>
                         <label className='control-label'>Description</label>
                         <button 
@@ -86,11 +95,12 @@ var DescriptionSection = React.createClass({
                             value={this.state.description} 
                             onChange={this.handleChange}
                             onBlur={this.validate}
+                            tabIndex='2'
                             placeholder='Additional location details, severity, etc.'></textarea>
                     </div>
-                    <div className="col-md-6 image-container">
+                    <div className="image-container">
                         <button style={styles.hidden} onClick={this.closeImage} type="button" className="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <img ref='preview'/>
+                        <img style={imageContainerStyle} ref='preview' src=''/>
                     </div>
                 </div>
             </div>

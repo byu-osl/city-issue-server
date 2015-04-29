@@ -18,8 +18,9 @@ var Phone = React.createClass({
 	render: function () {
 		return (
 			<div>
-				<label htmlFor='phone'>Phone number</label>
+				<label className='control-label' htmlFor='phone'>Phone number</label>
 				<input 
+					className='form-control'
 					onChange={this.handleChange}
 					type='text' name='phone' value={this.state.phone}></input>
 			</div>

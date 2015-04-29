@@ -2,10 +2,23 @@
 
 var api = require('../server-api');
 api = new api();
+var styles = require('../styles');
 
 var CategorySection = React.createClass({
 
-    validate: function() {return this.state.isValid},
+    getInitialState: function () {
+        return {
+            categories: [],
+            selectedCategory: '',
+            isValid: undefined
+        };
+    },
+
+    validate: function() {
+        var isValid = this.state.selectedCategory.length > 0;
+        this.setState({isValid:isValid});
+        return isValid;
+    },
 
     categoryClicked: function(event) {
         this.setState({
@@ -14,15 +27,7 @@ var CategorySection = React.createClass({
         });
     },
 
-    getInitialState: function () {
-        return {
-            categories: [],
-            selectedCategory: '',
-            isValid: false
-        };
-    },
-
-    getSelectedCategory: function() {return this.state.selectedCategory; },
+    getSelectedCategory: function() {return this.state.selectedCategory},
  
     receivedCategories: function (categories) {
         this.setState({
@@ -35,13 +40,17 @@ var CategorySection = React.createClass({
     },
 
     render: function() {
+        var errorStyle = 
+            this.state.isValid === false ? styles.visible : styles.hidden;
+
         return (
             <div className='form-group'>
+                <p style={errorStyle} className="bg-warning">Please choose a category.</p>
                 <h4>Pick a Category</h4> 
                 <div className='btn-group' data-toggle='buttons'>
                     {this.state.categories.map(function(category, index){
                         return (
-                            <label className='btn btn-primary active' key={category.service_name} onClick={this.categoryClicked}>
+                            <label className='btn btn-primary' key={category.service_name} onClick={this.categoryClicked}>
                                 <input type='radio' name='options' value={category.service_code} autoComplete='off'/>{category.service_name}
                             </label>
                         );

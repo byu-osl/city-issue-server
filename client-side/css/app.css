@@ -1,3 +1,4 @@
+/* Site-wide */
 .navbar-default {
   background-color: #F3F3E1;
 }
@@ -6,6 +7,16 @@
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
   background-color: #e2e2b6;
+}
+
+body {
+	padding-bottom:20px
+}
+
+/* Request form */
+
+.request-form input[type=text], .request-form input[type=password] {
+	margin-bottom: 15px;
 }
 
 

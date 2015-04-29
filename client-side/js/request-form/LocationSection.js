@@ -62,8 +62,13 @@ module.exports = React.createClass({
     render: function () {
         var validationState = '';
         var errorStyle = styles.hidden;
+        var autofocus;
         var buttonStyle = {
           marginLeft: '10px'
+        }
+
+        var markerStyle = {
+            color: 'rgb(207, 99, 99)'
         }
 
         if (this.state.isValid === false) {
@@ -77,7 +82,7 @@ module.exports = React.createClass({
 
         return (
             <div className="row">
-                <div className={'form-group col-md-6' + validationState}>
+                <div className={'form-group' + validationState}>
                     <div>
                         <p style={errorStyle} className='bg-warning'>Please add a location.</p>
                         <label className='control-label'>Location</label>
@@ -85,13 +90,14 @@ module.exports = React.createClass({
                             style={buttonStyle}
                             className='btn btn-default btn-xs location-button' 
                             onClick={this.handleLocationClick}>
-                            <span className='glyphicon glyphicon-map-marker'/>
+                            <span  style={markerStyle} className='glyphicon glyphicon-map-marker'/>
                             detect my location
                         </button>
                     </div>
                     <input 
                         onChange={this.handleChange}
                         onBlur={this.validate}
+                        tabIndex='1'
                         ref='input' 
                         className='form-control' 
                         name='location' 
