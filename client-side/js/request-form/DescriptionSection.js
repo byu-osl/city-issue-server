@@ -3,14 +3,6 @@ var styles = require('../styles');
 
 var DescriptionSection = React.createClass({
 
-    validate: function() {
-        var isValid = this.state.description.length > 0 || this.getImage().length > 0
-        this.setState({isValid:isValid});
-        return isValid;
-    },
-
-    getDescription: function () {return this.state.description},
-
     getInitialState: function () {
         return  {
               description: '',
@@ -19,8 +11,10 @@ var DescriptionSection = React.createClass({
         };
     },
 
-    getImage: function () {
-        return React.getDOMNode(this.refs.preview).src
+    validate: function() {
+        var isValid = this.state.description.length > 0 || this.getImage().length > 0
+        this.setState({isValid:isValid});
+        return isValid;
     },
 
     handleChange: function () {
@@ -31,8 +25,6 @@ var DescriptionSection = React.createClass({
         var value = event.target.value;
         this.setState({description:event.target.value});
     },
-
-    handlePictureClick: function () {$('.picture-input').click(); },
 
     handleImage: function(event) {
         var file = event.target.files[0];
@@ -52,9 +44,14 @@ var DescriptionSection = React.createClass({
         React.findDOMNode(this.refs.preview).src = '';
         $('button.close').hide();
     },
+    
+    handlePictureClick: function () {$('.picture-input').click()},
+    getDescription: function () {return this.state.description},
+    getImage: function () {return React.getDOMNode(this.refs.preview).src },
 
     render: function() {
         var validationState = '';
+        var errorStyle = styles.hidden;
 
         var buttonStyle = {
             marginLeft: '10px'
@@ -62,6 +59,7 @@ var DescriptionSection = React.createClass({
 
         if (this.state.isValid === false) {
             validationState = ' has-error';
+            errorStyle = styles.visible;
         }
 
         if (this.state.isValid === true) {
@@ -71,8 +69,8 @@ var DescriptionSection = React.createClass({
         return (
             <div className='form-group'>
                 <div className='row'>
-
                     <div className={'col-md-6' + validationState}>
+                        <p style={errorStyle} className='bg-warning'>Please add an image or description.</p>
                         <label className='control-label'>Description</label>
                         <button 
                             style={buttonStyle}

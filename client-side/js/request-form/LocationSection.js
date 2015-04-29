@@ -1,5 +1,8 @@
 'use strict';
 
+var styles = require('../styles');
+var mixins = require('../mixins');
+
 // LocationSection of the form
 module.exports = React.createClass({
 
@@ -17,10 +20,10 @@ module.exports = React.createClass({
         };
     },
 
-    getLocation:   function () {return this.state.location; },
-    getLat:        function () {return this.state.lat; },
-    getLong:       function () {return this.state.long; },
-    usedDetection: function () {return this.state.usedDetection; },
+    getLocation:   function () {return this.state.location},
+    getLat:        function () {return this.state.lat},
+    getLong:       function () {return this.state.long},
+    usedDetection: function () {return this.state.usedDetection},
 
     setLocation: function (positionData) {
         var lat = positionData.coords.latitude;
@@ -58,12 +61,14 @@ module.exports = React.createClass({
 
     render: function () {
         var validationState = '';
+        var errorStyle = styles.hidden;
         var buttonStyle = {
           marginLeft: '10px'
         }
 
         if (this.state.isValid === false) {
             validationState += ' has-error';
+            errorStyle = styles.visible;
         }
 
         if (this.state.isValid === true) {
@@ -74,6 +79,7 @@ module.exports = React.createClass({
             <div className="row">
                 <div className={'form-group col-md-6' + validationState}>
                     <div>
+                        <p style={errorStyle} className='bg-warning'>Please add a location.</p>
                         <label className='control-label'>Location</label>
                         <button 
                             style={buttonStyle}
@@ -84,14 +90,14 @@ module.exports = React.createClass({
                         </button>
                     </div>
                     <input 
+                        onChange={this.handleChange}
+                        onBlur={this.validate}
                         ref='input' 
-                        name='location' 
                         className='form-control' 
+                        name='location' 
                         type='text' 
                         value={this.state.location} 
-                        onChange={this.handleChange}
-                        onBlur={this.validate
-                    }/>
+                    />
                 </div>
             </div>
         );

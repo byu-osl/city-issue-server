@@ -6,19 +6,21 @@ var serverAPI = new ServerAPI();
 var LocationSection = require('./LocationSection');
 var CategorySection = require('./CategorySection');
 var DescriptionSection = require('./DescriptionSection');
+var Email = require('./Email');
+var Phone = require('./Phone');
+var Name = require('./Name');
  
 var RequestForm = React.createClass({
     submitForm: function (event) {
         event.preventDefault()
+        var long; 
+        var lat;
 
         if (!this.validateForm()) {
             return;
         }
- 
-        var long; 
-        var lat;
 
-        var location    = this.refs.location.getLocation();
+        var location = this.refs.location.getLocation();
 
         if (this.refs.location.usedDetection) {
             long = this.refs.location.getLong();
@@ -27,6 +29,10 @@ var RequestForm = React.createClass({
 
         serverAPI.postRequest({
             address_string: this.refs.location.usedDetection ? '' : location,
+            email: this.refs.email.getEmail(),
+            phone: this.refs.phone.getPhone(),
+            first_name: this.refs.name.getFirstName(),
+            last_name: this.refs.name.getLastName(),
             description: this.refs.description.getDescription(),
             lat:lat,
             long:long,
@@ -58,6 +64,9 @@ var RequestForm = React.createClass({
                     <LocationSection ref='location'/>
                     <DescriptionSection ref='description'/>
                     <CategorySection ref='category'/>
+                    <Email ref='email'/>
+                    <Name ref='name'/>
+                    <Phone ref='phone'/>
                     <input type='submit' className='btn btn-fault'></input>
                 </form>
             </div>
