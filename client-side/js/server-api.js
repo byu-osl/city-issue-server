@@ -1,11 +1,21 @@
-function ServerAPI () {}
+'use strict';
 
-ServerAPI.prototype.postRequest = function (data, callback) {
-    $.post('/requests.json', data, callback);
+var serverAPI = {};
+
+serverAPI.postRequest = function (data, cb) {
+    $.post('/requests.json', data, cb);
 }
 
-ServerAPI.prototype.getCategories = function (callback) {
-     $.get('/services.json', callback);
+serverAPI.getCategories = function (cb) {
+     $.get('/services.json', cb);
 }
 
-module.exports = ServerAPI;
+serverAPI.registerUser = function (data, cb) {
+	$.post('/register-user', data, cb);
+}
+
+serverAPI.login = function (token, cb) {
+	$.post('/login', {token:token}, cb);
+}
+
+module.exports = serverAPI;

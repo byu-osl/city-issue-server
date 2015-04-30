@@ -3,11 +3,13 @@
 var styles = require('../styles');
 var mixins = require('../mixins');
 
+var Map = require('./Map.jsx');
+
 // LocationSection of the form
 module.exports = React.createClass({
 
     validate: function() {
-        var isValid = this.state.location.length > 0;
+        var isValid = (!!this.getLocation());
         this.setState({isValid:isValid});
         return isValid;
     },
@@ -20,7 +22,7 @@ module.exports = React.createClass({
         };
     },
 
-    getLocation:   function () {return this.state.location},
+    getLocation:   function () {return this.refs.map.getLatLng()},
     getLat:        function () {return this.state.lat},
     getLong:       function () {return this.state.long},
     usedDetection: function () {return this.state.usedDetection},
@@ -28,16 +30,12 @@ module.exports = React.createClass({
     setLocation: function (positionData) {
         var lat = positionData.coords.latitude;
         var long = positionData.coords.longitude;
-        var output = 'latitude: ' + lat + ', longitude: ' + long;
 
-        this.setState({
-            location:output
-        });
+        this.refs.map.setCenter(lat, long);
 
         this.setState({
             lat:lat, 
             long:long, 
-            location: output,
             usedDetection: true,
             isValid: true
         });
@@ -45,7 +43,11 @@ module.exports = React.createClass({
 
     handleLocationClick: function (event) {
         event.preventDefault();
-        navigator.geolocation.getCurrentPosition(this.setLocation, null, {enableHighAccuracy:true});
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(this.setLocation, null, {enableHighAccuracy:true});
+        } else {
+            // report that they don't have 
+        }
     },
 
     handleChange: function (event) {
@@ -94,18 +96,19 @@ module.exports = React.createClass({
                             detect my location
                         </button>
                     </div>
-                    <input 
-                        onChange={this.handleChange}
-                        onBlur={this.validate}
-                        tabIndex='1'
-                        ref='input' 
-                        className='form-control' 
-                        name='location' 
-                        type='text' 
-                        value={this.state.location} 
-                    />
+                    <Map ref='map'/>
                 </div>
             </div>
         );
     }
 });
+                    // <input 
+                    //     onChange={this.handleChange}
+                    //     onBlur={this.validate}
+                    //     tabIndex='1'
+                    //     ref='input' 
+                    //     className='form-control' 
+                    //     name='location' 
+                    //     type='text' 
+                    //     value={this.state.location} 
+                    // />

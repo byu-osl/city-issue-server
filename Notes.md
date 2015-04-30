@@ -11,11 +11,22 @@ MongoDB
 
 Istanbul for code coverage
 
-Questions:
-    Want to know how I'm implementing certain things?
-    Validation strategy
-    What percentage should I shoot for in caniuse?
-    What should be 
-
 Todo:
     cleanup code duplication with validation messages
+
+
+======================
+
+Auth
+    register + login, tokens, create token from username and password, local storage to store token
+
+opt: email - update checkbox (auto focus)
+no account required
+
+google maps for location
+
+redo the priority list
+
+
+# Changed since last time
+- contact info

@@ -1,8 +1,9 @@
 {
 
   	"globals": {
-    	"React": false,
-    	"$"	   : false
+    	"React" : false,
+    	"$"	    : false,
+        "google": false
 	},
 
     "asi"       : true,

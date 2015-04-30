@@ -21,7 +21,7 @@ var Email = React.createClass({
 
 	render: function () {
 		return (
-			<div>
+			<div style={this.props.style}>
 				<label className='control-label' htmlFor="email">Email</label>
 				<input 
 					className='form-control'

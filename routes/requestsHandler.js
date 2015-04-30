@@ -1,6 +1,4 @@
-/* 
-	route: /requests.json
-*/
+'use strict';
 
 var express = require('express');
 var router  = express.Router();
@@ -10,8 +8,6 @@ var Service = require('../models/service');
 router.get('/:requestID.json', queryStatus);
 router.get('/', findRequests);
 router.post('/', validatePOSTParameters, saveRequest);
-
-module.exports = router;
 
 function queryStatus(req, res){
     var requestID = req.params.requestID;
@@ -73,7 +69,6 @@ function saveRequest(req, res) {
 	request.save(function requestSaved(error, request, numberAffected){
 		if (error) {
 			res.send500('There was an error in saving your request.');
-			throw new Error(error);
 		} else if (numberAffected > 0) {
 			// TODO: spec says service_request_id shouldn't be returned if a token is returned
 			res.send([{
@@ -112,3 +107,5 @@ function validObjectID(id) {
 	// 24 characters, a-f, 0-9
 	return /([a-f]|\d){24}/.test(id);
 }
+
+module.exports = router;

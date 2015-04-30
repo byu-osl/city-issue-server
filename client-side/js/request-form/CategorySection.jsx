@@ -1,7 +1,6 @@
 'use strict';
 
 var api = require('../server-api');
-api = new api();
 var styles = require('../styles');
 
 var CategorySection = React.createClass({
@@ -21,8 +20,17 @@ var CategorySection = React.createClass({
     },
 
     categoryClicked: function(event) {
+        // in case the target is the label
+        var value = $('input', event.target).val();
+
+        // it may target a span that react inserts
+        if (typeof value === 'undefined') {
+            var parent = $(event.target).parent() 
+            value = $('input', parent).val();
+        }
+
         this.setState({
-            selectedCategory: $('input', event.currentTarget).val(),
+            selectedCategory: value,
             isValid: true
         });
     },
@@ -46,9 +54,9 @@ var CategorySection = React.createClass({
         return (
             <div className='form-group'>
                 <p style={errorStyle} className="bg-warning">Please choose a category.</p>
-                <h4>Pick a Category</h4> 
+                <label style={styles.block} className='control-label'>Pick a category:</label> 
                 <div className='btn-group' data-toggle='buttons'>
-                    {this.state.categories.map(function(category, index){
+                    {this.state.categories.map(function (category, index){
                         return (
                             <label className='btn btn-primary' key={category.service_name} onClick={this.categoryClicked}>
                                 <input type='radio' name='options' value={category.service_code} autoComplete='off'/>{category.service_name}

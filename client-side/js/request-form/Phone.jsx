@@ -7,17 +7,17 @@ var Phone = React.createClass({
 		}
 	},
 
-	getPhone : function () {
+	getPhoneNumber: function () {
 		return this.state.phone;
 	},
 
-	handleChange : function () {
+	handleChange: function () {
 		this.setState({phone: event.target.value})
 	},
 
 	render: function () {
 		return (
-			<div>
+			<div style={this.props.style}>
 				<label className='control-label' htmlFor='phone'>Phone number</label>
 				<input 
 					className='form-control'

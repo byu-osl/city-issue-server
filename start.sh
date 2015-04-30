@@ -8,5 +8,5 @@ if  ! type 'supervisor' > /dev/null; then
     	node server.js
     fi
 else
-    supervisor -n error server.js
+    supervisor -n error --ignore client-side server.js
 fi

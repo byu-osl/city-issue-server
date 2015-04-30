@@ -40,3 +40,5 @@ old_public/
 .module-cache/
 
 client-side/dist/src/build.js
+
+config.js

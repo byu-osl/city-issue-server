@@ -75,7 +75,7 @@ var DescriptionSection = React.createClass({
         var imageContainerStyle = 
             this.getImage().length > 0 ? styles.visible : styles.hidden;
 
-        return (
+        return (   
             <div className='form-group'>
                 <div className='row'>
                     <div className={validationState}>

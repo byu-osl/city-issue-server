@@ -74,15 +74,15 @@ After that, [submit a pull request](https://help.github.com/articles/using-pull-
 ### Todo list
 
 Ranked by priority:
+- [ ] authentication
 - [ ] administrative section for city employees
 - [ ] endpoints:
 	+ [ ] POST service type
-- [ ] authentication
 - [ ] email notifications for status updates
 - [ ] optional account creation at issue submission
 - [ ] form validation
 - [ ] submit issue by picture
-- [ ] Flux architecture, React router
+- [ ] Flux architecture
 - [ ] set up frontend testing
 - [ ] rename the two app.js files
 - [ ] production concatenation/minifcation

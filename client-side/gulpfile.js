@@ -1,3 +1,6 @@
+'use strict';
+var notify = require('gulp-notify');
+var gutil = require('gulp-util');
 var gulp = require('gulp');
 var uglify = require('gulp-uglify');
 var htmlreplace = require('gulp-html-replace');
@@ -14,21 +17,36 @@ var path = {
   DEST: 'dist',
   DEST_BUILD: 'dist/build',
   DEST_SRC: 'dist/src',
-  ENTRY_POINT: './js/client-main.js'
+  ENTRY_POINT: './js/client-main.jsx'
 };
 
-gulp.on('error', function(err) {
-      console.log(err.message);
-      this.end();
-    }).task('copy', function(){
+gulp.task('copy', function(){
   gulp.src(path.HTML)
     .pipe(gulp.dest(path.DEST));
 });
 
-gulp.on('error', function(err) {
-      console.log(err.message);
-      this.end();
-    }).task('watch', function() {
+
+gulp.task('build', function(){
+  var b = browserify({
+    entries: [path.ENTRY_POINT],
+    transform: [reactify],
+  });
+
+  return b.bundle()
+    .pipe(source(path.MINIFIED_OUT))
+    .pipe(streamify(uglify(path.MINIFIED_OUT)))
+    .pipe(gulp.dest(path.DEST_BUILD));
+});
+
+gulp.task('replaceHTML', function(){
+  gulp.src(path.HTML)
+    .pipe(htmlreplace({
+      'js': 'build/' + path.MINIFIED_OUT
+    }))
+    .pipe(gulp.dest(path.DEST));
+});
+
+gulp.task('watch', function() {
   gulp.watch(path.HTML, ['copy']);
 
   var watcher  = watchify(browserify({
@@ -39,54 +57,78 @@ gulp.on('error', function(err) {
   }));
 
   return watcher.on('update', function () {
-    watcher.bundle()
+    watcher.bundle().on('error', handleError('Browserify'))
       .pipe(source(path.OUT))
       .pipe(gulp.dest(path.DEST_SRC));
-      console.log('Updated');
+      console.log('Updated: ' + new Date());
   })
-    .bundle().on('error', function(err) {
-      console.log(err.message);
-      this.end();
-    })
+    .bundle()
     .pipe(source(path.OUT))
     .pipe(gulp.dest(path.DEST_SRC));
 });
 
-gulp.on('error', function(err) {
-      console.log(err.message);
-      this.end();
-    }).task('build', function(){
-  var b = browserify({
-    entries: [path.ENTRY_POINT],
-    transform: [reactify],
-  });
+gulp.task('production', ['replaceHTML', 'build']);
 
-  return b.bundle().on('error', function(err) {
-      console.log(err.message);
-      this.end();
-    })
-    .pipe(source(path.MINIFIED_OUT))
-    .pipe(streamify(uglify(path.MINIFIED_OUT)))
-    .pipe(gulp.dest(path.DEST_BUILD));
-});
+gulp.task('default', ['watch']);
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
 
-gulp.on('error', function(err) {
-      console.log(err.message);
-      this.end();
-    }).task('replaceHTML', function(){
-  gulp.src(path.HTML)
-    .pipe(htmlreplace({
-      'js': 'build/' + path.MINIFIED_OUT
-    }))
-    .pipe(gulp.dest(path.DEST));
-});
+function handleError (task) {
+  return function(err) {
+    
+      notify.onError({
+        message: task + ' failed.',
+        sound: true
+      })(err);
+    
+    gutil.log(gutil.colors.bgRed(task + ' error:'), gutil.colors.red(err));
+  };
+};
 
-gulp.on('error', function(err) {
-      console.log(err.message);
-      this.end();
-    }).task('production', ['replaceHTML', 'build']);
+// var tasks = {
+//   // --------------------------
+//   // Browserify
+//   // --------------------------
+//   browserify: function() {
+//     var bundler = browserify('./js/client-main.jsx', {
+//     	transform: [reactify],
+// 		debug: true,
+// 		cache: {}
+//     });
 
-gulp.on('error', function(err) {
-      console.log(err.message);
-      this.end();
-    }).task('default', ['watch']);
+//     bundler = watchify(bundler);
+//     var rebundle = function() {
+//         return bundler.bundle()
+// 			.on('error', handleError('Browserify'))
+// 			.pipe(source('build.js'))
+// 			.pipe(gulp.dest('dist/src/'));
+//     };
+//     bundler.on('update', rebundle);
+
+//     console.log('Updated.');
+//     return rebundle();
+//   }
+ 
+// };
+
+// gulp.task('browser-sync', function() {
+//     browserSync({
+//         server: {
+//             baseDir: "./"
+//         },
+//         port: 3000
+//     });
+// });
+
+// gulp.task('reload-js', ['browserify'], function(){
+// 	browserSync.reload();
+// });
+
+// gulp.task('browserify', tasks.browserify);
+
+// gulp.task('watch', ['browserify', 'browser-sync'], function() {
+//   gulp.watch('./js/request-form/**', ['reload-js']);
+// });
+ 
+// gulp.task('default', ['watch']);
