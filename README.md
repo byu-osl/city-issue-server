@@ -79,12 +79,11 @@ Ranked by priority:
 - [ ] endpoints:
 	+ [ ] POST service type
 - [ ] email notifications for status updates
-- [ ] optional account creation at issue submission
-- [ ] form validation
-- [ ] submit issue by picture
+- [X] optional account creation at issue submission
+- [X] form validation
+- [X] submit issue by picture
 - [ ] Flux architecture
 - [ ] set up frontend testing
-- [ ] rename the two app.js files
 - [ ] production concatenation/minifcation
 - [ ] detect if a port is in use - use a different one if necessary
 - [ ] create GitHub issues for each of these todo items

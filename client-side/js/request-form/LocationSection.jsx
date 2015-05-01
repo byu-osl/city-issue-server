@@ -86,7 +86,7 @@ module.exports = React.createClass({
             <div className="row">
                 <div className={'form-group' + validationState}>
                     <div>
-                        <p style={errorStyle} className='bg-warning'>Please add a location.</p>
+                        <p style={errorStyle} className='bg-warning'>Please choose a location.</p>
                         <label className='control-label'>Location</label>
                         <button 
                             style={buttonStyle}
@@ -96,7 +96,7 @@ module.exports = React.createClass({
                             detect my location
                         </button>
                     </div>
-                    <Map ref='map'/>
+                    <Map onBlur={this.validate} ref='map'/>
                 </div>
             </div>
         );

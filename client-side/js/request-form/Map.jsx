@@ -1,6 +1,22 @@
 'use strict';
 var Marker = google.maps.Marker;
 var cityCenter = new google.maps.LatLng(40.4122994, -111.75418)
+var mapOptions = {
+	center: {
+		lat: 40.4122994,
+		lng: -111.75418
+	},
+	draggableCursor:'crosshair',
+	zoom: 14,
+	mapTypeId: google.maps.MapTypeId.HYBRID
+}
+
+var markerOptions = {
+	animation: google.maps.Animation.DROP,
+	draggable: true,
+	position: cityCenter,
+	title: 'Issue location'
+}
 
 var Map = React.createClass({
 
@@ -16,25 +32,13 @@ var Map = React.createClass({
 	},
 
 	initializeMap: function () {
-		var options = {
-			center: {
-				lat: 40.4122994,
-				lng: -111.75418
-			},
-			zoom: 14
-		}
-
-		var map = new google.maps.Map($('.map-canvas')[0], options);
+		var map = new google.maps.Map($('.map-canvas')[0], mapOptions);
 		google.maps.event.addListener(map, 'click', this.mapClicked);
 
-		var marker = new Marker({
-			animation: google.maps.Animation.DROP,
-			draggable: true,
-			position: cityCenter,
-			map: map,
-			title: 'Issue location'
-		});
+		var marker = new Marker(markerOptions);
+		marker.setMap(map);
 		google.maps.event.addListener(marker, 'dragend', this.markerDragged);
+
 
 		this.setState({
 			map: map,
@@ -71,7 +75,7 @@ var Map = React.createClass({
 		}
 
 		return (
-			<div style={style} className='map-canvas'></div>
+			<div onBlur={this.props.onBlur} style={style} className='map-canvas'></div>
 		)
 	}
 
