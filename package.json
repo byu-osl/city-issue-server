@@ -30,6 +30,7 @@
     "passport-local": "^1.0.0",
     "react-router": "^0.13.3",
     "reactify": "^1.0.0",
+    "require-directory": "^2.1.0",
     "serve-favicon": "^2.2.0",
     "supertest": "^0.15.0"
   },
