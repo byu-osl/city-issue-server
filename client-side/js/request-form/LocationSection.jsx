@@ -17,6 +17,7 @@ module.exports = React.createClass({
     getInitialState: function () {
         return {
             location: '',
+            loading: false,
             usedDetection: false,
             isValid: undefined
         };
@@ -37,11 +38,13 @@ module.exports = React.createClass({
             lat:lat, 
             long:long, 
             usedDetection: true,
-            isValid: true
+            isValid: true,
+            loading: false
         });
     },
 
     handleLocationClick: function (event) {
+        this.setState({loading: true});
         event.preventDefault();
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(this.setLocation, null, {enableHighAccuracy:true});
@@ -70,7 +73,18 @@ module.exports = React.createClass({
         }
 
         var markerStyle = {
-            color: 'rgb(207, 99, 99)'
+            color: 'rgb(207, 99, 99)',
+            display: this.state.loading ? 'none' : 'inherit'
+        }
+
+        var loadingStyle = {
+            border: 'none',
+            display: this.state.loading ? 'inherit' : 'none',
+            top: '-5px',
+            position: 'relative',
+            paddingRight: '2px',
+            height: '9px',
+            marginRight: '5px'
         }
 
         if (this.state.isValid === false) {
@@ -93,6 +107,7 @@ module.exports = React.createClass({
                             className='btn btn-default btn-xs location-button' 
                             onClick={this.handleLocationClick}>
                             <span  style={markerStyle} className='glyphicon glyphicon-map-marker'/>
+                            <img style={loadingStyle} src='../../images/location-loader.gif'/>
                             detect my location
                         </button>
                     </div>

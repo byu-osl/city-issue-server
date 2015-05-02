@@ -16,11 +16,10 @@ var requestSchema = new Schema({
     device_id: String,          // unique ID of the device that submitted the request
     email: String,              // of the submitter
     expected_datetime: Date,    // when it's expected to be fulfilled
-    first_name: String,         // of the submitter
-    // history: Schema.Types.Mixed,// Array[Array[String]]
+    history: [{date: Date, description: String}],
     jurisdiction_id: String,    // unique city identifier
     lat: String,                // of the location
-    last_name: String,          // of the submitter
+    name: String,          // of the submitter
     media_url: String,          // image/etc. associate with the request
     long: String,               // of the location
     phone: String,              // of the submitter

@@ -18,10 +18,6 @@ var Name = React.createClass({
 		}
 	},
 
-	focus: function () {
-		
-	},
-
 	validate: function () {
 		return true;
 	},

@@ -4,12 +4,12 @@ var express = require('express');
 var router  = express.Router();
 var Request = require('../models/request');
 var Service = require('../models/service');
+var historyHandler = require('./historyHandler');
 
 router.get('/:requestID.json', queryStatus);
 router.get('/', findRequests);
 router.post('/', validatePOSTParameters, saveRequest);
-router.post('/.:requestID.json/addHistoryEntry', addHistoryEntry);
-
+router.use('/addHistoryEntry', historyHandler);
 
 function queryStatus(req, res){
     var requestID = req.params.requestID;
@@ -67,6 +67,10 @@ function saveRequest(req, res) {
 	var request = new Request(req.body);
 	request.requested_datetime = new Date().toISOString();
 	request.status = 'open';
+	request.history.push({
+		date: request.requested_datetime,
+		description: 'Issue submitted.'
+	})
 
 	request.save(function requestSaved(error, request, numberAffected){
 		if (error) {
@@ -81,17 +85,6 @@ function saveRequest(req, res) {
 		}
 	});
 }
-
-// req.params.requestID
-// req.body.status
-
-function addHistoryEntry(req, res) {
-	Request.findById(req.params.requestID, function(){
-		
-	})
-}
-
-
 
 //////////////////////////////////
 //////////////////////////////////
