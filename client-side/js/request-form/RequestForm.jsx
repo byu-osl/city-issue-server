@@ -40,7 +40,6 @@ var RequestForm = React.createClass({
             media_url: this.refs.description.getImage(),
             service_code: this.refs.category.getSelectedCategory()
         }, function (data){
-            data = JSON.parse(data);
             console.log('Saved!');
             console.log(data);
         });
@@ -51,7 +50,7 @@ var RequestForm = React.createClass({
                 password: password,
                 name: name
             }, function (data) {
-                console.log('User registered maybe');
+                localStorage['issueTrackerToken'] = data.token;
             });
         }
     },

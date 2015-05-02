@@ -1,8 +1,13 @@
 'use strict';
 
+// Each request needs to store its history. The history will be 
+// an array of entries
+//  Each entry will have the date, status. 
+
 var mongoose = require('mongoose');
+var Schema   = mongoose.Schema;
 var moment   = require('moment');
-var requestSchema = new mongoose.Schema({
+var requestSchema = new Schema({
     account_id: String,         // the user who submitted the request
     address_id: Number,         // address of some external system
     address_string: String,     // description of location of the issue
@@ -12,6 +17,7 @@ var requestSchema = new mongoose.Schema({
     email: String,              // of the submitter
     expected_datetime: Date,    // when it's expected to be fulfilled
     first_name: String,         // of the submitter
+    // history: Schema.Types.Mixed,// Array[Array[String]]
     jurisdiction_id: String,    // unique city identifier
     lat: String,                // of the location
     last_name: String,          // of the submitter

@@ -19,9 +19,8 @@ function loginUser (req, res) {
 		}
 
 		bcrypt.compare(req.body.password, user.passwordHash, function(err, response) {
-			console.log(user, req.body.email, req.body.password);
 			if (response === true) {
-				res.send('Correct password');
+				res.send(user);
 			} else {
 				res.send('Incorrect password');
 			}

@@ -1,5 +1,4 @@
 'use strict';
-var requireDirectory = require('require-directory');
 var express        = require('express');
 var path           = require('path');
 var bodyParser     = require('body-parser');
@@ -25,6 +24,7 @@ app.use(/\/requests(.json)?/, routes.requestsHandler);
 app.use(/\/services(.json)?/, routes.servicesHandler);
 app.use('/register', 		  routes.registrationHandler);
 app.use('/login', 			  routes.loginHandler);
+app.use('/authenticate', 	  routes.authenticationHandler);
 
 app.use(function return404(req, res) {
     res.status(404).send({

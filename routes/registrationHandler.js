@@ -4,6 +4,8 @@ var express = require('express');
 var router  = express.Router();
 var User = require('../models/user');
 var bcrypt = require('bcrypt');  
+var jwt = require('jwt-simple');
+var config = require('../config');
 
 router.post('/', validateUser, registerUser);
 
@@ -23,11 +25,17 @@ function registerUser (req, res) {
 	bcrypt.hash(req.body.password, 10, function(err, hash) {
 		req.body.passwordHash = hash;
 		var user = new User(req.body);
+
 		user.save(function userSaved (error, user, numberAffected){
+			delete user.passwordHash;
+			var token = jwt.encode(user, config.key);
 			if (error) {
 				res.send500('There was an error saving this user');
 			} else if (numberAffected > 0) {
-				res.send('User saved.');
+				res.json({
+					user: user,
+					token: token
+				});
 			}
 		});
 	});
@@ -35,3 +43,4 @@ function registerUser (req, res) {
 
 module.exports = router;
 
+ 

@@ -26,21 +26,21 @@ Router.run(routes, Router.HashLocation, function (Root) {
 	React.render(<Root />, $('.app-container')[0]);
 });
 
-login();
+authenticate();
 
-function login () {
-	var token = localStorage.getItem('token');
+function authenticate () {
+	var token = localStorage.getItem('issueTrackerToken');
 
 	if (!token) {
 		window.loggedIn = false;
 	} else {
-		serverAPI.login(token, function (data) {
-			data = JSON.parse(data);
-			if (data.loggedIn === true) {
-				window.userData = JSON.parse(data);
-				window.loggedIn = true;
-			} else {
+		serverAPI.authenticate(token, function (data) {
+			if (data.authenticated === false) {
 				window.loggedIn = false;
+			} else {
+				console.log('Authenticated.');
+				window.userData = data;
+				window.loggedIn = true;
 			}
 		});
 	}

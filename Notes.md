@@ -1,17 +1,7 @@
-Notes
-MongoDB: Robomongo
 Istanbul for code coverage
 
 # Questions
 - satellite map?
-
-Auth
-    register + login, tokens, create token from username and password, local storage to store token
-
-opt: email - update checkbox (auto focus)
-no account required
-
-redo the priority list
 
 # Changed since last time
 - contact info
@@ -20,13 +10,16 @@ redo the priority list
 ----------------
 
 ## Individual request page:
-- User stuff
-    - all request info: map, description, category, comments?
-    - some sort of activity
+- For users:
+    + see request info
+        * map, description, category
+    + edit request info
+    + see request status
 
 - Admin stuff  
-    + Set status
-    + view user contact info
+    + update status
+        * canned statuses available
+    + view user info
     + directions to location
 
 ## Admin page

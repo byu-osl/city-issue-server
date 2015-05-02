@@ -8,6 +8,8 @@ var Service = require('../models/service');
 router.get('/:requestID.json', queryStatus);
 router.get('/', findRequests);
 router.post('/', validatePOSTParameters, saveRequest);
+router.post('/.:requestID.json/addHistoryEntry', addHistoryEntry);
+
 
 function queryStatus(req, res){
     var requestID = req.params.requestID;
@@ -79,6 +81,22 @@ function saveRequest(req, res) {
 		}
 	});
 }
+
+// req.params.requestID
+// req.body.status
+
+function addHistoryEntry(req, res) {
+	Request.findById(req.params.requestID, function(){
+		
+	})
+}
+
+
+
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+
 
 //  required for requests
 function hasLocationInfo(params) {

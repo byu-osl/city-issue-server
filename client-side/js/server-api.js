@@ -11,11 +11,11 @@ serverAPI.getCategories = function (cb) {
 }
 
 serverAPI.registerUser = function (data, cb) {
-	$.post('/register-user', data, cb);
+	$.post('/register', data, cb);
 }
 
-serverAPI.login = function (token, cb) {
-	$.post('/login', {token:token}, cb);
+serverAPI.authenticate = function (token, cb) {
+	$.post('/authenticate', {token:token}, cb);
 }
 
 module.exports = serverAPI;
