@@ -9,7 +9,17 @@ var Name = React.createClass({
 	},
 
 	getName : function () {
-		return this.state.Name;
+		return this.state.name;
+	},
+
+	componentDidUpdate: function () {
+		if (this.getName().length === 0) {
+			this.refs.input.getDOMNode().focus();
+		}
+	},
+
+	focus: function () {
+		
 	},
 
 	validate: function () {

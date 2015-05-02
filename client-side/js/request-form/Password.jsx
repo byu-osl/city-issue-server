@@ -12,6 +12,12 @@ var Password = React.createClass({
 		return this.state.password;
 	},
 
+	componentDidUpdate: function () {
+		if (this.props.creatingAccount) {
+			this.refs.input.getDOMNode().focus();
+		}
+	},
+
 	validate: function () {
 		return true;
 	},
@@ -43,6 +49,7 @@ var Password = React.createClass({
 					<a style={visibilityStyle} className='small' onClick={this.togglePasswordVisibility}>{visibilityText}</a>
 				</label>
 				<input 
+					ref='input'
 					className='form-control'
 					type={formType}
 					name='password'

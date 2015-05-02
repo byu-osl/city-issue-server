@@ -1,3 +1,5 @@
+'use strict';
+
 var Name = require('./Name.jsx');
 var Email = require('./Email.jsx');
 var Password = require('./Password.jsx');
@@ -32,6 +34,8 @@ var ContactInfo = React.createClass({
 			value = $('input', parent).val();
     	}
     	this.setState({contactMethod: value});
+
+    	this.refs.name.focus();
     },
 
 	render: function () {
@@ -84,7 +88,7 @@ var ContactInfo = React.createClass({
                         <input type='checkbox' onChange={this.toggleAccountCreation}/> Create an account <span className="small">(save your information for the next time you submit an issue)</span>
                     </label>
                 </div>
-                <Password style={passwordStyle} ref='password'/>
+                <Password creatingAccount={this.state.creatingAccount} style={passwordStyle} ref='password'/>
 
 			</div>
 		)
