@@ -74,7 +74,7 @@ After that, [submit a pull request](https://help.github.com/articles/using-pull-
 ### Todo list
 
 Ranked by priority:
-- [ ] authentication
+- [X] authentication
 - [ ] administrative section for city employees
 - [ ] endpoints:
 	+ [ ] POST service type

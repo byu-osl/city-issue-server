@@ -1,9 +1,5 @@
 'use strict';
 
-// Each request needs to store its history. The history will be 
-// an array of entries
-//  Each entry will have the date, status. 
-
 var mongoose = require('mongoose');
 var Schema   = mongoose.Schema;
 var moment   = require('moment');
@@ -12,6 +8,7 @@ var requestSchema = new Schema({
     address_id: Number,         // address of some external system
     address_string: String,     // description of location of the issue
     agency_responsible: String, // who needs to fulfill it
+    contact_method: String,     // 
     description: String,        // description of the request
     device_id: String,          // unique ID of the device that submitted the request
     email: String,              // of the submitter
@@ -19,10 +16,10 @@ var requestSchema = new Schema({
     history: [{date: Date, description: String}],
     jurisdiction_id: String,    // unique city identifier
     lat: String,                // of the location
-    name: String,          // of the submitter
+    name: String,               // of the submitter
     media_url: String,          // image/etc. associate with the request
     long: String,               // of the location
-    phone: String,              // of the submitter
+    phone_number: String,              // of the submitter
     requested_datetime: Date,   // time requested
     service_code: String,       // type of service needed
     service_name: String,       // type of service needed (human readable)

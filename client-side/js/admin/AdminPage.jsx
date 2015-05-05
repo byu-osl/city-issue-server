@@ -1,4 +1,5 @@
 'use strict';
+var React  = require('react');
 
 var AdminPage = React.createClass({
 

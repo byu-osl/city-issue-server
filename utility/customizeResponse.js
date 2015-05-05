@@ -11,4 +11,3 @@ module.exports = function customizeResponse (req, res, next){
 	});
 	next();
 };
-

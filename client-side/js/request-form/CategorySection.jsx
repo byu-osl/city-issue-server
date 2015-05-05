@@ -1,4 +1,5 @@
 'use strict';
+var React  = require('react');
 
 var api = require('../server-api');
 var styles = require('../styles');

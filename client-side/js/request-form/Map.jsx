@@ -1,4 +1,5 @@
 'use strict';
+var React  = require('react');
 var Marker = google.maps.Marker;
 var cityCenter = new google.maps.LatLng(40.4122994, -111.75418)
 var mapOptions = {
@@ -34,11 +35,10 @@ var Map = React.createClass({
 	initializeMap: function () {
 		var map = new google.maps.Map($('.map-canvas')[0], mapOptions);
 		google.maps.event.addListener(map, 'click', this.mapClicked);
-
+		
 		var marker = new Marker(markerOptions);
 		marker.setMap(map);
 		google.maps.event.addListener(marker, 'dragend', this.markerDragged);
-
 
 		this.setState({
 			map: map,
@@ -60,6 +60,7 @@ var Map = React.createClass({
 		this.state.map.panTo(position);
 		this.state.marker.setPosition(position);
 		this.setState({latLng:position});
+		this.state.map.setZoom(19);
 	},
 
 	componentDidMount: function () {

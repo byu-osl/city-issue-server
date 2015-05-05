@@ -1,5 +1,5 @@
 'use strict';
-
+var React  = require('react');
 var Password = React.createClass({
 	getInitialState: function () {
 	    return {

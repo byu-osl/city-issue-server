@@ -1,7 +1,10 @@
 'use strict';
+var React  = require('react');
+
 
 var Email = React.createClass({
 	getInitialState: function () {
+		var email = this.props.value || '';
 	    return {
 	        email: '',
 	    };
@@ -17,6 +20,10 @@ var Email = React.createClass({
 
 	handleChange: function () {
 		this.setState({email:event.target.value});
+	},
+
+	componentWillReceiveProps: function (newProps) {
+		this.setState({email:newProps.value});
 	},
 
 	render: function () {

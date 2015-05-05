@@ -1,18 +1,23 @@
 'use strict';
-
+var React  = require('react');
 var Phone = React.createClass({
 	getInitialState : function () {
+		var phoneNumber = this.props.value || '';
 		return {
-			phone: ''
+			phoneNumber: phoneNumber
 		}
 	},
 
 	getPhoneNumber: function () {
-		return this.state.phone;
+		return this.state.phoneNumber;
 	},
 
 	handleChange: function () {
 		this.setState({phone: event.target.value})
+	},
+
+	componentWillReceiveProps: function (newProps) {
+		this.setState({phoneNumber:newProps.value});
 	},
 
 	render: function () {
@@ -22,7 +27,7 @@ var Phone = React.createClass({
 				<input 
 					className='form-control'
 					onChange={this.handleChange}
-					type='text' name='phone' value={this.state.phone}></input>
+					type='text' name='phoneNumber' value={this.state.phoneNumber}></input>
 			</div>
 		)
 	}

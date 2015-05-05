@@ -4,24 +4,22 @@ var express = require('express');
 var jwt = require('jsonwebtoken');
 var User = require('../models/user');
 var config = require('../config');
-var router  = express.Router();
 
-router.post('/', authenticate);
 
-function authenticate (req, res) {
+function isAdmin (req, res, next) {
 	var decodedUser = jwt.decode(req.body.token, config.key);
 	if (decodedUser) {
 		User.count({email: decodedUser.email}, function (error, count) {
-			if (count > 0) {
-				res.send(decodedUser);
+			if (count === 0 || decodedUser.role !== 'admin') {
+				res.send403('You aren\'t authorized to make this request.');
 			} else {
-				res.send({authenticated: false});
+				next();
 			}
 		})
 	} else {
-		res.send({authenticated: false});
+		res.send403('You aren\'t authorized to make this request.');
 	}
 }
 
-module.exports = router;
+module.exports = authenticate;
 

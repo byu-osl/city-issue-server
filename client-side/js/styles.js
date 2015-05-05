@@ -1,3 +1,5 @@
+'use strict';
+
 var styles = {};
 
 styles.hidden = {
@@ -15,5 +17,15 @@ styles.spaceBelow = {
 styles.block = {
 	display: 'block'
 }
+
+styles.hiddenIf = function (condition) {
+	return condition ? styles.hidden : styles.visible;
+}
+
+styles.visibleIf = function(condition) {
+	return condition ? styles.visible : styles.hidden;
+}
+
+
 
 module.exports = styles;

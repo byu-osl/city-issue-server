@@ -1,5 +1,5 @@
 'use strict';
-
+var React  = require('react');
 var serverAPI = require('../server-api');
 var _ = require('../_');
 var LocationSection = require('./LocationSection.jsx');
@@ -7,8 +7,36 @@ var CategorySection = require('./CategorySection.jsx');
 var DescriptionSection = require('./DescriptionSection.jsx');
 var ContactInfo = require('./ContactInfo.jsx');
 var styles = require('../styles');
+var loggedOutUser = {
+    user: {
+        loggedIn: false
+    }
+}
  
 var RequestForm = React.createClass({
+
+    getInitialState: function () {
+        return loggedOutUser;
+    },
+
+    componentWillMount: function authenticate() {
+        var token = localStorage.getItem('issueTrackerToken');
+        if (!token) {
+            this.setState(loggedOutUser);
+        } else {
+            serverAPI.authenticate(token, function (data) {
+                var user = this.state.user;
+                if (data.authenticated === false) {
+                    this.setState(loggedOutUser);
+                } else {
+                    console.log('Authenticated.');
+                    _.assign(user, data);
+                    user.loggedIn = true;
+                    this.setState({user:user});
+                }
+            }, this);
+        }
+    },
 
     submitForm: function (event) {
         event.preventDefault()
@@ -17,6 +45,8 @@ var RequestForm = React.createClass({
         var email = this.refs.contactInfo.getEmail();
         var password =  this.refs.contactInfo.getPassword();
         var name = this.refs.contactInfo.getName();
+        var contactMethod = this.refs.contactInfo.getContactMethod();
+        var phoneNumber = this.refs.contactInfo.getPhoneNumber();
 
         if (!this.validateForm()) {
             return;
@@ -31,13 +61,14 @@ var RequestForm = React.createClass({
 
         serverAPI.postRequest({
             address_string: this.refs.location.usedDetection ? '' : location,
-            email: email,
-            phoneNumber: this.refs.contactInfo.getPhoneNumber(),
-            name: name,
+            contact_method: contactMethod,
             description: this.refs.description.getDescription(),
-            lat:lat,
-            long:long,
+            email: email,
+            lat: lat,
+            long: long,
             media_url: this.refs.description.getImage(),
+            name: name,
+            phone_number: phoneNumber,
             service_code: this.refs.category.getSelectedCategory()
         }, function (data){
             console.log('Saved!');
@@ -47,10 +78,12 @@ var RequestForm = React.createClass({
         if (this.refs.contactInfo.getPassword()) {
             serverAPI.registerUser({
                 email: email,
+                contact_method: contactMethod,
                 password: password,
+                phone_number: phoneNumber,
                 name: name
             }, function (data) {
-                localStorage['issueTrackerToken'] = data.token;
+                localStorage.issueTrackerToken = data.token;
             });
         }
     },
@@ -67,17 +100,18 @@ var RequestForm = React.createClass({
         return passing;
     },
 
+
     render: function () {
         return (
             <div>
                 <div className='row'>
-                    <h1>Submit an issue</h1>
+                    <h1>Submit an Issue</h1>
                 </div>
                 <form className='request-form col-md-6' onSubmit={this.submitForm}>
-                    <LocationSection    ref='location'/>
-                    <DescriptionSection ref='description'/>
-                    <CategorySection    ref='category'/>
-                    <ContactInfo        ref='contactInfo'/>
+                    <LocationSection    user={this.state.user} ref='location'/>
+                    <DescriptionSection user={this.state.user} ref='description'/>
+                    <CategorySection    user={this.state.user} ref='category'/>
+                    <ContactInfo        user={this.state.user} ref='contactInfo'/>
                     <input type='submit' className='btn btn-fault'></input>
                 </form>
             </div>

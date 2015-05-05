@@ -1,9 +1,13 @@
 'use strict';
 
+var React  = require('react');
+
+
 var Name = React.createClass({
 	getInitialState: function () {
+		var name = this.props.value || '';
 	    return {
-	        name: '',
+	        name: name,
 	        visible: false
 	    };
 	},
@@ -24,6 +28,12 @@ var Name = React.createClass({
 
 	nameChange: function () {
 		this.setState({name:event.target.value});
+	},
+
+	componentWillReceiveProps: function (newProps) {
+		if (typeof newProps.value !== 'undefined') {
+			this.setState({name:newProps.value});
+		}
 	},
 
 	render: function () {

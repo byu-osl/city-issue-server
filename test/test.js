@@ -190,11 +190,11 @@ function populateLeDatabase(done){
 		.save();
 	new Service({description: 'Fix streetlamps', metadata: false, keywords: 'lights', group: 'infrastructure', service_code: 2, service_name: 'streetlight', type:  'realtime'})
 		.save();
-	new Request({account_id: 123, address_string: 'address', address_id: 4, device_id: 5, description: 'desc', email: 'email', first_name: 'Chris', last_name: 'Anderson', lat: '2432', long: '2342342', media_url: undefined, phone: '24232234', service_code: 1, requested_datetime: new Date().toISOString(), status: 'open'})
+	new Request({account_id: 123, address_string: 'address', address_id: 4, device_id: 5, description: 'desc', email: 'email', first_name: 'Chris', last_name: 'Anderson', lat: '2432', long: '2342342', media_url: undefined, phone_number: '24232234', service_code: 1, requested_datetime: new Date().toISOString(), status: 'open'})
 		.save(function (err, request){
 			requestID1 = request._id;
 		});
-	new Request({account_id: 123, address_string: 'address', address_id: 4, device_id: 5, description: 'desc', email: 'email', first_name: 'Chris', last_name: 'Anderson', lat: '2432', long: '2342342', media_url: undefined, phone: '24232234', service_code: 2, requested_datetime: new Date().toISOString(), status: 'open'})
+	new Request({account_id: 123, address_string: 'address', address_id: 4, device_id: 5, description: 'desc', email: 'email', first_name: 'Chris', last_name: 'Anderson', lat: '2432', long: '2342342', media_url: undefined, phone_number: '24232234', service_code: 2, requested_datetime: new Date().toISOString(), status: 'open'})
 		.save(function (err, request){
 			requestID2 = request._id;
 			done();

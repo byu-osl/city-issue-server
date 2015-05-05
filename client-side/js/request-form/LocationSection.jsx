@@ -1,5 +1,6 @@
 'use strict';
 
+var React  = require('react');
 var styles = require('../styles');
 var mixins = require('../mixins');
 
@@ -108,7 +109,7 @@ module.exports = React.createClass({
                             onClick={this.handleLocationClick}>
                             <span  style={markerStyle} className='glyphicon glyphicon-map-marker'/>
                             <img style={loadingStyle} src='../../images/location-loader.gif'/>
-                            detect my location
+                            go to my location
                         </button>
                     </div>
                     <Map onBlur={this.validate} ref='map'/>

@@ -9,6 +9,7 @@ var historyHandler = require('./historyHandler');
 router.get('/:requestID.json', queryStatus);
 router.get('/', findRequests);
 router.post('/', validatePOSTParameters, saveRequest);
+router.post('/update', updateRequest);
 router.use('/addHistoryEntry', historyHandler);
 
 function queryStatus(req, res){
@@ -50,6 +51,7 @@ function validatePOSTParameters(req, res, next) {
 		return;
 	}
 
+	// TODO: replace with Service.count
 	Service.checkExistence(serviceCode, function (err, serviceExists){
 		if (err) {
 			res.send500('Something went wrong while trying to see if you had a valid service code.');
@@ -85,6 +87,19 @@ function saveRequest(req, res) {
 		}
 	});
 }
+
+function updateRequest (req, res) {
+	Request.findByIdAndUpdate (req.body.requestID, {$set:req.body} , function(error, request) {
+		if (error) {
+			res.send500('Something went wrong while finding the matching request');
+		} else if (!request) {
+			res.send404('Request not found.');
+		} else {
+			res.send(request);
+		}
+	});
+}
+
 
 //////////////////////////////////
 //////////////////////////////////

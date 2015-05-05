@@ -1,13 +1,12 @@
 Istanbul for code coverage
 
+#### From last meeting
+add address field to maps
+
 # Questions
-- satellite map?
 
 # Changed since last time
-- contact info
-- map
 
-----------------
 
 ## Individual request page:
 - For users:
@@ -24,4 +23,6 @@ Istanbul for code coverage
 
 ## Admin page
 - Find/sort requests
-- 
+- CRUD: service categories
+- CRUD: admin users
+

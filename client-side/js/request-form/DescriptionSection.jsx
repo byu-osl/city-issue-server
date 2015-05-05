@@ -1,4 +1,6 @@
 'use strict';
+var React  = require('react');
+
 var styles = require('../styles');
 
 var DescriptionSection = React.createClass({
@@ -47,6 +49,7 @@ var DescriptionSection = React.createClass({
     
     handlePictureClick: function () {$('.picture-input').click()},
     getDescription: function () {return this.state.description},
+
     getImage: function () {
         if (this.refs.preview) {
             return React.getDOMNode(this.refs.preview).getAttribute('src');
@@ -73,7 +76,7 @@ var DescriptionSection = React.createClass({
         }
 
         var imageContainerStyle = 
-            this.getImage().length > 0 ? styles.visible : styles.hidden;
+            this.state.image.length > 0 ? styles.visible : styles.hidden;
 
         return (   
             <div className='form-group'>
