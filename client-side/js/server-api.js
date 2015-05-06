@@ -6,8 +6,10 @@ serverAPI.postRequest = function (data, cb) {
     $.post('/requests.json', data, cb);
 }
 
-serverAPI.getCategories = function (cb) {
-     $.get('/services.json', cb);
+serverAPI.getCategories = function (cb, thisArg) {
+     $.get('/services.json', function(data) {
+		cb.call(thisArg, data);
+     });
 }
 
 serverAPI.registerUser = function (data, cb) {
@@ -15,8 +17,8 @@ serverAPI.registerUser = function (data, cb) {
 }
 
 serverAPI.authenticate = function (token, cb, thisArg) {
-	$.post('/authenticate', {token:token}, function(data){
-		cb.call(thisArg, data)
+	$.post('/authenticate', {token:token}, function authDone(data){
+		cb.call(thisArg, data);
 	});
 }
 

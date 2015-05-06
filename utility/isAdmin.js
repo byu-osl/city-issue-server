@@ -20,6 +20,6 @@ function isAdmin (req, res, next) {
 		res.send403('You aren\'t authorized to make this request.');
 	}
 }
-
-module.exports = authenticate;
+ 
+module.exports = isAdmin;
 

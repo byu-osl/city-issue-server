@@ -8,7 +8,8 @@ var DescriptionSection = React.createClass({
     getInitialState: function () {
         return  {
               description: '',
-              image: '',
+              imageSrc: '',
+              imageLoaded: false,
               isValid: undefined
         };
     },
@@ -33,10 +34,19 @@ var DescriptionSection = React.createClass({
         var reader = new FileReader();
         var self = this;
 
-        reader.onloadend = function() {
+        reader.onloadend = function showFancyStoreUgly() {
+            var compressedImage;
+            var preCompressed = new Image();
+            preCompressed.src = reader.result;
+
+            setTimeout(function storeCompressed() {
+                compressedImage = compressAndResizeImage(preCompressed).src;
+                self.setState({imageSrc: compressedImage});
+            }, 0);
+
             React.findDOMNode(self.refs.preview).src = reader.result;
-            $('button.close').show();
             self.setState({isValid:true});
+            self.setState({imageLoaded: true});
         };
 
         reader.readAsDataURL(file); 
@@ -44,18 +54,14 @@ var DescriptionSection = React.createClass({
 
     closeImage: function () {
         React.findDOMNode(this.refs.preview).src = '';
-        $('button.close').hide();
+        this.setState({imageLoaded:false});
     },
     
     handlePictureClick: function () {$('.picture-input').click()},
     getDescription: function () {return this.state.description},
 
     getImage: function () {
-        if (this.refs.preview) {
-            return React.getDOMNode(this.refs.preview).getAttribute('src');
-        } else {
-            return ''
-        }
+        return this.state.imageSrc;
     },
 
     render: function() {
@@ -75,8 +81,7 @@ var DescriptionSection = React.createClass({
             validationState += ' has-success';
         }
 
-        var imageContainerStyle = 
-            this.state.image.length > 0 ? styles.visible : styles.hidden;
+        var imageContainerStyle = styles.visibleIf(this.state.imageLoaded);
 
         return (   
             <div className='form-group'>
@@ -101,9 +106,9 @@ var DescriptionSection = React.createClass({
                             tabIndex='2'
                             placeholder='Additional location details, severity, etc.'></textarea>
                     </div>
-                    <div className="image-container">
-                        <button style={styles.hidden} onClick={this.closeImage} type="button" className="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <img style={imageContainerStyle} ref='preview' src=''/>
+                    <div style={imageContainerStyle} className="image-container">
+                        <button onClick={this.closeImage} type="button" className="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <img ref='preview' src=''/>
                     </div>
                 </div>
             </div>
@@ -113,3 +118,41 @@ var DescriptionSection = React.createClass({
 
 
 module.exports = DescriptionSection;
+
+// sourceImage: 
+function compressAndResizeImage(sourceImage){
+    var width = sourceImage.naturalWidth;
+    var height = sourceImage.naturalHeight;
+    var ratio;
+    var MAX_DIMENSION = 600;
+    var IMAGE_QUALITY = 0.8;
+
+    if (width >= height && width > MAX_DIMENSION) {
+        width = MAX_DIMENSION;
+        ratio = width/sourceImage.naturalWidth;
+        height = sourceImage.naturalHeight * ratio;
+    } else if (height > width) {
+        height = MAX_DIMENSION;
+        ratio = height / sourceImage.naturalHeight;
+        width = sourceImage.naturalWidth * ratio;
+    }
+
+    var canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    var context = canvas.getContext("2d").drawImage(sourceImage, 0, 0, width, height);
+    var newImageData = canvas.toDataURL('image/jpeg', IMAGE_QUALITY);
+    var result = new Image();
+    result.src = newImageData;
+    return result;
+}
+
+function async(fn, cb) {
+    return function() {
+        setTimeout(function() {
+            fn();
+            cb();
+        }, 0);
+    }
+}
+

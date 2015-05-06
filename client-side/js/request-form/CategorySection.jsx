@@ -38,19 +38,16 @@ var CategorySection = React.createClass({
 
     getSelectedCategory: function() {return this.state.selectedCategory},
  
-    receivedCategories: function (categories) {
-        this.setState({
-            categories: categories
-        });
-    },
-
     componentDidMount: function () {
-        api.getCategories(this.receivedCategories);
+        api.getCategories(function gotCategories(categories) {
+            this.setState({
+                categories: categories
+            });
+        }, this);
     },
 
     render: function() {
-        var errorStyle = 
-            this.state.isValid === false ? styles.visible : styles.hidden;
+        var errorStyle = styles.visibleIf(this.state.isValid === false);
 
         return (
             <div className='form-group'>

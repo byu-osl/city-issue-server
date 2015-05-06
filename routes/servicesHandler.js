@@ -64,7 +64,7 @@ function deleteService (req, res, next) {
 		} else {
 			res.send('Service deleted.');
 		}
-	};
+	});
 }
 
 module.exports = router;

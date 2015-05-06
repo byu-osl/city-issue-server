@@ -56,8 +56,12 @@ var App = React.createClass({
 var routes = (
 	<Route handler={App}>
 		<Route name='/' 				 handler={HomePage}/>
-		<Route name='issue-submission' handler={RequestForm}/>
-		<Route name='admin' 		     handler={AdminPage}/>
+		<Route name='issue-submission'   handler={RequestForm}/>
+		<Route name='admin' 		     handler={AdminPage}>
+			<Route name='requests'></Route>
+			<Route name='services'></Route>
+			<Route name='users'></Route>
+		</Route>
 	</Route>
 );
 
