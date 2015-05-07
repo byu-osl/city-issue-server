@@ -10,13 +10,15 @@ var Map = require('./Map.jsx');
 module.exports = React.createClass({
 
     validate: function() {
-        var isValid = (this.state.location.length > 0 || this.state.usedDetection || this.state.lat.length > 0);
+        var isValid = (this.state.location.length > 0 || this.state.usedDetection || this.state.lat);
         this.setState({isValid:isValid});
         return isValid;
     },
 
     getInitialState: function () {
         return {
+            lat: null,
+            long: null,
             location: '',
             loading: false,
             usedDetection: false,
@@ -25,8 +27,8 @@ module.exports = React.createClass({
     },
 
     getLocation:   function () {return this.state.location},
-    getLat:        function () {return this.state.lat},
-    getLong:       function () {return this.state.long},
+    getLat:        function () {return this.refs.map.getLatLng().lat()},
+    getLong:       function () {return this.refs.map.getLatLng().lng()},
     usedDetection: function () {return this.state.usedDetection},
 
     setLocation: function (positionData) {

@@ -5,6 +5,7 @@ var Reactable = require('reactable');
 var Router    = require('react-router');
 var Table     = Reactable.Table
 var unsafe    = Reactable.unsafe
+var AdminMap  = require('./AdminMap.jsx');
 
 
 var AdminBody = React.createClass({
@@ -23,6 +24,7 @@ var AdminBody = React.createClass({
 			this.setState({
 				requests: requests.map(transformRequest)
 			});
+			this.refs.map.loadRequests(requests);
 		}, this);
 
 		api.getUsers(function(users){
@@ -57,6 +59,7 @@ var AdminBody = React.createClass({
 
         return (
         	<div className='col-xs-10'>
+        		<AdminMap ref='map' requests={this.state.requests} />
         		<label style={labelStyle}>Search</label>
         		<Table 
         		filterable={['Date Submitted','Location', 'Status']} 

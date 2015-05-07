@@ -18,6 +18,7 @@ var markerOptions = {
 	position: cityCenter,
 	title: 'Issue location'
 }
+
 var geocoder = new google.maps.Geocoder();
 
 var Map = React.createClass({

@@ -42,11 +42,11 @@ var RequestForm = React.createClass({
         event.preventDefault()
         var long; 
         var lat;
-        var email = this.refs.contactInfo.getEmail();
-        var password =  this.refs.contactInfo.getPassword();
-        var name = this.refs.contactInfo.getName();
+        var email         = this.refs.contactInfo.getEmail();
+        var password      = this.refs.contactInfo.getPassword();
+        var name          = this.refs.contactInfo.getName();
         var contactMethod = this.refs.contactInfo.getContactMethod();
-        var phoneNumber = this.refs.contactInfo.getPhoneNumber();
+        var phoneNumber   = this.refs.contactInfo.getPhoneNumber();
 
         if (!this.validateForm()) {
             return;
@@ -54,10 +54,8 @@ var RequestForm = React.createClass({
 
         var location = this.refs.location.getLocation();
 
-        if (this.refs.location.usedDetection()) {
-            long = this.refs.location.getLong();
-            lat  = this.refs.location.getLat();
-        }
+        long = this.refs.location.getLong();
+        lat  = this.refs.location.getLat();
 
         serverAPI.postRequest({
             address_string: location,
@@ -107,7 +105,7 @@ var RequestForm = React.createClass({
                 <div className='row'>
                     <h1>Submit an Issue</h1>
                 </div>
-                <form className='request-form col-md-6' onSubmit={this.submitForm}>
+                <form className='request-form col-md-8' onSubmit={this.submitForm}>
                     <LocationSection    user={this.state.user} ref='location'/>
                     <DescriptionSection user={this.state.user} ref='description'/>
                     <CategorySection    user={this.state.user} ref='category'/>
