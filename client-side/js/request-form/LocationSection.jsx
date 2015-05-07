@@ -10,7 +10,7 @@ var Map = require('./Map.jsx');
 module.exports = React.createClass({
 
     validate: function() {
-        var isValid = (!!this.getLocation());
+        var isValid = (this.state.location.length > 0 || this.state.usedDetection || this.state.lat.length > 0);
         this.setState({isValid:isValid});
         return isValid;
     },
@@ -24,7 +24,7 @@ module.exports = React.createClass({
         };
     },
 
-    getLocation:   function () {return this.refs.map.getLatLng()},
+    getLocation:   function () {return this.state.location},
     getLat:        function () {return this.state.lat},
     getLong:       function () {return this.state.long},
     usedDetection: function () {return this.state.usedDetection},
@@ -54,6 +54,21 @@ module.exports = React.createClass({
         }
     },
 
+    onGeocode: function (results, status) {
+        if (typeof this.state.isValid !== 'undefined') {
+            this.validate();
+        }
+
+        this.setState({
+            location:results[0].formatted_address,
+            usedDetection: false
+        });
+    },
+
+    markValid: function () {
+        this.setState({isValid:true});
+    },
+
     handleChange: function (event) {
         if (typeof this.state.isValid !== 'undefined') {
             this.validate();
@@ -70,7 +85,7 @@ module.exports = React.createClass({
         var errorStyle = styles.hidden;
         var autofocus;
         var buttonStyle = {
-          marginLeft: '10px'
+          marginLeft: 10
         }
 
         var markerStyle = {
@@ -81,11 +96,11 @@ module.exports = React.createClass({
         var loadingStyle = {
             border: 'none',
             display: this.state.loading ? 'inherit' : 'none',
-            top: '-5px',
+            top: -5,
             position: 'relative',
-            paddingRight: '2px',
-            height: '9px',
-            marginRight: '5px'
+            paddingRight: 2,
+            height: 9,
+            marginRight: 5
         }
 
         if (this.state.isValid === false) {
@@ -112,19 +127,21 @@ module.exports = React.createClass({
                             go to my location
                         </button>
                     </div>
-                    <Map onBlur={this.validate} ref='map'/>
+                    <Map markValid={this.markValid} onBlur={this.validate} onGeocode={this.onGeocode} ref='map'/>
+                    <input 
+                        style={{marginTop: 5}}
+                        onChange={this.handleChange}
+                        onBlur={this.validate}
+                        tabIndex='1'
+                        ref='input' 
+                        className='form-control' 
+                        name='location' 
+                        type='text' 
+                        value={this.state.location} 
+                        placeholder='Address: use "go to my location" to detect'
+                    />
                 </div>
             </div>
         );
     }
 });
-                    // <input 
-                    //     onChange={this.handleChange}
-                    //     onBlur={this.validate}
-                    //     tabIndex='1'
-                    //     ref='input' 
-                    //     className='form-control' 
-                    //     name='location' 
-                    //     type='text' 
-                    //     value={this.state.location} 
-                    // />

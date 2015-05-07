@@ -69,7 +69,7 @@ var DescriptionSection = React.createClass({
         var errorStyle = styles.hidden;
 
         var buttonStyle = {
-            marginLeft: '10px'
+            marginLeft: 10
         };
 
         if (this.state.isValid === false) {

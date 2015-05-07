@@ -5,9 +5,12 @@ add address field to maps
 
 # Questions
 
+Why don't we use localstorage to store their info? Do they even need an account?
+
+
 # Changed since last time
 
-b
+
 
 ------------------
 ------------------

@@ -38,9 +38,26 @@ body {
 	text-align: center;
 }
 
+.styled-box {
+	background: rgb(243, 243, 225);
+	border: solid 1px rgb(231, 231, 231);
+}
+
+
 /* Bootstrap overrides */
 
 .row {
 	margin-right: 0px;
 	margin-left: 0px; 
+}
+
+input[type=checkbox], input[type=radio] {
+	margin: 0px 0 0;
+	line-height: 13px;
+	position: relative;
+	top: 2px;
+}
+
+label {
+	margin-bottom: 0px
 }

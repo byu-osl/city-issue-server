@@ -34,13 +34,40 @@ Tasks:
             - demographics?
         * Administrative devices?
         * Title of request page?
+        * "Other" category?
 
 # Review of interpretation
 
 
 # Notes
--
-
+Cody from Orem
+- udot has one - see click fix
+- GIS - map based
+- geocortex essentials
+- can't click outside of orem
+- user clicks, generates an address
+- name, email, comment area
+    + depending on hour of day, it will email people
+    + sends a text to a few people - even asphault. They might fix it if they can. try to get 24 hours
+    + emails user what they put in
+    + map shows by time, by status
+    + they track the potholes
+    + show all reported potholes
+    + they can report anything they want: want to keep it isolated to potholes
+    + typically use the maps - crews use the maps
+    + search filter?
+        * search for dates repaired for legal 
+        * potholes are always high priority
+        * still use maps for everything
+        * sidewalk issues, streetlights
+        * maps are awesome
+        * email notifications: not automatic
+        * guys on the route use ipads and iphones
+    + biggest thing is bringing in to the GIS system
+    + esri.com - take a look at that
+    + udot see click fix
+    + need to visualize all of the issues by category
+    + users will report when back home more than out and about
 
 # Interpretation
 -

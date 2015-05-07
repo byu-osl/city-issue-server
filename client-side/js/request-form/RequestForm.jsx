@@ -60,7 +60,7 @@ var RequestForm = React.createClass({
         }
 
         serverAPI.postRequest({
-            address_string: this.refs.location.usedDetection ? '' : location,
+            address_string: location,
             contact_method: contactMethod,
             description: this.refs.description.getDescription(),
             email: email,

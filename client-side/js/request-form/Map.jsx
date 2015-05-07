@@ -18,6 +18,7 @@ var markerOptions = {
 	position: cityCenter,
 	title: 'Issue location'
 }
+var geocoder = new google.maps.Geocoder();
 
 var Map = React.createClass({
 
@@ -47,8 +48,12 @@ var Map = React.createClass({
 	},
 
 	mapClicked: function (event) {
+		geocoder.geocode({latLng: event.latLng}, this.props.onGeocode);
 		this.state.marker.setPosition(event.latLng);
-		this.setState({latLng:event.latLng});
+		this.setState({
+			latLng:event.latLng
+		});
+		this.props.markValid();
 	},
 
 	markerDragged: function (event) {
@@ -61,6 +66,8 @@ var Map = React.createClass({
 		this.state.marker.setPosition(position);
 		this.setState({latLng:position});
 		this.state.map.setZoom(19);
+		geocoder.geocode({'latLng':position}, this.props.onGeocode);
+		this.props.markValid();
 	},
 
 	componentDidMount: function () {
@@ -72,7 +79,7 @@ var Map = React.createClass({
 
 		var style = {
 			width: '100%',
-			minHeight: '350px'
+			minHeight: 350
 		}
 
 		return (

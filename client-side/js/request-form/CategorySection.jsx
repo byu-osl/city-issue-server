@@ -39,7 +39,7 @@ var CategorySection = React.createClass({
     getSelectedCategory: function() {return this.state.selectedCategory},
  
     componentDidMount: function () {
-        api.getCategories(function gotCategories(categories) {
+        api.getServices(function gotCategories(categories) {
             this.setState({
                 categories: categories
             });

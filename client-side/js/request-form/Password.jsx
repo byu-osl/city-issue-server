@@ -36,7 +36,7 @@ var Password = React.createClass({
 			this.state.passwordVisible ? 'hide password' : 'show password';
 
 		var visibilityStyle = {
-			marginLeft: '10px',
+			marginLeft: 10,
 			cursor: 'pointer',
 			color: 'rgb(155, 155, 155)'
 		}

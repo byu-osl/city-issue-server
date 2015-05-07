@@ -52,7 +52,7 @@ var ContactInfo = React.createClass({
 		var nameStyle, passwordStyle, emailStyle, phoneStyle, accountCreationStyle, autofocus;
 		var contactForms = [];
 
-		passwordStyle = styles.visibleIf(this.state.creatingAccount === true);
+		passwordStyle = styles.visibleIf(this.state.creatingAccount === true && this.state.contactMethod !== 'none');
 		nameStyle  = styles.hiddenIf(this.state.contactMethod === 'none');
 		emailStyle = styles.visibleIf(this.state.contactMethod === 'email');
 		phoneStyle = styles.visibleIf(this.state.contactMethod === 'text' || this.state.contactMethod === 'phone');
