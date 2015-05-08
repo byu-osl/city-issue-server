@@ -8,61 +8,66 @@ var CategorySection = React.createClass({
 
     getInitialState: function () {
         return {
-            categories: [],
-            selectedCategory: '',
-            isValid: undefined
+            services:            [],
+            selectedService:     '',
+            selectedServiceName: '',
+            isValid:             undefined
         };
     },
 
     validate: function() {
-        var isValid = this.state.selectedCategory.length > 0;
+        var isValid = this.state.selectedService.length > 0;
         this.setState({isValid:isValid});
         return isValid;
     },
 
-    categoryClicked: function(event) {
+    serviceClicked: function(event) {
         // in case the target is the label
         var value = $('input', event.target).val();
+        var name  = $('input', event.target).attr('data-service-name');
 
         // it may target a span that react inserts
         if (typeof value === 'undefined') {
             var parent = $(event.target).parent() 
             value = $('input', parent).val();
+            name  = $('input', parent).attr('data-service-name');
         }
 
         this.setState({
-            selectedCategory: value,
-            isValid: true
+            selectedService:     value,
+            selectedServiceName: name,
+            isValid:             true
         });
     },
 
-    getSelectedCategory: function() {return this.state.selectedCategory},
- 
+    getSelectedService:     function() {return this.state.selectedService},
+    getSelectedServiceName: function() {return this.state.selectedServiceName},
+
     componentDidMount: function () {
-        api.getServices(function gotCategories(categories) {
+        api.getServices(function gotServices(services) {
             this.setState({
-                categories: categories
+                services: services
             });
         }, this);
     },
-
+ 
     render: function() {
         var errorStyle = styles.visibleIf(this.state.isValid === false);
 
         return (
-            <div className='form-group'>
-                <p style={errorStyle} className="bg-warning">Please choose a category.</p>
-                <label style={styles.block} className='control-label'>Pick a category:</label> 
-                <div className='btn-group' data-toggle='buttons'>
-                    {this.state.categories.map(function (category, index){
-                        return (
-                            <label className='btn btn-primary' key={category.service_name} onClick={this.categoryClicked}>
-                                <input type='radio' name='options' value={category.service_code} autoComplete='off'/>{category.service_name}
-                            </label>
-                        );
-                    }, this)}
-                </div>
+        <div className='form-group'>
+            <p style={errorStyle} className="bg-warning">Please choose a category.</p>
+            <label style={styles.block} className='control-label'>Issue type:</label> 
+            <div className='btn-group' data-toggle='buttons'>
+                {this.state.services.map(function (service){
+                    return (
+                        <label className='btn btn-primary' key={service.service_name} onClick={this.serviceClicked}>
+                            <input type='radio' name='options' data-service-name={service.service_name} value={service.service_code} autoComplete='off'/>{service.service_name}
+                        </label>
+                    );
+                }, this)}
             </div>
+        </div>
         );
     }
 });

@@ -9,6 +9,7 @@ var chai     = require('chai');
 var expect   = chai.expect;
 var Request  = require('../models/request');
 var Service  = require('../models/service');
+var proxyquire = '';
 var connection = server.connection;
 require('chai').should();
 

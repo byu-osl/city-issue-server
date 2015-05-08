@@ -67,7 +67,7 @@ var ContactInfo = React.createClass({
 			 
 		return (
 			<div>
-				<label style={styles.block} className='control-label'>Keep me updated:</label>
+				<label style={styles.block} className='control-label'>Preffered contact method:</label>
 				<div style={styles.spaceBelow} className='btn-group' data-toggle='buttons'>
 					<label onClick={this.optionChanged} value='none' htmlFor='none' className={this.state.contactMethod === 'none' ? activeClass : inactiveClass}>
 						No thanks

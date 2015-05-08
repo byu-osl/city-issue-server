@@ -74,23 +74,12 @@ After that, [submit a pull request](https://help.github.com/articles/using-pull-
 ### Todo list
 
 Ranked by priority:
-- [X] authentication
-- [ ] administrative section for city employees
-- [ ] endpoints:
-	+ [ ] POST service type
-- [ ] email notifications for status updates
-- [X] optional account creation at issue submission
-- [X] form validation
-- [X] submit issue by picture
 - [ ] Flux architecture
 - [ ] set up frontend testing
 - [ ] production concatenation/minifcation
 - [ ] detect if a port is in use - use a different one if necessary
-- [ ] create GitHub issues for each of these todo items
-- [ ] code coverage
-- [ ] pre-commit hooks for jsxhint
-- [ ] push notifications?
-- [ ] ES6 integration: frontend and backend
+- [ ] ES6: frontend and backend
+- [ ] validate contact info
 
 ## Overview
 

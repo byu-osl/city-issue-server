@@ -24,6 +24,7 @@ var AdminBody = React.createClass({
 			this.setState({
 				requests: requests.map(transformRequest)
 			});
+
 			this.refs.map.loadRequests(requests);
 		}, this);
 
@@ -62,11 +63,11 @@ var AdminBody = React.createClass({
         		<AdminMap ref='map' requests={this.state.requests} />
         		<label style={labelStyle}>Search</label>
         		<Table 
-        		filterable={['Date Submitted','Location', 'Status']} 
-        		sortable={true} 
-        		className='table-responsive table-hover table' 
-        		data={activeData}
-        		itemsPerPage={10}
+        		filterable   = {['Date Submitted','Location', 'Status']} 
+        		sortable     = {true} 
+        		className    = 'table-responsive table-hover table' 
+        		data         = {activeData}
+        		itemsPerPage = {10}
         		/>
         	</div>
         );

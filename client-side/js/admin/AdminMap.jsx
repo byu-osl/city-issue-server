@@ -1,25 +1,23 @@
 'use strict';
 var React  = require('react');
+var mapMixin = require('../mixins/mapMixin.js');
 var Marker = google.maps.Marker;
 var cityCenter = new google.maps.LatLng(40.4122994, -111.75418)
+var styles     = require('../styles.js');
+
 var mapOptions = {
 	center: {
 		lat: 40.4122994,
 		lng: -111.75418
 	},
-	draggableCursor:'crosshair',
-	zoom: 14,
-	mapTypeId: google.maps.MapTypeId.HYBRID
-}
-
-var markerOptions = {
-	animation: google.maps.Animation.DROP,
-	draggable: false,
+	zoom:            14,
+	mapTypeId:       google.maps.MapTypeId.HYBRID
 }
 
 var geocoder = new google.maps.Geocoder();
 
 var AdminMap = React.createClass({
+	mixins: [mapMixin],
 
 	getInitialState: function () {
 		return {
@@ -32,56 +30,30 @@ var AdminMap = React.createClass({
 		var map = new google.maps.Map($('.map-canvas')[0], mapOptions);
 		google.maps.event.addListener(map, 'click', this.mapClicked);
 		
-		var marker = new Marker(markerOptions);
-		marker.setMap(map);
-		google.maps.event.addListener(marker, 'dragend', this.markerDragged);
-
 		this.setState({
 			map: map,
-			marker: marker
 		});
 	},
 
-	loadRequests: function (requests) {
-		var map = this.state.map;
-		var self = this;
-		requests.forEach(function(request, index) {
-			if (typeof request.lat === 'undefined') {return;}
-
-			var infoWindow = new google.maps.InfoWindow({
-				content: this.renderInfoWindow(request)
-			});
-
-			var marker = new google.maps.Marker({
-				position: new google.maps.LatLng(request.lat, request.long),
-				map: map,
-				title: request.description,
-				icon: self.getImageType(request.service_code)
-			});
-
-			google.maps.event.addListener(marker, 'click', function () {
-				infoWindow.open(map, marker);
-			});
-		}, this);
-	},
-
 	renderInfoWindow: function (request) {
+		var imageStyle = styles.hiddenIf((typeof request.media_url === 'undefined' || !request.media_url));
+
+		imageStyle = styles.mix(imageStyle, {
+			maxWidth:     200,
+			maxHeight:    200,
+			marginBottom: 10
+		});
+
 		var content = (
 			<div>
-				<label>Pothole</label>
+				<label>Category: {request.service_name}</label>
 				<p>open</p>
+				<img style={imageStyle} src={typeof request.media_url !== 'undefined'? request.media_url : ''}></img>
 				<p>{request.address_string}</p>
 			</div>
 		);
 
 		return React.renderToStaticMarkup(content);
-	},
-
-	getImageType: function (serviceCode) {
-		switch(serviceCode) {
-			case 2:  return '../../../images/pothole-marker.png'
-			default: return '../../../images/pothole-marker.png'
-		}
 	},
 
 	componentDidMount: function () {

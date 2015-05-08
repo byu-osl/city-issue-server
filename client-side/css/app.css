@@ -24,11 +24,11 @@ body {
   margin-right: 5px;
 }
 
-.request-form img {
+/*.request-form img {
 	max-width: 100%;
 	border: rgb(208, 208, 208) solid 1px;
 	margin-top: 10px;
-}
+}*/
 
 .picture-input {
 	display: none !important;

@@ -1,32 +1,44 @@
 'use strict';
-var React  = require('react');
-var Marker = google.maps.Marker;
+var React      = require('react');
+var mapMixin   = require('../mixins/mapMixin.js');
+var api        = require('../server-api.js');
+var Marker     = google.maps.Marker;
+var styles     = require('../styles.js');
 var cityCenter = new google.maps.LatLng(40.4122994, -111.75418)
 var mapOptions = {
 	center: {
 		lat: 40.4122994,
 		lng: -111.75418
 	},
-	draggableCursor:'crosshair',
-	zoom: 14,
-	mapTypeId: google.maps.MapTypeId.HYBRID
+	draggableCursor: 'crosshair',
+	zoom:            14,
+	mapTypeId:       google.maps.MapTypeId.HYBRID,
+
+	streetViewControl:  false,
+	panControl:         true,
+	zoomControl:        true,
+	mapTypeControl:     true,
+	scaleControl:       true,
+	overviewMapControl: true
 }
 
 var markerOptions = {
 	animation: google.maps.Animation.DROP,
 	draggable: true,
-	position: cityCenter,
-	title: 'Issue location'
+	position:  cityCenter,
+	title:     'Issue location'
 }
 
 var geocoder = new google.maps.Geocoder();
 
 var Map = React.createClass({
+	mixins: [mapMixin],
 
 	getInitialState: function () {
 		return {
 			latLng: undefined,
-			map: undefined
+			map:    undefined,
+			requests: []
 		}
 	},
 
@@ -43,7 +55,7 @@ var Map = React.createClass({
 		google.maps.event.addListener(marker, 'dragend', this.markerDragged);
 
 		this.setState({
-			map: map,
+			map:    map,
 			marker: marker
 		});
 	},
@@ -74,12 +86,39 @@ var Map = React.createClass({
 	componentDidMount: function () {
 		var self = this;
 		$(document).ready(function(){self.initializeMap()});
+		api.getRequests(this.loadRequests);
+		api.getServices(function gotServices(services) {
+            this.setState({
+                services: services
+            });
+        }, this);
+	},
+
+	renderInfoWindow: function (request) {
+		var imageStyle = styles.hiddenIf((typeof request.media_url === 'undefined' || !request.media_url));
+
+		imageStyle = styles.mix(imageStyle, {
+			maxWidth:     200,
+			maxHeight:    200,
+			marginBottom: 10
+		});
+
+		var content = (
+			<div>
+				<label>Category: {request.service_name}</label>
+				<p>open</p>
+				<img style={imageStyle} src={typeof request.media_url !== 'undefined'? request.media_url : ''}></img>
+				<p>{request.address_string}</p>
+			</div>
+		);
+
+		return React.renderToStaticMarkup(content);
 	},
 
 	render: function () {
 
 		var style = {
-			width: '100%',
+			width:     '100%',
 			minHeight: 350
 		}
 
