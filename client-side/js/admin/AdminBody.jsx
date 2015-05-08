@@ -58,7 +58,7 @@ var AdminBody = React.createClass({
 
 
         return (
-        	<div className='col-xs-10'>
+        	<div className='col-xs-10' style={{paddingRight:0}}>
         		<AdminMap ref='map' requests={this.state.requests} />
         		<label style={labelStyle}>Search</label>
         		<Table 

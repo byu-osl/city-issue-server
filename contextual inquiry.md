@@ -35,6 +35,123 @@ Tasks:
         * Administrative devices?
         * Title of request page?
         * "Other" category?
+        * how much on paper?
+
+- Brenda from Cedar Hills
+    + Need a way to manually add a request
+    + Taking a call
+        * worker order from finance department - someone assigned each day to do work orders, someone from the sites
+        * needed a phone number for someone who had a complaint
+        * not just public works
+        * lots of building - so switching between jobs
+        * use iworks 
+        * "complaints" "requests" streets, sidewalks, water
+        * take down info
+        * description
+        * typically maintenance request, citizens complain
+        * one field for work description
+        * address, person who called, phone number, call them back is a request
+        * technicians call the resident
+        * technicians wouldn't need addresses or anything
+        * this is only 2 square miles
+        * sometimes research is required for how to solve it - supplies need budgeting. some are done that day and some weeks
+        * keeps track of status
+        * vandalism in restroom windows
+            - given to a tech
+            - tech writes on paper (see picture)
+            - you intitial on the paper
+            - needs repair
+            - he needs to keep track of cost, and get an estimate for time
+            - lots of notes going back and forth - updates
+            - techs have old nasty phones *** maybe text to a number
+                + they send Brenda pictures
+                + pictures would be nice in status updates
+        * broken window report
+            - had them take a picture - maybe legal stuff
+            - good for police reports
+        * vandalism is a category
+        * cross connect irigation - proof that an issue 
+        * attatched to work order
+            - drawing
+            - work order
+            - tons of stuff - GRAMA request - through city recorder
+            - attach map to work order - technical drawing, shows where lines
+            - techs typically take pictures for underground stuff
+                + stuff that's underground
+        * plop work orders in a little filing thing - calls the techs if they haven't checked.
+            - techs aren't just doing work orders - tons of other work
+            - 20 work orders in one day
+                + some of them the techs already saw
+                + technicians call brenda to make work orders
+                    * brenda enters them in
+    + get work orders from finance people too - puts it into iwork as well
+    + big variety of people - wealthy, farmers, middle aged wealthy, higher income, 10k
+    + 28 miles of road
+    + Dee sees everything
+    + dee biggest concern - too many requests where people are being picky, typically people send
+    + duplicates aren't a big deal - sometimes don't respond to duplicates
+    + sometimes problems are recurring
+    + CATEGORIES? 
+        * sidewalks, potholes, water, pressure irrigation, parks, streets, sidewalks, streetlights, signs, other, lots of sub-categories
+            - trees 
+    + location is the most important
+    + sometimes multiple issues at the same place
+    + chad - coordinating crews - planning organizing
+        * techs stick to a category if they can
+        * pictures sometimes, complete a job
+        * problems with the work orders
+        * relate back what you did
+        * nobody has smartphones
+        * every has smartphones - typically don't have smartphones with them
+        * just lifted a ban on the personal phones
+    + mapping purposes
+        * locations of issues
+        * not just for issues - more for technical stuff
+        * location accuracy is really important
+        * 0.00384514958
+    + 
+    + priorities are an issue, staff is limited
+    + sometimes issues are their problem
+    + residents try to play the system
+    + sprinkler system issues - not really big issues
+    + guy has no idea where a stop and waste
+    + irrigation and culinary
+    + maps are important
+    + arcgis - 
+    + tons of info in iworks and stuff that you already
+    + biggest issue - tons of sources in different places
+    + tons of history
+    + would need to duplicate everything if they switched over - migrating everything, #1 ********************88
+    + poor documentation in the past - need to encourage and make this easier. This needs to be super easy, and access good history for every issue
+    + Address is really important, better than location 
+    + some stuff might not have an address
+    + history is really important
+    + not opposed because - 
+    + people aren't updated - this is a big problem. 
+    + iworks is a one time thing
+        * street dimensions
+        * helps calculate street stuff
+        * pavement and other things that you need.
+        * we have a budget, and a list of sidewalk repairs by priority
+    + need to prioritize issues that are coming in
+    + GIS map
+        * maps of pipes and valves
+        * potholes
+        * GIS + iWorks
+        * gateway mapping neal frasier for questions about their GIS system
+    + only 1 laptop with wireless
+    + maybe a tablet for the truck  - could be good
+    + could be 100s of thousands
+    + need a date
+    + color coordination
+    + colors for status and not just category
+    + categories would be great
+    + description should be required, picture is a bonus
+    + required: name and phone number
+    + markers on the map for future requests so that duplicates 
+    + sort by newest
+    + importing into iworks would be possible
+
 
 # Review of interpretation
 
