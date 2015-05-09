@@ -55,27 +55,54 @@ Notes
     * color coordination on the map is more important for categories
     * sorting by date should be the default
 
+- how can we indicate open/closed on the icons?
+- 
+
+Annoyances / things to optimize or fix
+----------------------------------------
+- trivial issue requests / too many requests
+- duplication of data in different systems
+- techs coming in to check for orders
+- keeping track of paper orders
+- techs finding exactly where issues are at (sometimes they call the residents)
+
+Priorities (no particular order)
+---------------------------------
+- data importation
+- easy to use status update/history system
+- prioritization of issues
+- location accuracy
+- color categorization
+
+To do list
+------------
+- [ ] Admin page: Manually add/delete a request
+- [ ] Admin page: status updates for requests
+- [ ] Admin page: search for anything, filter based on anything
+- [ ] Admin page: edit/manage service categories (sidewalk, potholes, irrigation, etc)
+- [ ] Admin page: add links to edit the requests
+- [ ] Admin map: submitter contact info on the admin map
+- [ ] Admin map: submitter contact info when you click on a request
+- [ ] Admin map: color/icon categorize different service types
+- [ ] Status updates: allow images
+- [ ] Status updates: keep track of which admin edited the status
+- [ ] Status updates: email updates for residents
+- [ ] Request submission: show open requests on the map
+- [ ] Requests: create a page to view individual requests
+- [ ] Requests: be able to associate documents
+- [ ] Requests: allow prioritization
+- [ ] Data importation from/to iWorks?
 
 Questions
 -----------------
-- How can we discourage reporting trivial things?
-- How big is their current database?
-- Does Brenda ever get overloaded? What is the volume of updates she has to make in iWorks?
-- Do they want to import all data straight into iWorks?
-- would it be good for techs to enter in the info themselves instead of Brenda?
-- Should editing be in the table they're displayed in?
+- How many issues do you have stored in iWorks? How often are you adding requests?
+- Do you want to import stuff *from* iWorks or *to* iWorks? What will be the purpose of iWorks after this app is in place? 
+- Would it be good for techs to enter in the info themselves instead of Brenda?
+- What are all of the different categories you want colors/icons for?
+- How would you like to prioritize issues? High, medium, low?
+- Do you have any annoyances you'd like to add to the list that the app could help with? Are the ones I listed accurate?
+- Do you have any other priorities or features you'd like to the current lists?
+- Any other thoughts that you've come up with since I stopped by yesterday?
+- Do people only make reports via phone?
 
-
-Features ideas
----------------
-- Manually add a request from admin
-- A way to view work orders so they don't have to come in
-- Work order generation from a request
-- images in status updates ***
-- associate documents with issues - technical drawings (pdf)
-- show old requests when people are submitting in case there duplicates
-- search for anything, filter anything
-- submitter contact info on the admin map
-- easy access links for editing a request
-- keep track of which user edited a request
-- add prioritization for requests
+- Feature idea: we could prioritize things based on the category. Maybe that would help with people submitting things that are less important.

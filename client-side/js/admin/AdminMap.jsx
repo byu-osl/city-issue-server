@@ -1,9 +1,11 @@
 'use strict';
-var React  = require('react');
-var mapMixin = require('../mixins/mapMixin.js');
-var Marker = google.maps.Marker;
-var cityCenter = new google.maps.LatLng(40.4122994, -111.75418)
+var React      = require('react');
+var mapMixin   = require('../mixins/mapMixin.js');
 var styles     = require('../styles.js');
+var _          = require('../_.js');
+var Marker     = google.maps.Marker;
+var cityCenter = new google.maps.LatLng(40.4122994, -111.75418)
+
 
 var mapOptions = {
 	center: {
@@ -22,7 +24,8 @@ var AdminMap = React.createClass({
 	getInitialState: function () {
 		return {
 			map: undefined,
-			requests: []
+			requests: [],
+			markers: []
 		}
 	},
 
@@ -39,8 +42,8 @@ var AdminMap = React.createClass({
 		var imageStyle = styles.hiddenIf((typeof request.media_url === 'undefined' || !request.media_url));
 
 		imageStyle = styles.mix(imageStyle, {
-			maxWidth:     200,
-			maxHeight:    200,
+			maxWidth:     150,
+			maxHeight:    150,
 			marginBottom: 10
 		});
 
@@ -56,9 +59,24 @@ var AdminMap = React.createClass({
 		return React.renderToStaticMarkup(content);
 	},
 
+	setFilter: function (event, options) {
+		var self = this;
+		options = this.setDefaults(options);
+		this.state.markers.forEach(function(marker) {
+			_.keys(options).forEach(function(option){
+				if (_.contains(options[option], marker.request[option])) {
+					marker.setMap(self.state.map);
+				} else {
+					marker.setMap(null)
+				}
+			});
+		});
+	},
+
 	componentDidMount: function () {
 		var self = this;
 		$(document).ready(function(){self.initializeMap()});
+		$(window).on('map:filterChanged', this.setFilter)
 	},
 
 	render: function () {

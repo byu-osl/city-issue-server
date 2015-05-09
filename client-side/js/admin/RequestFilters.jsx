@@ -5,7 +5,32 @@ var styles = require('../styles.js');
 
 var RequestFilters = React.createClass({
 
+	getInitialState: function () {
+		return  {
+			services: {}
+		}
+	},
+
 	handleChange: function (event) {
+	},
+
+	serviceChanged: function (event) {	
+
+		
+	},
+
+	statusChanged: function (event) {
+		var values;
+
+		if (event.target.value === 'all') {
+			values = ['open', 'closed']
+		} else {
+			values = [event.target.value];
+		}
+
+		$(window).trigger('map:filterChanged', {
+			status: values
+		});
 	},
 
 
@@ -26,12 +51,17 @@ var RequestFilters = React.createClass({
 					<span style={styles.bold}>Status</span>
 					<div class="checkbox">
 					    <label style={labelStyle}>
-					        <input name='status' type="radio" value='open'/> open
+					        <input name='status' type="radio" value='all' onChange={this.statusChanged}/> all
 					    </label>
 					</div>
 					<div class="checkbox">
 					    <label style={labelStyle}>
-					        <input name='status' type="radio" value='closed'/> closed
+					        <input name='status' type="radio" value='open' onChange={this.statusChanged}/> open
+					    </label>
+					</div>
+					<div class="checkbox">
+					    <label style={labelStyle}>
+					        <input name='status' type="radio" value='closed' onChange={this.statusChanged}/> closed
 					    </label>
 					</div>
 				</div>
@@ -46,10 +76,11 @@ var RequestFilters = React.createClass({
     	var labelStyle = {
     		fontWeight: '500'
     	}
+
     	return (
 	    	<div class="checkbox">
 	    	    <label style={labelStyle}>
-	    	        <input type="checkbox" value={service.service_code}/> {service.service_name}
+	    	        <input onChange={this.categoryChanged} type="checkbox" value={service.service_code}/> {service.service_name}
 	    	    </label>
 	    	</div>
 		);

@@ -71,6 +71,8 @@ var Map = React.createClass({
 
 	markerDragged: function (event) {
 		this.setState({latLng:event.latLng});
+		geocoder.geocode({latLng: event.latLng}, this.props.onGeocode);
+		this.props.markValid();
 	},
 
 	setCenter: function (lat, long) {
@@ -86,7 +88,9 @@ var Map = React.createClass({
 	componentDidMount: function () {
 		var self = this;
 		$(document).ready(function(){self.initializeMap()});
-		api.getRequests(this.loadRequests);
+		api.getRequests({
+			status: 'open'
+		}, this.loadRequests);
 		api.getServices(function gotServices(services) {
             this.setState({
                 services: services
@@ -98,8 +102,8 @@ var Map = React.createClass({
 		var imageStyle = styles.hiddenIf((typeof request.media_url === 'undefined' || !request.media_url));
 
 		imageStyle = styles.mix(imageStyle, {
-			maxWidth:     200,
-			maxHeight:    200,
+			maxWidth:     150,
+			maxHeight:    150,
 			marginBottom: 10
 		});
 
@@ -119,7 +123,7 @@ var Map = React.createClass({
 
 		var style = {
 			width:     '100%',
-			minHeight: 350
+			minHeight: 500
 		}
 
 		return (

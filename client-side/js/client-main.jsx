@@ -87,3 +87,7 @@ if (!String.prototype.endsWith) {
       return lastIndex !== -1 && lastIndex === position;
   };
 }
+
+window.isUndefined = function (thing) {
+	return typeof thing === 'undefined'
+}

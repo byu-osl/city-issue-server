@@ -5,11 +5,15 @@ add address field to maps
 
 # Questions
 
-Why don't we use localstorage to store their info? Do they even need an account?
+- Why don't we use localstorage to store their info? Do they even need an account?
+- Starting to feel a little yucky about the code
 
 
 # Changed since last time
-
+- request form
+- visit to cedar hills
+- admin maps
+- 
 
 
 ------------------

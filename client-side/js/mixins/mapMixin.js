@@ -1,13 +1,18 @@
 'use strict';
 
+var _ = require('../_.js');
+
+
 module.exports = {
-	loadRequests: function (requests) {
+	loadRequests: function (requests, options) {
+		options = setDefaults(options);
+
 		var map = this.state.map;
 		var self = this;
 		this.setState({requests:requests});
-		requests.forEach(function(request, index) {
-			if (typeof request.lat === 'undefined') {return;}
-
+		var markers = requests.map(function(request, index) {
+			if (isUndefined(request.lat)) {return;}
+			
 			var infoWindow = new google.maps.InfoWindow({
 				content: this.renderInfoWindow(request)
 			});
@@ -22,17 +27,38 @@ module.exports = {
 			google.maps.event.addListener(marker, 'click', function () {
 				infoWindow.open(map, marker);
 			});
+
+			marker.request = request;
+			return marker;
 		}, this);	
+
+		this.setState({markers:markers})
 	},
 
 	getImageType: function (serviceName) {
 		switch(serviceName) {
 			case 'potholes':     return '../../../images/marker-orange.png'; 
 			case 'streetlights': return '../../../images/marker-yellow.png'; 
-			case 'irrigation':  return '../../../images/marker-blue.png'; 
+			case 'irrigation':   return '../../../images/marker-blue.png'; 
 			case 'sidewalks':    return '../../../images/marker-white.png'; 
-			case 'vandalism':   return '../../../images/marker-purple.png'; 
-			default:            return '../../../images/marker-gray.png'
+			case 'vandalism':    return '../../../images/marker-purple.png'; 
+			default:             return '../../../images/marker-gray.png'
 		}
 	},
+
+	setDefaults: function (options) {
+		var defaultOptions = {
+			status: ['open', 'closed']
+		};
+
+		if (isUndefined(options)) {
+			return defaultOptions;
+		}
+
+		return _.assign(defaultOptions, options);
+	},
+}
+
+function setDefaults(options) {
+
 }

@@ -2,7 +2,6 @@
 
 var React  = require('react');
 var styles = require('../styles');
-var mixins = require('../mixins');
 
 var Map = require('./Map.jsx');
 
@@ -10,15 +9,13 @@ var Map = require('./Map.jsx');
 module.exports = React.createClass({
 
     validate: function() {
-        var isValid = (this.state.location.length > 0 || this.state.usedDetection || this.state.lat);
+        var isValid = (this.state.location.length > 0 || this.state.usedDetection || this.refs.map.getLatLng().lat());
         this.setState({isValid:isValid});
         return isValid;
     },
 
     getInitialState: function () {
         return {
-            lat: null,
-            long: null,
             location: '',
             loading: false,
             usedDetection: false,
@@ -38,8 +35,6 @@ module.exports = React.createClass({
         this.refs.map.setCenter(lat, long);
 
         this.setState({
-            lat:lat, 
-            long:long, 
             usedDetection: true,
             isValid: true,
             loading: false

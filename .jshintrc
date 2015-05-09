@@ -2,7 +2,8 @@
 
   	"globals": {
     	"$"	    : false,
-        "google": false
+        "google": false,
+        "isUndefined": false
 	},
 
     "asi"       : true,

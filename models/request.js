@@ -32,14 +32,13 @@ var requestSchema = new Schema({
 });
 
 // Takes req.body as the parameter
-// returns a built query to be executed
 requestSchema.statics.findRequests = function(params, callback){
     var requestsQuery = this.find();
-    var startDate = params.start_date; //  lower bound for requested_datetime
-    var endDate = params.end_date;     // upper bound for requested_datetime
-    var requestIDs = params.service_request_id;
-    var serviceCodes = params.service_code;
-    var status = params.status;
+    var startDate     = params.start_date; //  lower bound for requested_datetime
+    var endDate       = params.end_date;     // upper bound for requested_datetime
+    var requestIDs    = params.service_request_id;
+    var serviceCodes  = params.service_code;
+    var status        = params.status;
 
     if (typeof startDate === 'undefined') {
         startDate = moment().subtract(90, 'days');
@@ -76,6 +75,3 @@ requestSchema.statics.findRequests = function(params, callback){
 };
 
 module.exports = mongoose.model('Request', requestSchema);
-
-// If the difference between the start and end > 90, set the end
-// to be 90 days after the start. Leave the start where it is.
