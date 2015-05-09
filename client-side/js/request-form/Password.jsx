@@ -13,7 +13,7 @@ var Password = React.createClass({
 	},
 
 	componentDidUpdate: function () {
-		if (this.props.creatingAccount) {
+		if (this.props.creatingAccount && this.state.password === '') {
 			this.refs.input.getDOMNode().focus();
 		}
 	},
@@ -40,7 +40,6 @@ var Password = React.createClass({
 			cursor: 'pointer',
 			color: 'rgb(155, 155, 155)'
 		}
-
 
 		return (
 			<div style={this.props.style}>

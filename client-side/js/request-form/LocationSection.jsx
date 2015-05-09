@@ -9,7 +9,7 @@ var Map = require('./Map.jsx');
 module.exports = React.createClass({
 
     validate: function() {
-        var isValid = (this.state.location.length > 0 || this.state.usedDetection || this.refs.map.getLatLng().lat());
+        var isValid = (this.state.location.length > 0 || this.state.usedDetection || this.getLat());
         this.setState({isValid:isValid});
         return isValid;
     },
@@ -32,7 +32,7 @@ module.exports = React.createClass({
         var lat = positionData.coords.latitude;
         var long = positionData.coords.longitude;
 
-        this.refs.map.setCenter(lat, long);
+        this.refs.map.setMarkerPosition(lat, long);
 
         this.setState({
             usedDetection: true,
@@ -52,7 +52,7 @@ module.exports = React.createClass({
     },
 
     onGeocode: function (results, status) {
-        if (typeof this.state.isValid !== 'undefined') {
+        if (!isUndefined(this.state.isValid)) {
             this.validate();
         }
 
@@ -67,7 +67,7 @@ module.exports = React.createClass({
     },
 
     handleChange: function (event) {
-        if (typeof this.state.isValid !== 'undefined') {
+        if (!isUndefined(this.state.isValid)) {
             this.validate();
         }
 
@@ -87,18 +87,19 @@ module.exports = React.createClass({
 
         var markerStyle = {
             color: 'rgb(207, 99, 99)',
-            display: this.state.loading ? 'none' : 'inherit'
         }
 
         var loadingStyle = {
             border: 'none',
-            display: this.state.loading ? 'inherit' : 'none',
             top: -5,
             position: 'relative',
             paddingRight: 2,
             height: 9,
             marginRight: 5
         }
+
+        markerStyle  = styles.mix(markerStyle, styles.hiddenIf(this.state.loading));
+        loadingStyle = styles.mix(loadingStyle, styles.visibleIf(this.state.loading));
 
         if (this.state.isValid === false) {
             validationState += ' has-error';

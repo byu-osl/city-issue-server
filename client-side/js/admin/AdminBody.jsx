@@ -39,10 +39,6 @@ var AdminBody = React.createClass({
 		this.setState({services:newProps.services});
 	},
 
-	getSortingOptions: function () {
-		
-	},
-
     render: function() {
     	var activeData;
     	['requests','services','users'].forEach(function(navItem){
@@ -56,7 +52,6 @@ var AdminBody = React.createClass({
 			top: 8,
 			left: 7,
 		}
-
 
         return (
         	<div className='col-xs-10' style={{paddingRight:0}}>
@@ -77,11 +72,11 @@ var AdminBody = React.createClass({
 // TODO: perf issue?
 function transformRequest (request) {
 	var newRequest = {};
-	newRequest.Image = unsafe('<img style="max-width: 40px" src="'+request.media_url+'"/>');
+	newRequest.Image             = unsafe('<img style="max-width: 40px" src="'+request.media_url+'"/>');
 	newRequest['Date Submitted'] = new Date(request.requested_datetime).toDateString().substring(4)
-	newRequest.Status = request.status;
-	newRequest.Description = request.description;
-	newRequest.Location = request.address_string;
+	newRequest.Status            = request.status;
+	newRequest.Description       = request.description;
+	newRequest.Location          = request.address_string;
 
 	return newRequest;
 }

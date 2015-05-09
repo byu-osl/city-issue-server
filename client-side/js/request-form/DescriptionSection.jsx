@@ -21,7 +21,7 @@ var DescriptionSection = React.createClass({
     },
 
     handleChange: function () {
-        if (typeof this.state.isValid !== 'undefined') {
+        if (!isUndefined(this.state.isValid)) {
             this.validate();
         }
 

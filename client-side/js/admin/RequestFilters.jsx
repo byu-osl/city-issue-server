@@ -11,9 +11,6 @@ var RequestFilters = React.createClass({
 		}
 	},
 
-	handleChange: function (event) {
-	},
-
 	serviceChanged: function (event) {	
 
 		

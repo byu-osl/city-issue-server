@@ -30,10 +30,8 @@ var ContactInfo = React.createClass({
     },
 
     optionChanged: function () {
-    	// in case the target is the label
     	var value = $('input', event.target).val();
-    	// it may target a span that react inserts
-    	if (typeof value === 'undefined') {
+    	if (isUndefined(value)) {
     		var parent = $(event.target).parent() 
 			value = $('input', parent).val();
     	}
@@ -41,7 +39,7 @@ var ContactInfo = React.createClass({
     },
 
     componentWillReceiveProps: function (newProps) {
-    	if (typeof newProps.user.contact_method !== 'undefined') {
+    	if (!isUndefined(newProps.user.contact_method)) {
 	    	this.setState({
 	    		contactMethod: newProps.user.contact_method
 	    	});
@@ -53,16 +51,17 @@ var ContactInfo = React.createClass({
 		var contactForms = [];
 
 		passwordStyle = styles.visibleIf(this.state.creatingAccount === true && this.state.contactMethod !== 'none');
-		nameStyle  = styles.hiddenIf(this.state.contactMethod === 'none');
-		emailStyle = styles.visibleIf(this.state.contactMethod === 'email');
-		phoneStyle = styles.visibleIf(this.state.contactMethod === 'text' || this.state.contactMethod === 'phone');
+		nameStyle     = styles.hiddenIf(this.state.contactMethod === 'none');
+		emailStyle    = styles.visibleIf(this.state.contactMethod === 'email');
+		phoneStyle    = styles.visibleIf(this.state.contactMethod === 'text' || this.state.contactMethod === 'phone');
+		
 		if (this.state.contactMethod === 'none') {
 			accountCreationStyle = styles.hidden;
 		} else  {
 			accountCreationStyle = styles.hiddenIf(this.props.user.loggedIn);
 		}
 
-		var activeClass = 'btn btn-primary active';
+		var activeClass   = 'btn btn-primary active';
 		var inactiveClass = 'btn btn-primary';
 			 
 		return (

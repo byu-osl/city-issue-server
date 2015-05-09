@@ -36,14 +36,14 @@ var Map = React.createClass({
 
 	getInitialState: function () {
 		return {
-			latLng: undefined,
 			map:    undefined,
+			marker: undefined,
 			requests: []
 		}
 	},
 
 	getLatLng: function () {
-		return this.state.latLng;
+		return this.marker.getPosition();
 	},
 
 	initializeMap: function () {
@@ -63,24 +63,20 @@ var Map = React.createClass({
 	mapClicked: function (event) {
 		geocoder.geocode({latLng: event.latLng}, this.props.onGeocode);
 		this.state.marker.setPosition(event.latLng);
-		this.setState({
-			latLng:event.latLng
-		});
 		this.props.markValid();
 	},
 
 	markerDragged: function (event) {
-		this.setState({latLng:event.latLng});
 		geocoder.geocode({latLng: event.latLng}, this.props.onGeocode);
 		this.props.markValid();
 	},
 
-	setCenter: function (lat, long) {
+	setMarkerPosition: function (lat, long) {
 		var position = new google.maps.LatLng(lat, long);
+
 		this.state.map.panTo(position);
-		this.state.marker.setPosition(position);
-		this.setState({latLng:position});
 		this.state.map.setZoom(19);
+		this.state.marker.setPosition(position);
 		geocoder.geocode({'latLng':position}, this.props.onGeocode);
 		this.props.markValid();
 	},
@@ -88,9 +84,11 @@ var Map = React.createClass({
 	componentDidMount: function () {
 		var self = this;
 		$(document).ready(function(){self.initializeMap()});
+
 		api.getRequests({
 			status: 'open'
 		}, this.loadRequests);
+
 		api.getServices(function gotServices(services) {
             this.setState({
                 services: services
@@ -99,7 +97,7 @@ var Map = React.createClass({
 	},
 
 	renderInfoWindow: function (request) {
-		var imageStyle = styles.hiddenIf((typeof request.media_url === 'undefined' || !request.media_url));
+		var imageStyle = styles.hiddenIf((isUndefined(request.media_url) || !request.media_url));
 
 		imageStyle = styles.mix(imageStyle, {
 			maxWidth:     150,
@@ -111,7 +109,7 @@ var Map = React.createClass({
 			<div>
 				<label>Category: {request.service_name}</label>
 				<p>open</p>
-				<img style={imageStyle} src={typeof request.media_url !== 'undefined'? request.media_url : ''}></img>
+				<img style={imageStyle} src={!isUndefined(request.media_url)? request.media_url : ''}></img>
 				<p>{request.address_string}</p>
 			</div>
 		);

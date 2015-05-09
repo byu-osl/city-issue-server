@@ -42,7 +42,7 @@ function findRequests(req, res) {
 function validatePOSTParameters(req, res, next) {
 	var serviceCode = req.body.service_code;
 
-	if (typeof serviceCode === 'undefined') {
+	if (isUndefined(serviceCode)) {
 		res.send400('A service code was not defined.');
 		return;
 	}
@@ -108,10 +108,10 @@ function updateRequest (req, res) {
 
 //  required for requests
 function hasLocationInfo(params) {
-	return ((typeof params.lat !== 'undefined' && 
-			 typeof params.long !== 'undefined') ||  
-	    (typeof params.address_string !== 'undefined') ||
-	    (typeof params.address_id !== 'undefined'));
+	return ((!isUndefined(params.lat) && 
+			 !isUndefined(params.long)) ||  
+	   	    (!isUndefined(params.address_string)) ||
+	        (!isUndefined(params.address_id));
 }
 
 // Takes a request JSON object

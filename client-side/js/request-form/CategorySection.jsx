@@ -15,6 +15,9 @@ var CategorySection = React.createClass({
         };
     },
 
+    getSelectedService:     function() {return this.state.selectedService},
+    getSelectedServiceName: function() {return this.state.selectedServiceName},
+
     validate: function() {
         var isValid = this.state.selectedService.length > 0;
         this.setState({isValid:isValid});
@@ -22,12 +25,10 @@ var CategorySection = React.createClass({
     },
 
     serviceClicked: function(event) {
-        // in case the target is the label
         var value = $('input', event.target).val();
         var name  = $('input', event.target).attr('data-service-name');
 
-        // it may target a span that react inserts
-        if (typeof value === 'undefined') {
+        if (isUndefined(value)) {
             var parent = $(event.target).parent() 
             value = $('input', parent).val();
             name  = $('input', parent).attr('data-service-name');
@@ -39,9 +40,6 @@ var CategorySection = React.createClass({
             isValid:             true
         });
     },
-
-    getSelectedService:     function() {return this.state.selectedService},
-    getSelectedServiceName: function() {return this.state.selectedServiceName},
 
     componentDidMount: function () {
         api.getServices(function gotServices(services) {

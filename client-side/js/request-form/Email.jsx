@@ -23,7 +23,7 @@ var Email = React.createClass({
 	},
 
 	componentWillReceiveProps: function (newProps) {
-		if (typeof newProps.value !== 'undefined') {
+		if (!isUndefined(newProps.value)) {
 			this.setState({email:newProps.value});
 		}
 	},

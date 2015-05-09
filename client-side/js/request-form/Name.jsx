@@ -31,7 +31,7 @@ var Name = React.createClass({
 	},
 
 	componentWillReceiveProps: function (newProps) {
-		if (typeof newProps.value !== 'undefined') {
+		if (!isUndefined(newProps.value)) {
 			this.setState({name:newProps.value});
 		}
 	},

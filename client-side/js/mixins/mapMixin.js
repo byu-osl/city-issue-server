@@ -6,9 +6,7 @@ var _ = require('../_.js');
 module.exports = {
 	loadRequests: function (requests, options) {
 		options = setDefaults(options);
-
 		var map = this.state.map;
-		var self = this;
 		this.setState({requests:requests});
 		var markers = requests.map(function(request, index) {
 			if (isUndefined(request.lat)) {return;}
@@ -21,7 +19,7 @@ module.exports = {
 				position: new google.maps.LatLng(request.lat, request.long),
 				map:      map,
 				title:    request.service_name,
-				icon:     self.getImageType(request.service_name)
+				icon:     this.getImageType(request.service_name)
 			});
 
 			google.maps.event.addListener(marker, 'click', function () {
@@ -57,8 +55,4 @@ module.exports = {
 
 		return _.assign(defaultOptions, options);
 	},
-}
-
-function setDefaults(options) {
-
 }

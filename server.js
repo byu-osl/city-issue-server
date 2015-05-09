@@ -1,8 +1,14 @@
 "use strict";
 
+global.isUndefined = function(thing) {
+  return (typeof thing === 'undefined');
+}
+
+
 var app = require('./app');
 var debug = require('debug')('app:server');
 var http = require('http');
+
 
 var port = parseInt(process.env.PORT, 10) || 3000;
 app.set('port', port);

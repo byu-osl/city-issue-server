@@ -90,8 +90,8 @@ var RequestForm = React.createClass({
     validateForm: function() {
         var passing = true;
 
-        _.forEach(this.refs, function (ref) {
-            if (typeof ref.validate !== 'undefined') {
+        _.forEach(this.refs, function validateFormComponents(ref) {
+            if (!isUndefined(ref.validate)) {
                 passing = passing && ref.validate();
             }
         });

@@ -12,8 +12,8 @@ var mapOptions = {
 		lat: 40.4122994,
 		lng: -111.75418
 	},
-	zoom:            14,
-	mapTypeId:       google.maps.MapTypeId.HYBRID
+	zoom:      14,
+	mapTypeId: google.maps.MapTypeId.HYBRID
 }
 
 var geocoder = new google.maps.Geocoder();
@@ -39,7 +39,7 @@ var AdminMap = React.createClass({
 	},
 
 	renderInfoWindow: function (request) {
-		var imageStyle = styles.hiddenIf((typeof request.media_url === 'undefined' || !request.media_url));
+		var imageStyle = styles.hiddenIf((isUndefined(request.media_url) || !request.media_url));
 
 		imageStyle = styles.mix(imageStyle, {
 			maxWidth:     150,
@@ -51,7 +51,7 @@ var AdminMap = React.createClass({
 			<div>
 				<label>Category: {request.service_name}</label>
 				<p>open</p>
-				<img style={imageStyle} src={typeof request.media_url !== 'undefined'? request.media_url : ''}></img>
+				<img style={imageStyle} src={isUndefined(request.media_url)? '' : request.media_url}></img>
 				<p>{request.address_string}</p>
 			</div>
 		);
@@ -62,8 +62,9 @@ var AdminMap = React.createClass({
 	setFilter: function (event, options) {
 		var self = this;
 		options = this.setDefaults(options);
-		this.state.markers.forEach(function(marker) {
-			_.keys(options).forEach(function(option){
+		// for each option 
+		this.state.markers.forEach(function (marker) {
+			_.keys(options).forEach(function (option){
 				if (_.contains(options[option], marker.request[option])) {
 					marker.setMap(self.state.map);
 				} else {
