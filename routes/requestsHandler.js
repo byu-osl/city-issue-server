@@ -111,7 +111,7 @@ function hasLocationInfo(params) {
 	return ((!isUndefined(params.lat) && 
 			 !isUndefined(params.long)) ||  
 	   	    (!isUndefined(params.address_string)) ||
-	        (!isUndefined(params.address_id));
+	        (!isUndefined(params.address_id)))
 }
 
 // Takes a request JSON object

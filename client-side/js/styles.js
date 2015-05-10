@@ -28,15 +28,11 @@ styles.indented = {
 }
 
 styles.hiddenIf = function (condition) {
-	return condition ? styles.hidden : styles.visible;
+	return condition ? {display:'none'} : {display:'inherit'};
 }
 
 styles.visibleIf = function(condition) {
-	return condition ? styles.visible : styles.hidden;
+	return condition ? {display:'inherit'} : {display:'none'};
 }
-
-styles.mix = _.assign;
-
-
 
 module.exports = styles;

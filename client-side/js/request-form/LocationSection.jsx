@@ -2,6 +2,7 @@
 
 var React  = require('react');
 var styles = require('../styles');
+var _ = require('../_');
 
 var Map = require('./Map.jsx');
 
@@ -98,8 +99,8 @@ module.exports = React.createClass({
             marginRight: 5
         }
 
-        markerStyle  = styles.mix(markerStyle, styles.hiddenIf(this.state.loading));
-        loadingStyle = styles.mix(loadingStyle, styles.visibleIf(this.state.loading));
+        _.assign(markerStyle, styles.hiddenIf(this.state.loading));
+        _.assign(loadingStyle, styles.visibleIf(this.state.loading));
 
         if (this.state.isValid === false) {
             validationState += ' has-error';

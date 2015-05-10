@@ -5,6 +5,7 @@ var api        = require('../server-api.js');
 var Marker     = google.maps.Marker;
 var styles     = require('../styles.js');
 var cityCenter = new google.maps.LatLng(40.4122994, -111.75418)
+var _ 		   = require('../_');
 var mapOptions = {
 	center: {
 		lat: 40.4122994,
@@ -99,7 +100,7 @@ var Map = React.createClass({
 	renderInfoWindow: function (request) {
 		var imageStyle = styles.hiddenIf((isUndefined(request.media_url) || !request.media_url));
 
-		imageStyle = styles.mix(imageStyle, {
+		_.assign(imageStyle, {
 			maxWidth:     150,
 			maxHeight:    150,
 			marginBottom: 10

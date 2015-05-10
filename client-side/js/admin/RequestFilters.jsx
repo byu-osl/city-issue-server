@@ -2,32 +2,64 @@
 var React  = require('react');
 var api = require('../server-api.js');
 var styles = require('../styles.js');
+var _ = require('../_.js');
 
 var RequestFilters = React.createClass({
 
 	getInitialState: function () {
 		return  {
-			services: {}
+			selectedServices: undefined,
+			status: 'all'
 		}
 	},
 
 	serviceChanged: function (event) {	
+		var newSelections = this.state.selectedServices;
+		newSelections[event.target.value] = event.target.checked;
 
-		
+		this.setState({
+			selectedServices: newSelections
+		});
+
+		this.triggerMapUpdate(this.state.status, newSelections);
 	},
 
 	statusChanged: function (event) {
-		var values;
+		this.setState({
+			status: event.target.value,
+		});
 
-		if (event.target.value === 'all') {
-			values = ['open', 'closed']
+		this.triggerMapUpdate(event.target.value, this.state.selectedServices);
+	},
+
+	triggerMapUpdate: function(status, selectedServices) {
+		if (status === 'all') { 
+			status = ['open', 'closed']
 		} else {
-			values = [event.target.value];
+			status = [status];
 		}
 
+		selectedServices = _.keys(selectedServices).filter(function(service){
+			return (selectedServices[service] === true)
+		}, this);
+
+		var self = this;
 		$(window).trigger('map:filterChanged', {
-			status: values
+			status: status,
+			service_name: selectedServices
 		});
+	},
+
+	componentWillReceiveProps: function (nextProps) {
+		if (isUndefined(this.state.selectedServices)) {
+			var selectedServices = {};
+			nextProps.services.forEach(function (service){
+				selectedServices[service.service_name] = true;
+			});
+			this.setState({
+				selectedServices: selectedServices
+			});
+		}
 	},
 
 
@@ -42,27 +74,28 @@ var RequestFilters = React.createClass({
     	}
 
         return (
-			<div style={styles.mix(this.props.style, containerStyle)}>
+			<div style={_.assign(containerStyle, this.props.style)}>
 
 				<div className="form-group">
 					<span style={styles.bold}>Status</span>
 					<div class="checkbox">
 					    <label style={labelStyle}>
-					        <input name='status' type="radio" value='all' onChange={this.statusChanged}/> all
+					        <input checked={this.state.status === 'all'} name='status' type="radio" value='all' onChange={this.statusChanged}/> all
 					    </label>
 					</div>
 					<div class="checkbox">
 					    <label style={labelStyle}>
-					        <input name='status' type="radio" value='open' onChange={this.statusChanged}/> open
+					        <input checked={this.state.status === 'open'} name='status' type="radio" value='open' onChange={this.statusChanged}/> open
 					    </label>
 					</div>
 					<div class="checkbox">
 					    <label style={labelStyle}>
-					        <input name='status' type="radio" value='closed' onChange={this.statusChanged}/> closed
+					        <input checked={this.state.status === 'closed'} name='status' type="radio" value='closed' onChange={this.statusChanged}/> closed
 					    </label>
 					</div>
 				</div>
 				<div className="form-group"><span style={styles.bold}>Category</span>
+					// todo: "all" link
 					{this.props.services.map(this.renderService, this)}
 				</div>
 			</div>
@@ -77,7 +110,7 @@ var RequestFilters = React.createClass({
     	return (
 	    	<div class="checkbox">
 	    	    <label style={labelStyle}>
-	    	        <input onChange={this.categoryChanged} type="checkbox" value={service.service_code}/> {service.service_name}
+	    	        <input onChange={this.serviceChanged} checked={this.state.selectedServices[service.service_name]} type="checkbox" value={service.service_name}/> {service.service_name}
 	    	    </label>
 	    	</div>
 		);

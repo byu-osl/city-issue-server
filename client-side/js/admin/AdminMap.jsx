@@ -41,7 +41,7 @@ var AdminMap = React.createClass({
 	renderInfoWindow: function (request) {
 		var imageStyle = styles.hiddenIf((isUndefined(request.media_url) || !request.media_url));
 
-		imageStyle = styles.mix(imageStyle, {
+		_.assign(imageStyle, {
 			maxWidth:     150,
 			maxHeight:    150,
 			marginBottom: 10
@@ -62,15 +62,21 @@ var AdminMap = React.createClass({
 	setFilter: function (event, options) {
 		var self = this;
 		options = this.setDefaults(options);
-		// for each option 
+
 		this.state.markers.forEach(function (marker) {
+			var allGood = true;
+
 			_.keys(options).forEach(function (option){
-				if (_.contains(options[option], marker.request[option])) {
-					marker.setMap(self.state.map);
-				} else {
-					marker.setMap(null)
-				}
+				if (!_.contains(options[option], marker.request[option])) {
+					allGood = false
+				} 
 			});
+
+			if (!allGood) {
+				marker.setMap(null)
+			} else {
+				marker.setMap(self.state.map)
+			}
 		});
 	},
 
@@ -81,7 +87,6 @@ var AdminMap = React.createClass({
 	},
 
 	render: function () {
-
 		var style = {
 			width: '100%',
 			minHeight: 500
@@ -95,3 +100,4 @@ var AdminMap = React.createClass({
 });
 
 module.exports = AdminMap;
+

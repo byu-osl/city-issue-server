@@ -40,11 +40,11 @@ function getStatus() {
 }
 
 function getLat() {
-    return randgen.rnorm(40.415436, stdDeviation);
+    return randgen.rnorm(40.413436, stdDeviation);
 }
 
 function getLong() {
-    return randgen.rnorm(-111.756283,stdDeviation);
+    return randgen.rnorm(-111.755283,stdDeviation);
 }
 
 function randomInRange(min, max) {

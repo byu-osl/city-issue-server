@@ -6,7 +6,7 @@ add address field to maps
 # Questions
 
 - Why don't we use localstorage to store their info? Do they even need an account?
-- Starting to feel a little yucky about the code
+- Weirdness in requestFilters triggering
 
 
 # Changed since last time

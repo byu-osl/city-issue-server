@@ -5,7 +5,8 @@ var _ = require('../_.js');
 
 module.exports = {
 	loadRequests: function (requests, options) {
-		options = setDefaults(options);
+		console.log('loading requests');
+		options = this.setDefaults(options);
 		var map = this.state.map;
 		this.setState({requests:requests});
 		var markers = requests.map(function(request, index) {
