@@ -44,4 +44,10 @@ serverAPI.getUsers = function(options, cb, thisArg) {
 	cb.call(thisArg, []);
 }
 
+serverAPI.getServiceMetadata = function (cb, thisArg) {
+	$.get('/services/metadata', function(data) {
+		cb.call(thisArg, data)
+	});
+}
+
 module.exports = serverAPI;

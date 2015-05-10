@@ -1,12 +1,16 @@
 'use strict';
-var express  = require('express');
-var router   = express.Router();
-var Service  = require('../models/service');
+var express = require('express');
+var router  = express.Router();
+var Service = require('../models/service');
+var Request = require('../models/request');
 var isAdmin = require('../utility/isAdmin.js')
+var async   = require('async');
 
 // services.json/...
 router.get('/', listServices);
 router.get(':serviceCode.json', getServiceDescription);
+router.get('/metadata', getMetadata);
+
 router.post('/add', addService);
 router.post('/delete', isAdmin, deleteService);
 
@@ -66,5 +70,32 @@ function deleteService (req, res, next) {
 		}
 	});
 }
+
+function getMetadata (req, res) {
+	var results = {};
+	var servicesDone = 0;
+	Service.find(function(error, services){
+		services.forEach(function (service, index) {
+			Request.count({service_code: service.service_code, status:'open'}, function(error, openCount) {
+				results[service.service_name] = {};
+				results[service.service_name].openCount = openCount;
+				Request.count({service_code: service.service_code, status: 'closed'}, function(error, closedCount) {
+					results[service.service_name].closedCount = closedCount;
+					results[service.service_name].total = openCount + closedCount;
+					servicesDone++;
+					if (servicesDone === services.length) {
+						res.send(results);
+					}
+				});
+			});
+		});
+	});
+}
+
+function countOpenRequests(serviceCode) {
+
+
+}
+
 
 module.exports = router;

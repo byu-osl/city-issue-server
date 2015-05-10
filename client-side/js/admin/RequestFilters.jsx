@@ -73,6 +73,7 @@ var RequestFilters = React.createClass({
     		marginLeft: 10
     	}
 
+// TODO: all filter for categories
         return (
 			<div style={_.assign(containerStyle, this.props.style)}>
 
@@ -95,7 +96,6 @@ var RequestFilters = React.createClass({
 					</div>
 				</div>
 				<div className="form-group"><span style={styles.bold}>Category</span>
-					// todo: "all" link
 					{this.props.services.map(this.renderService, this)}
 				</div>
 			</div>

@@ -2,10 +2,8 @@
 
 var _ = require('../_.js');
 
-
 module.exports = {
 	loadRequests: function (requests, options) {
-		console.log('loading requests');
 		options = this.setDefaults(options);
 		var map = this.state.map;
 		this.setState({requests:requests});
@@ -55,5 +53,5 @@ module.exports = {
 		}
 
 		return _.assign(defaultOptions, options);
-	},
+	}
 }

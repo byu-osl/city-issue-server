@@ -5,6 +5,7 @@ var Reactable = require('reactable');
 var Router    = require('react-router');
 var Table     = Reactable.Table
 var unsafe    = Reactable.unsafe
+var mapMixin   = require('../mixins/mapMixin.js');
 var AdminMap  = require('./AdminMap.jsx');
 
 
@@ -16,6 +17,7 @@ var AdminBody = React.createClass({
 			requests: [],
 			services: [],
 			users:    [],
+			serviceMetadata: undefined,
 		}
 	},
 
@@ -33,10 +35,40 @@ var AdminBody = React.createClass({
 				users: users.map(transformUser)
 			});
 		}, this);
+
+		
 	},
 
+	// TODO: this is weird. call what we need from the parent
+	//       shouldn't set the state so often
 	componentWillReceiveProps: function (newProps) {
-		this.setState({services:newProps.services});
+		if (isUndefined(this.state.serviceMetadata)) {
+			api.getServiceMetadata(function(data){
+				this.setState({
+					serviceMetadata: data
+				});
+				this.forceUpdate();
+				this.setState({
+					services: newProps.services.map(this.transformService, this)
+				});
+			}, this);
+		} else {
+			this.setState({
+				services: newProps.services.map(this.transformService, this)
+			});
+		}
+	},
+
+	transformService: function (service) {
+		var newService = {};
+		var metaData = this.state.serviceMetadata[service.service_name]
+		var src = mapMixin.getImageType(service.service_name);
+		newService[' '] = unsafe('<img style="height:20px" src="'+src+'"/>');
+		newService.Name   = service.service_name;
+		newService.Open   = metaData.openCount;
+		newService.Closed = metaData.closedCount;
+		newService.Total  = metaData.total;
+		return newService;
 	},
 
     render: function() {
@@ -79,10 +111,6 @@ function transformRequest (request) {
 	newRequest.Location          = request.address_string;
 
 	return newRequest;
-}
-
-function transformService (service) {
-	return service;
 }
 
 function transformUser (user) {
