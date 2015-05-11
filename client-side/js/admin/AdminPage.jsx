@@ -26,7 +26,7 @@ var AdminPage = React.createClass({
         return (
         	<div className=''>
         		<AdminNav  services={this.state.services}></AdminNav>
-                <RouteHandler services={this.state.services}></RouteHandler>
+                <RouteHandler></RouteHandler>
         	</div>
         );
     }

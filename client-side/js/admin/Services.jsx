@@ -26,22 +26,18 @@ var Services = React.createClass({
 		return newService;
 	},
 
-	componentWillReceiveProps: function (newProps) {
-		if (isUndefined(this.state.serviceMetadata)) {
-			api.getServiceMetadata(function(data){
+	componentDidMount: function () {
+		api.getServices(function gotServices(services) {
+            api.getServiceMetadata(function(data){
 				this.setState({
 					serviceMetadata: data
 				});
 				this.forceUpdate();
 				this.setState({
-					services: newProps.services.map(this.transformService, this)
+					services: services.map(this.transformService, this)
 				});
 			}, this);
-		} else {
-			this.setState({
-				services: newProps.services.map(this.transformService, this)
-			});
-		}
+        }, this);
 	},
 
     render: function() {
@@ -54,13 +50,10 @@ var Services = React.createClass({
         return (
 			<div className='col-xs-10' style={{paddingRight:0}}>
 	        	<h2>Services</h2>
-        		<label style={labelStyle}>Search</label>
         		<Table 
-        		filterable   = {['Date Submitted','Location', 'Status']} 
         		sortable     = {true} 
         		className    = 'table-responsive table-hover table' 
         		data         = {this.state.services}
-        		itemsPerPage = {10}
         		/>
         	</div>
         );

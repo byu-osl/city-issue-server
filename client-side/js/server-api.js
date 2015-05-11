@@ -1,28 +1,19 @@
 'use strict';
 
-var serverAPI = {};
+var api = {};
 
-serverAPI.postRequest = function (data, cb) {
+// Requests
+api.postRequest = function (data, cb) {
     $.post('/requests.json', data, cb);
 }
 
-serverAPI.getServices = function (cb, thisArg) {
-     $.get('/services.json', function(data) {
-		cb.call(thisArg, data);
-     });
-}
-
-serverAPI.registerUser = function (data, cb) {
-	$.post('/register', data, cb);
-}
-
-serverAPI.authenticate = function (token, cb, thisArg) {
-	$.post('/authenticate', {token:token}, function authDone(data){
+api.getRequest = function (id, cb, thisArg){
+	$.get('/requests/'+id+'.json', function (data){
 		cb.call(thisArg, data);
 	});
 }
 
-serverAPI.getRequests = function(options, cb, thisArg) {
+api.getRequests = function(options, cb, thisArg) {
 	if (typeof options === 'function') {
 		thisArg = cb;
 		cb = options;
@@ -34,7 +25,30 @@ serverAPI.getRequests = function(options, cb, thisArg) {
 	});
 }
 
-serverAPI.getUsers = function(options, cb, thisArg) {
+// Services
+api.getServices = function (cb, thisArg) {
+     $.get('/services.json', function(data) {
+		cb.call(thisArg, data);
+     });
+}
+
+api.getServiceMetadata = function (cb, thisArg) {
+	$.get('/services/metadata', function(data) {
+		cb.call(thisArg, data)
+	});
+}
+// Users
+api.registerUser = function (data, cb) {
+	$.post('/register', data, cb);
+}
+
+api.authenticate = function (token, cb, thisArg) {
+	$.post('/authenticate', {token:token}, function authDone(data){
+		cb.call(thisArg, data);
+	});
+}
+
+api.getUsers = function(options, cb, thisArg) {
 	if (typeof options === 'function') {
 		thisArg = cb;
 		cb = options;
@@ -44,10 +58,4 @@ serverAPI.getUsers = function(options, cb, thisArg) {
 	cb.call(thisArg, []);
 }
 
-serverAPI.getServiceMetadata = function (cb, thisArg) {
-	$.get('/services/metadata', function(data) {
-		cb.call(thisArg, data)
-	});
-}
-
-module.exports = serverAPI;
+module.exports = api;

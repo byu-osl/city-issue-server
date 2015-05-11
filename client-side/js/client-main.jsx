@@ -9,6 +9,7 @@ var RouteHandler = Router.RouteHandler;
 var Link         = Router.Link;
 var RequestForm  = require('./request-form/RequestForm.jsx');
 var AdminPage    = require('./admin/AdminPage.jsx');
+var RequestPage  = require('./RequestPage.jsx');
 var HomePage     = require('./HomePage.jsx');
 var serverAPI    = require('./server-api.js');
 var styles       = require('./styles.js');
@@ -17,6 +18,7 @@ var Services     = require('./admin/Services.jsx');
 var Users        = require('./admin/Users.jsx');
 React.getDOMNode = React.findDOMNode;
 React.initializeTouchEvents(true);
+window.isUndefined = function (thing) {return typeof thing === 'undefined'}
 
 var App = React.createClass({
 render: function() {
@@ -69,6 +71,7 @@ var routes = (
 			<Route name='services' handler={Services}></Route>
 			<Route name='users'    handler={Users}></Route>
 		</Route>
+		<Route name='requests/:id' handler={RequestPage}></Route>
 	</Route>
 );
 
@@ -88,8 +91,4 @@ if (!String.prototype.endsWith) {
       var lastIndex = subjectString.indexOf(searchString, position);
       return lastIndex !== -1 && lastIndex === position;
   };
-}
-
-window.isUndefined = function (thing) {
-	return typeof thing === 'undefined'
 }

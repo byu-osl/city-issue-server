@@ -43,6 +43,40 @@ body {
 	border: solid 1px rgb(231, 231, 231);
 }
 
+.reactable-header-sortable {
+	cursor: pointer;
+}
+
+.reactable-header-sort-asc::after {
+	color: rgba(255, 255, 255, 0);
+	background: url('/images/ascending.png');
+	background-repeat: no-repeat;
+	background-size: 13px;
+	content: 'aa';
+	position: relative;
+	top: 2px;
+	left: 7px;
+}
+
+.reactable-header-sort-desc::after {
+	color: rgba(255, 255, 255, 0);
+	background: url('/images/descending.png');
+	background-repeat: no-repeat;
+	background-size: 13px;
+	content: 'aa';
+	position: relative;
+	top: 2px;
+	left: 7px;
+}
+
+.reactable-page-button:not(:last-child) {
+	border-right: solid 1px rgb(196, 215, 196);
+}
+
+a.reactable-page-button {
+	padding: 7px;
+	cursor: pointer;
+}
 
 /* Bootstrap overrides */
 
