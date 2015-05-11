@@ -1,9 +1,10 @@
 'use strict';
-var React  = require('react');
-var AdminNav = require('./AdminNav.jsx');
-var AdminBody = require('./AdminBody.jsx');
-var Link = require('react-router').Link;
-var api = require('../server-api.js');
+var React        = require('react');
+var AdminNav     = require('./AdminNav.jsx');
+var Router       = require('react-router');
+var Link         = require('react-router').Link;
+var RouteHandler = require('react-router').RouteHandler;
+var api          = require('../server-api.js');
 
 var AdminPage = React.createClass({
 
@@ -25,7 +26,7 @@ var AdminPage = React.createClass({
         return (
         	<div className=''>
         		<AdminNav  services={this.state.services}></AdminNav>
-        		<AdminBody services={this.state.services}></AdminBody>
+                <RouteHandler services={this.state.services}></RouteHandler>
         	</div>
         );
     }

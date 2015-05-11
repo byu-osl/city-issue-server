@@ -12,9 +12,11 @@ var AdminPage    = require('./admin/AdminPage.jsx');
 var HomePage     = require('./HomePage.jsx');
 var serverAPI    = require('./server-api.js');
 var styles       = require('./styles.js');
+var Requests     = require('./admin/Requests.jsx');
+var Services     = require('./admin/Services.jsx');
+var Users        = require('./admin/Users.jsx');
 React.getDOMNode = React.findDOMNode;
 React.initializeTouchEvents(true);
-
 
 var App = React.createClass({
 render: function() {
@@ -60,12 +62,12 @@ return (
 
 var routes = (
 	<Route handler={App}>
-		<Route name='/' 				 handler={HomePage}/>
-		<Route name='issue-submission'   handler={RequestForm}/>
-		<Route name='admin' 		     handler={AdminPage}>
-			<Route name='requests'></Route>
-			<Route name='services'></Route>
-			<Route name='users'></Route>
+		<Route name='/' 			   handler={HomePage}/>
+		<Route name='issue-submission' handler={RequestForm}/>
+		<Route name='admin' 		   handler={AdminPage}>
+			<Route name='requests' handler={Requests}></Route>
+			<Route name='services' handler={Services}></Route>
+			<Route name='users'    handler={Users}></Route>
 		</Route>
 	</Route>
 );

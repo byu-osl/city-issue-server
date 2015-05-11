@@ -13,7 +13,7 @@ add address field to maps
 - request form
 - visit to cedar hills
 - admin maps
-- 
+- filtering, services display
 
 
 ------------------

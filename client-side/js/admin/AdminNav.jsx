@@ -15,7 +15,7 @@ render: function() {
 		background: 'rgb(243, 243, 225)',
 		border: 'solid 1px rgb(231, 231, 231)',
 		padding: 10,
-		minHeight: 500,
+		minHeight: 543,
 	};
 
     return (
