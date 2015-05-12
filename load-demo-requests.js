@@ -97,5 +97,5 @@ function getService() {
 }
 
 function getDictionary() {
-return ['tech', 'crew', 'came', 'to', 'the', 'site', 'dug', 'up', 'some', 'wires', 'that', 'were', 'obstructing', 'the', 'road', 'to', 'fix', 'the', 'pothole', 'streetlight', 'had', 'been', 'out', 'fot', 'several', 'weeks', 'vandalism', 'on', 'the', 'wall', 'street']
+    return ['everything', 'is', 'fixed', 'now', 'we', 'came', 'by', 'the', 'resident', 'said', 'we', 'forgot', 'to', 'backfill', 'the', 'hole', 'duct', 'tape', 'did', 'the', 'trick', 'streetlight', 'out', 'truck', 'backhoe', 'repaint', 'vandalism', 'third', 'time', 'this', 'month', 'crack', 'in', 'the', 'sidewalk', 'irrigation', 'flooding', 'problems', 'replaced', 'a', 'bulb', 'filled', 'the', 'pothole', 'reported', 'that', 'jackhammer', 'street', 'corner'];
 }

@@ -4,12 +4,15 @@ var Reactable = require('reactable');
 var Table     = Reactable.Table;
 var unsafe    = Reactable.unsafe;
 var Row       = Reactable.Tr;
+var Cell      = Reactable.Td;
+var styles = require('./styles.js');
 
 
 var RequestHistoryTable = React.createClass({
 	getInitialState: function () {
 		return {
-			request: undefined
+			request: undefined,
+            adding: false
 		}
 	},
 
@@ -18,6 +21,10 @@ var RequestHistoryTable = React.createClass({
 			history: this.formatHistory(request.history)
 		});
 	},
+
+    addEntry: function (event) {
+        this.setState({adding:true});
+    },
 
     render: function() {
     	if (isUndefined(this.state.history)) {
@@ -31,6 +38,8 @@ var RequestHistoryTable = React.createClass({
     		direction: 'desc'
     	}
 
+        var addRowStyle = styles.visibleIf(this.state.adding)
+
         return (
         	<div>
 	        	<Table 
@@ -39,6 +48,9 @@ var RequestHistoryTable = React.createClass({
 	        	sortable={sortOptions}
 	        	defaultSort={defaultSort}
 	        	>
+                <Row style={addRowStyle}>   
+                    <Cell></Cell>
+                </Row>
 	          
 	        	</Table>
         	</div>

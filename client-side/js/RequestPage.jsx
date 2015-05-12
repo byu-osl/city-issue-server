@@ -25,6 +25,10 @@ var RequestPage = React.createClass({
 		}, this);
 	},
 
+    addEntry: function (event) {
+        this.refs.table.addEntry(event);
+    },
+
     render: function() {
     	if (isUndefined(this.state.request)) {return <div></div>; }
     	var request = this.state.request;
@@ -42,22 +46,26 @@ var RequestPage = React.createClass({
     	var date = new Date(request.requested_datetime).toDateString().substring(4);
 
         return (
-    	<div className='container'>
+    	<div className='container request-page'>
         	<div className='row'>
         		<h1>{request.service_name} <span className='small'>{date}</span></h1>
         	</div>
             <div className='row'>
                 <span style={statusStyle}>status: <span style={{color:statusColor}}>{status}</span></span>
             </div>       
+            <div className='row'>
+                <h3>History <button onClick={this.addEntry} type="button" className="btn btn-success" style={{marginLeft:10}}><span className="glyphicon glyphicon-plus" aria-hidden="true"></span>add an entry</button></h3>
+            </div>
+            <div className='row'>
+                <div className='col-md-12'>
+                    <RequestHistoryTable ref='table'></RequestHistoryTable>
+                </div>
+            </div>
          	<div className='row'>
-                <h3>History</h3>
-                <RequestHistoryTable ref='table'></RequestHistoryTable>
-        	</div>
- 			<div className='row'>
- 				<div className='col-md-12' style={{padding:0, marginTop:15}}>
+                <div className='col-md-12'>
         			<SingleRequestMap ref='map'></SingleRequestMap>
- 				</div>
- 			</div>
+                </div>
+            </div>
     	</div>
         );
     }

@@ -79,17 +79,17 @@ var RequestFilters = React.createClass({
 
 				<div className="form-group">
 					<span style={styles.bold}>Status</span>
-					<div class="checkbox">
+					<div className="checkbox">
 					    <label style={labelStyle}>
 					        <input checked={this.state.status === 'all'} name='status' type="radio" value='all' onChange={this.statusChanged}/> all
 					    </label>
 					</div>
-					<div class="checkbox">
+					<div className="checkbox">
 					    <label style={labelStyle}>
 					        <input checked={this.state.status === 'open'} name='status' type="radio" value='open' onChange={this.statusChanged}/> open
 					    </label>
 					</div>
-					<div class="checkbox">
+					<div className="checkbox">
 					    <label style={labelStyle}>
 					        <input checked={this.state.status === 'closed'} name='status' type="radio" value='closed' onChange={this.statusChanged}/> closed
 					    </label>
@@ -108,7 +108,7 @@ var RequestFilters = React.createClass({
     	}
 
     	return (
-	    	<div class="checkbox">
+	    	<div className="checkbox">
 	    	    <label style={labelStyle}>
 	    	        <input onChange={this.serviceChanged} checked={this.state.selectedServices[service.service_name]} type="checkbox" value={service.service_name}/> {service.service_name}
 	    	    </label>

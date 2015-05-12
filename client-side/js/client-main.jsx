@@ -25,7 +25,7 @@ render: function() {
 return (
 	<div>
 	    <div className="navbar navbar-default" role="navigation">
-	        <div className="container">
+	        <div className="container" style={{paddingLeft:10}}>
 	            <div className="navbar-header">
 	                <button 
 	                type="button" 
