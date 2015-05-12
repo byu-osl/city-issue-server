@@ -7,8 +7,10 @@ add address field to maps
 
 - Why don't we use localstorage to store their info? Do they even need an account?
 - Weirdness in requestFilters triggering
-- Google maps quota
+- Google maps quota - 25k per day
+    + need to cache the map
 - cache
+- 2.2 MB of JS?!
 
 
 # Changed since last time

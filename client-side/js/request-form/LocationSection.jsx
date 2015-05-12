@@ -27,6 +27,8 @@ module.exports = React.createClass({
     getLocation:   function () {return this.state.location},
     getLat:        function () {return this.refs.map.getLatLng().lat()},
     getLong:       function () {return this.refs.map.getLatLng().lng()},
+
+    // TODO: get rid of this?
     usedDetection: function () {return this.state.usedDetection},
 
     setLocation: function (positionData) {

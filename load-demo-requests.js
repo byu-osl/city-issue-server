@@ -4,6 +4,7 @@ var mongoose   = require('mongoose');
 var Request = require('./models/request');
 var Service = require('./models/service');
 var randgen = require('randgen');
+var loremIpsum = require('lorem-ipsum');
 
 mongoose.connect('mongodb://localhost/city-issues');
 var db = mongoose.connection;
@@ -21,6 +22,7 @@ var stdDeviation = 0.005;
 for (var i = 0; i < 90; i++) {
     var service = getService();
     new Request({
+        history: getHistory(),
         lat: getLat(),
         long: getLong(),
         service_code: service.code,
@@ -33,6 +35,26 @@ for (var i = 0; i < 90; i++) {
 
 function log () {
     console.log(i, 'done')
+}
+
+function getHistory () {
+    var history = [];
+    var lorem;
+    for (var i = 0; i < 10; i++) {
+        lorem = loremIpsum({
+            count: 1,                     
+            units: 'sentences',        
+            sentenceLowerBound: 5,        
+            sentenceUpperBound: 15,       
+            format: 'plain',              
+            words: getDictionary(),  
+            random: Math.random          
+        });
+        var date = getRandomDate(new Date('2015/02/08'), new Date());
+        history.push({date: date, description: lorem})
+    }
+
+    return history;
 }
 
 function getStatus() {
@@ -72,4 +94,8 @@ function getService() {
         name: name
     }
 
+}
+
+function getDictionary() {
+return ['tech', 'crew', 'came', 'to', 'the', 'site', 'dug', 'up', 'some', 'wires', 'that', 'were', 'obstructing', 'the', 'road', 'to', 'fix', 'the', 'pothole', 'streetlight', 'had', 'been', 'out', 'fot', 'several', 'weeks', 'vandalism', 'on', 'the', 'wall', 'street']
 }

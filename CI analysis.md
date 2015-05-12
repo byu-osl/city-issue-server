@@ -76,9 +76,10 @@ Priorities (no particular order)
 
 To do list
 ------------
-- [ ] Admin page: Manually add/delete a request
+- [ ] Admin page: Manually add/delete a request?
 - [ ] Admin page: status updates for requests
 - [ ] Admin page: search for anything, filter based on anything
+- [ ] Admin page: filter in table
 - [ ] Admin page: edit/manage service categories (sidewalk, potholes, irrigation, etc)
 - [ ] Admin page: add links to edit the requests
 - [ ] Admin map: submitter contact info on the admin map

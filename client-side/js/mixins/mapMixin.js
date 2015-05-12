@@ -2,6 +2,8 @@
 
 var _ = require('../_.js');
 
+// TODO: cache maps rather than taking the time to add markers so much
+
 module.exports = {
 	loadRequests: function (requests, options) {
 		options = this.setDefaults(options);

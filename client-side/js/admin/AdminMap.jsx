@@ -3,6 +3,8 @@ var React      = require('react');
 var mapMixin   = require('../mixins/mapMixin.js');
 var styles     = require('../styles.js');
 var _          = require('../_.js');
+var Router     = require('react-router');
+var Link       = Router.Link
 var Marker     = google.maps.Marker;
 var cityCenter = new google.maps.LatLng(40.4122994, -111.75418)
 
@@ -50,12 +52,12 @@ var AdminMap = React.createClass({
 		});
 
 		var content = (
-			<div>
+			<a href={'/#/requests/'+request._id}>
 				<label>Category: {request.service_name}</label>
 				<p>open</p>
 				<img style={imageStyle} src={isUndefined(request.media_url)? '' : request.media_url}></img>
 				<p>{request.address_string}</p>
-			</div>
+			</a>
 		);
 
 		return React.renderToStaticMarkup(content);

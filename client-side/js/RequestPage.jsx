@@ -1,9 +1,10 @@
 'use strict';
-var React      = require('react');
-var Router     = require('react-router');
-var StateMixin = Router.State;
-var api = require('./server-api.js');
-var SingleRequestMap = require('./SingleRequestMap.jsx');
+var React               = require('react');
+var Router              = require('react-router');
+var StateMixin          = Router.State;
+var api                 = require('./server-api.js');
+var SingleRequestMap    = require('./SingleRequestMap.jsx');
+var RequestHistoryTable = require('./RequestHistoryTable.jsx');
 
 var RequestPage = React.createClass({
 	mixins: [StateMixin],
@@ -20,6 +21,7 @@ var RequestPage = React.createClass({
 		api.getRequest(id, function (request){
 			this.setState({request:request});
 			this.refs.map.setRequest(request);
+            this.refs.table.setRequest(request);
 		}, this);
 	},
 
@@ -40,19 +42,23 @@ var RequestPage = React.createClass({
     	var date = new Date(request.requested_datetime).toDateString().substring(4);
 
         return (
-        	<div className='container'>
+    	<div className='container'>
         	<div className='row'>
         		<h1>{request.service_name} <span className='small'>{date}</span></h1>
         	</div>
-        	<div className='row'>
-        		<span style={statusStyle}>status: <span style={{color:statusColor}}>{status}</span></span>
+            <div className='row'>
+                <span style={statusStyle}>status: <span style={{color:statusColor}}>{status}</span></span>
+            </div>       
+         	<div className='row'>
+                <h3>History</h3>
+                <RequestHistoryTable ref='table'></RequestHistoryTable>
         	</div>
-     			<div className='row'>
-     				<div className='col-md-12' style={{padding:0, marginTop:15}}>
-	        			<SingleRequestMap ref='map'></SingleRequestMap>
-     				</div>
-     			</div>
-        	</div>
+ 			<div className='row'>
+ 				<div className='col-md-12' style={{padding:0, marginTop:15}}>
+        			<SingleRequestMap ref='map'></SingleRequestMap>
+ 				</div>
+ 			</div>
+    	</div>
         );
     }
 });
