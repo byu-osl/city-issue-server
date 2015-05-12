@@ -35,4 +35,9 @@ styles.visibleIf = function(condition) {
 	return condition ? {display:'inherit'} : {display:'none'};
 }
 
+styles.mix = function(first, second) {
+	var copy = _.extend({}, first);
+	return _.extend(copy, second);
+}
+
 module.exports = styles;

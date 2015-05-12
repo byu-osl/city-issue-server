@@ -53,7 +53,7 @@ var Requests = React.createClass({
 		}
 
         return (
-        	<div className='col-xs-10' style={{paddingRight:0}}>
+        	<div className='col-md-10' style={{paddingRight:0}}>
 	        	<h2>Requests</h2>
         		<AdminMap ref='map' requests={this.state.requests} />
         		<label style={labelStyle}>Search <span className='small'>by category, date, status, description, or location</span></label>

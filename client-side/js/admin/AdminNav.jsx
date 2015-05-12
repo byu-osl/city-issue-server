@@ -15,11 +15,11 @@ render: function() {
 		background: 'rgb(243, 243, 225)',
 		border: 'solid 1px rgb(231, 231, 231)',
 		padding: 10,
-		minHeight: 543,
+        height: $(window).width() < 500 ? 'auto' : 543,
 	};
 
     return (
-    	<div style={containerStyle} className='col-xs-2'>
+    	<div style={containerStyle} className='col-md-2'>
     		<ul className='list-unstyled'>
     			<li>
                     <Link activeStyle={styles.bold} to='requests'>Requests</Link>

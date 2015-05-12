@@ -1,29 +1,31 @@
 'use strict';
 
-var React        = require('react');
-var Router       = require('react-router');
-var Route        = Router.Route;
-var DefaultRoute = Router.DefaultRoute;
-var Redirect     = Router.Redirect;
-var RouteHandler = Router.RouteHandler;
-var Link         = Router.Link;
-var RequestForm  = require('./request-form/RequestForm.jsx');
-var AdminPage    = require('./admin/AdminPage.jsx');
-var RequestPage  = require('./RequestPage.jsx');
-var HomePage     = require('./HomePage.jsx');
-var serverAPI    = require('./server-api.js');
-var styles       = require('./styles.js');
-var Requests     = require('./admin/Requests.jsx');
-var Services     = require('./admin/Services.jsx');
-var Users        = require('./admin/Users.jsx');
-React.getDOMNode = React.findDOMNode;
+var React           = require('react');
+var Router          = require('react-router');
+var Route           = Router.Route;
+var DefaultRoute    = Router.DefaultRoute;
+var Redirect        = Router.Redirect;
+var RouteHandler    = Router.RouteHandler;
+var Link            = Router.Link;
+var RequestForm     = require('./request-form/RequestForm.jsx');
+var AdminPage       = require('./admin/AdminPage.jsx');
+var RequestPage     = require('./RequestPage.jsx');
+var HomePage        = require('./HomePage.jsx');
+var serverAPI       = require('./server-api.js');
+var styles          = require('./styles.js');
+var Requests        = require('./admin/Requests.jsx');
+var Services        = require('./admin/Services.jsx');
+var Users           = require('./admin/Users.jsx');
+React.getDOMNode    = React.findDOMNode;
 React.initializeTouchEvents(true);
 window.isUndefined = function (thing) {return typeof thing === 'undefined'}
 
 var App = React.createClass({
+
+
 render: function() {
 return (
-	<div>
+	<div >
 	    <div className="navbar navbar-default" role="navigation">
 	        <div className="container" style={{paddingLeft:10}}>
 	            <div className="navbar-header">
@@ -56,11 +58,15 @@ return (
 	            </div>
 	        </div>
 	    </div>
-	    <RouteHandler />
+	    <div style={{padding:10}}>
+	    	<RouteHandler />
+	    </div>
 	</div>
 	)
 }
 });
+
+// TODO: close menu on transition change
 
 var routes = (
 	<Route handler={App}>

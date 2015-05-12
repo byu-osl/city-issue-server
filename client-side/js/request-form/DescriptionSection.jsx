@@ -82,6 +82,7 @@ var DescriptionSection = React.createClass({
         }
 
         var imageContainerStyle = styles.visibleIf(this.state.imageLoaded);
+        imageContainerStyle = styles.mix(imageContainerStyle, {maxWidth: '100%'});
 
         return (   
             <div className='form-group'>
@@ -108,7 +109,7 @@ var DescriptionSection = React.createClass({
                     </div>
                     <div style={imageContainerStyle} className="image-container col-md-6">
                         <button onClick={this.closeImage} type="button" className="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <img ref='preview' src=''/>
+                        <img style={{maxWidth:'100%'}}ref='preview' src=''/>
                     </div>
                 </div>
             </div>

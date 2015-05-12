@@ -138,7 +138,7 @@ module.exports = React.createClass({
                         name='location' 
                         type='text' 
                         value={this.state.location} 
-                        placeholder='Address: use "go to my location" to detect'
+                        placeholder='Address: you can use "go to my location" to detect'
                     />
                 </div>
             </div>

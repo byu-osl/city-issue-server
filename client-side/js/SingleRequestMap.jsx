@@ -44,7 +44,7 @@ var Map = React.createClass({
 
 		if (!isUndefined(request.media_url)) {
 			var infoWindow = new google.maps.InfoWindow({
-				content: '<img src="'+request.media_url+'"/>'
+				content: '<img style="max-width:100%" src="'+request.media_url+'"/>'
 			});
 			infoWindow.open(this.state.map, marker);
 		}
@@ -61,7 +61,8 @@ var Map = React.createClass({
 
 		var style = {
 			width:     '100%',
-			minHeight: 500
+			height: $(window).width() < 500 ? 300 : 500,
+			maxHeight: $(window).height() / 1.5
 		}
 
 		return (

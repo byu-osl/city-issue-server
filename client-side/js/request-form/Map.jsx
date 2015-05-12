@@ -103,7 +103,7 @@ var Map = React.createClass({
 	renderInfoWindow: function (request) {
 		var imageStyle = styles.hiddenIf((isUndefined(request.media_url) || !request.media_url));
 
-		_.assign(imageStyle, {
+		_.extend(imageStyle, {
 			maxWidth:     150,
 			maxHeight:    150,
 			marginBottom: 10
@@ -125,7 +125,8 @@ var Map = React.createClass({
 
 		var style = {
 			width:     '100%',
-			minHeight: 500
+			height: $(window).width() < 500 ? 300 : 500,
+			maxHeight: $(window).height() / 1.5
 		}
 
 		return (

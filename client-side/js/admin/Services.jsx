@@ -49,13 +49,15 @@ var Services = React.createClass({
 		}
 
         return (
-			<div className='col-xs-10' style={{paddingRight:0}}>
+			<div className='col-md-10' style={{paddingRight:0}}>
 	        	<h2>Services</h2>
-        		<Table 
-        		sortable     = {true} 
-        		className    = 'table-responsive table-hover table' 
-        		data         = {this.state.services}
-        		/>
+	        	<div className='table-responsive'>
+	        		<Table 
+	        		sortable     = {true} 
+	        		className    = 'table-hover table' 
+	        		data         = {this.state.services}
+	        		/>
+	        	</div>
         	</div>
         );
     }

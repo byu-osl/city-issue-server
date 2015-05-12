@@ -86,6 +86,7 @@ var RequestForm = React.createClass({
                 }.bind(this));
             } else {
                 this.transitionTo('/requests/' + id);
+                // TODO: this is almost too fast: smooth would be a bit better.
             }
         }.bind(this));
     },

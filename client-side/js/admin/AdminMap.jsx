@@ -93,7 +93,8 @@ var AdminMap = React.createClass({
 	render: function () {
 		var style = {
 			width: '100%',
-			minHeight: 500
+			height: $(window).width() < 500 ? 300 : 500,
+			maxHeight: $(window).height() / 1.5
 		}
 
 		return (

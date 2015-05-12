@@ -17,16 +17,21 @@ var getFromCache = function(key) {
 };
 
 var isInCache = function(key) {
-	if (isUndefined(key) || isUndefined(api.cache[key])) {
+	if (isUndefined(key) || isUndefined(api.cache[key]) || !api.cache[key]) {
 		return false;
 	} else {
 		return true;
 	}
 };
 
+var resetCacheItem = function(key) {
+	api.cache[key] = null;
+}
+
 // Requests
 api.postRequest = function (data, cb, thisArg) {
     $.post('/requests.json', data, function(request) {
+    	resetCacheItem('requests');
     	cb.call(thisArg, request);
     });
 }
@@ -89,6 +94,7 @@ api.getServiceMetadata = function (cb, thisArg) {
 }
 // Users
 api.registerUser = function (data, cb) {
+	resetCacheItem('users');
 	$.post('/register', data, cb);
 }
 
@@ -100,6 +106,11 @@ api.authenticate = function (token, cb, thisArg) {
 
 api.getUsers = function(options, cb, thisArg) {
 	if (typeof options === 'function') {thisArg = cb; cb = options; options = {}; }
+
+	if (isInCache('users')) {
+		cb.call(thisArg, getFromCache('users'));
+	}
+
 	cb.call(thisArg, []);
 }
 
