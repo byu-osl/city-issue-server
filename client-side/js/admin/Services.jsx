@@ -32,7 +32,8 @@ var Services = React.createClass({
 				this.setState({
 					serviceMetadata: data
 				});
-				this.forceUpdate();
+				this.state.serviceMetadata = data;
+				
 				this.setState({
 					services: services.map(this.transformService, this)
 				});

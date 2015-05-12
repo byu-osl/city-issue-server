@@ -60,10 +60,10 @@ function getService() {
     var code = Math.floor(randomInRange(1,6))
     var name;
     switch (code) {
-        case 1: name = 'streetlights'; break;
-        case 2: name = 'potholes'; break;
+        case 1: name = 'streetlight'; break;
+        case 2: name = 'pothole'; break;
         case 3: name = 'vandalism'; break;
-        case 4: name = 'sidewalks'; break;
+        case 4: name = 'sidewalk'; break;
         case 5: name = 'irrigation'; break;
     }
 

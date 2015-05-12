@@ -36,6 +36,8 @@ var AdminMap = React.createClass({
 		this.setState({
 			map: map,
 		});
+
+		this.state.map = map;
 	},
 
 	renderInfoWindow: function (request) {

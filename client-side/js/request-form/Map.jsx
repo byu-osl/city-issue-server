@@ -44,7 +44,7 @@ var Map = React.createClass({
 	},
 
 	getLatLng: function () {
-		return this.marker.getPosition();
+		return this.state.marker.getPosition();
 	},
 
 	initializeMap: function () {
@@ -59,6 +59,9 @@ var Map = React.createClass({
 			map:    map,
 			marker: marker
 		});
+
+		this.state.map = map;
+		this.state.marker = marker;
 	},
 
 	mapClicked: function (event) {
@@ -84,7 +87,7 @@ var Map = React.createClass({
 
 	componentDidMount: function () {
 		var self = this;
-		$(document).ready(function(){self.initializeMap()});
+		this.initializeMap();
 
 		api.getRequests({
 			status: 'open'

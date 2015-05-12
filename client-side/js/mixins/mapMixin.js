@@ -34,12 +34,12 @@ module.exports = {
 
 	getImageType: function (serviceName) {
 		switch(serviceName) {
-			case 'potholes':     return '../../../images/marker-orange.png'; 
-			case 'streetlights': return '../../../images/marker-yellow.png'; 
-			case 'irrigation':   return '../../../images/marker-blue.png'; 
-			case 'sidewalks':    return '../../../images/marker-white.png'; 
-			case 'vandalism':    return '../../../images/marker-purple.png'; 
-			default:             return '../../../images/marker-gray.png'
+			case 'pothole':     return '../../../images/marker-orange.png'; 
+			case 'streetlight': return '../../../images/marker-yellow.png'; 
+			case 'irrigation':  return '../../../images/marker-blue.png'; 
+			case 'sidewalk':    return '../../../images/marker-white.png'; 
+			case 'vandalism':   return '../../../images/marker-purple.png'; 
+			default:            return '../../../images/marker-gray.png'
 		}
 	},
 

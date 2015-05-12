@@ -59,7 +59,6 @@ module.exports = React.createClass({
 
         this.setState({
             location:results[0].formatted_address,
-            usedDetection: false
         });
     },
 
@@ -114,7 +113,7 @@ module.exports = React.createClass({
         return (
             <div className="row">
                 <div className={'form-group' + validationState}>
-                    <div>
+                    <div style={{marginBottom:5}}>
                         <p style={errorStyle} className='bg-warning'>Please choose a location.</p>
                         <label className='control-label'>Location</label>
                         <button 

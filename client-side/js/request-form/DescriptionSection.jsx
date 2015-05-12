@@ -86,7 +86,7 @@ var DescriptionSection = React.createClass({
         return (   
             <div className='form-group'>
                 <div className='row'>
-                    <div className={validationState}>
+                    <div className={validationState + 'col-md-6'}>
                         <p style={errorStyle} className='bg-warning'>Please add an image or description.</p>
                         <label className='control-label'>Description</label>
                         <button 
@@ -106,7 +106,7 @@ var DescriptionSection = React.createClass({
                             tabIndex='2'
                             placeholder='Additional location details, severity, etc.'></textarea>
                     </div>
-                    <div style={imageContainerStyle} className="image-container">
+                    <div style={imageContainerStyle} className="image-container col-md-6">
                         <button onClick={this.closeImage} type="button" className="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <img ref='preview' src=''/>
                     </div>

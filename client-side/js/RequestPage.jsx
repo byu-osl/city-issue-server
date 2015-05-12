@@ -24,15 +24,34 @@ var RequestPage = React.createClass({
 	},
 
     render: function() {
-    	if (isUndefined(this.state.request)) {
-    		return;
+    	if (isUndefined(this.state.request)) {return <div></div>; }
+    	var request = this.state.request;
+
+    	var imgStyle = {
+    		width: '100%'
     	}
 
-    	var request = this.state.request;
+    	var statusStyle = {
+    		fontSize: 18,
+    	};
+
+    	var statusColor = request.status === 'closed' ? 'green' : 'rgb(255, 202, 37)'
+    	var status = request.status === 'closed' ? 'closed \u2713' : 'open';
+    	var date = new Date(request.requested_datetime).toDateString().substring(4);
+
         return (
-        	<div className='col-md-6'>
-        		<h1>{request.service_name}</h1>
-        		<SingleRequestMap ref='map'></SingleRequestMap>
+        	<div className='container'>
+        	<div className='row'>
+        		<h1>{request.service_name} <span className='small'>{date}</span></h1>
+        	</div>
+        	<div className='row'>
+        		<span style={statusStyle}>status: <span style={{color:statusColor}}>{status}</span></span>
+        	</div>
+     			<div className='row'>
+     				<div className='col-md-12' style={{padding:0, marginTop:15}}>
+	        			<SingleRequestMap ref='map'></SingleRequestMap>
+     				</div>
+     			</div>
         	</div>
         );
     }

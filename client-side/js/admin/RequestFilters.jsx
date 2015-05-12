@@ -95,7 +95,7 @@ var RequestFilters = React.createClass({
 					    </label>
 					</div>
 				</div>
-				<div className="form-group"><span style={styles.bold}>Category</span>
+				<div className="form-group"><span style={styles.bold}>Type</span>
 					{this.props.services.map(this.renderService, this)}
 				</div>
 			</div>
@@ -118,3 +118,5 @@ var RequestFilters = React.createClass({
 });
 
 module.exports = RequestFilters;
+
+// TODO: filter table too :/

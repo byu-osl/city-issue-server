@@ -1,9 +1,8 @@
 'use strict';
 var React      = require('react');
-var mapMixin   = require('../mixins/mapMixin.js');
-var api        = require('../server-api.js');
-var Marker     = google.maps.Marker;
-var styles     = require('../styles.js');
+var mapMixin   = require('./mixins/mapMixin.js');
+var api        = require('./server-api.js');
+var styles     = require('./styles.js');
 
 var mapOptions = {
 	center: {
@@ -11,14 +10,7 @@ var mapOptions = {
 		lng: -111.75418
 	},
 	zoom:            14,
-	mapTypeId:       google.maps.MapTypeId.HYBRID,
-
-	streetViewControl:  true,
-	panControl:         true,
-	zoomControl:        true,
-	mapTypeControl:     true,
-	scaleControl:       true,
-	overviewMapControl: true,
+	scrollwheel: false
 }
 
 var Map = React.createClass({
@@ -34,19 +26,29 @@ var Map = React.createClass({
 		var map = new google.maps.Map($('.map-canvas')[0], mapOptions);
 		
 		this.setState({
-			map:    map,
+			map:map,
 		});
+
+		this.state.map = map;
 	},
 
 	setRequest: function (request) {
-		var latLng =  new google.maps.LatLng(request.lat, request.long);
-		var marker = new Marker({
+		var latLng = new google.maps.LatLng(request.lat, request.long);
+		var marker = new google.maps.Marker({
 			animation: google.maps.Animation.DROP,
-			draggable: true,
+			draggable: false,
 			position: latLng
 		});
 
 		marker.setMap(this.state.map);
+
+		if (!isUndefined(request.media_url)) {
+			var infoWindow = new google.maps.InfoWindow({
+				content: '<img src="'+request.media_url+'"/>'
+			});
+			infoWindow.open(this.state.map, marker);
+		}
+
 		this.state.map.setCenter(latLng);
 		this.state.map.setZoom(17);
 	},

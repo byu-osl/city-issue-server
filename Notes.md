@@ -7,6 +7,8 @@ add address field to maps
 
 - Why don't we use localstorage to store their info? Do they even need an account?
 - Weirdness in requestFilters triggering
+- Google maps quota
+- cache
 
 
 # Changed since last time
@@ -14,6 +16,7 @@ add address field to maps
 - visit to cedar hills
 - admin maps
 - filtering, services display
+- pretty much everything
 
 
 ------------------
