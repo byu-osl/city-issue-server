@@ -28,7 +28,10 @@ var resetCacheItem = function(key) {
 	api.cache[key] = null;
 }
 
+////////////////////////////////
 // Requests
+////////////////////////////////
+
 api.postRequest = function (data, cb, thisArg) {
     $.post('/requests.json', data, function(request) {
     	resetCacheItem('requests');
@@ -68,7 +71,16 @@ api.getRequests = function(options, cb, thisArg) {
 	}.bind(this));
 }
 
+api.addHistoryEntry = function (options, cb, thisArg) {
+	$.post('/requests/addHistoryEntry', options, function postedHistory (newHistory) {
+		cb.call(thisArg, newHistory);
+	});
+}
+
+////////////////////////////////
 // Services
+////////////////////////////////
+
 api.getServices = function (cb, thisArg) {
 	if (isInCache('services')) {
 		cb.call(thisArg, getFromCache('services'));
@@ -92,7 +104,11 @@ api.getServiceMetadata = function (cb, thisArg) {
 		cb.call(thisArg, metadata)
 	}.bind(this));
 }
+
+////////////////////////////////
 // Users
+////////////////////////////////
+
 api.registerUser = function (data, cb) {
 	resetCacheItem('users');
 	$.post('/register', data, cb);

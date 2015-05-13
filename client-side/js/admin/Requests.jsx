@@ -53,19 +53,21 @@ var Requests = React.createClass({
 		}
 
         return (
-        	<div className='col-md-10' style={{paddingRight:0}}>
+        	<div className='col-sm-10' style={{paddingRight:0}}>
 	        	<h2>Requests</h2>
         		<AdminMap ref='map' requests={this.state.requests} />
         		<label style={labelStyle}>Search <span className='small'>by category, date, status, description, or location</span></label>
-        		<Table 
-        		filterable   = {['Category', 'Description', 'Date Submitted','Location', 'Status']} 
-        		sortable     = {sortOptions} 
-        		defaultSort  = {defaultSort}
-        		className    = 'table-responsive table-hover table' 
-        		itemsPerPage = {1000}
-        		>
-        			{this.state.requests.map(this.renderRow, this)}
-        		</Table>
+        		<div className='table-responsive'>
+	        		<Table 
+	        		filterable   = {['Category', 'Description', 'Date Submitted','Location', 'Status']} 
+	        		sortable     = {sortOptions} 
+	        		defaultSort  = {defaultSort}
+	        		className    = 'table-hover table' 
+	        		itemsPerPage = {1000}
+	        		>
+	        			{this.state.requests.map(this.renderRow, this)}
+	        		</Table>
+        		</div>
         	</div>
         );
     },

@@ -19,7 +19,7 @@ render: function() {
 	};
 
     return (
-    	<div style={containerStyle} className='col-md-2'>
+    	<div style={containerStyle} className='col-sm-2'>
     		<ul className='list-unstyled'>
     			<li>
                     <Link activeStyle={styles.bold} to='requests'>Requests</Link>

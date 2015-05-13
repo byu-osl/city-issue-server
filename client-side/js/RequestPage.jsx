@@ -25,10 +25,6 @@ var RequestPage = React.createClass({
 		}, this);
 	},
 
-    addEntry: function (event) {
-        this.refs.table.addEntry(event);
-    },
-
     render: function() {
     	if (isUndefined(this.state.request)) {return <div></div>; }
     	var request = this.state.request;
@@ -53,9 +49,6 @@ var RequestPage = React.createClass({
             <div className='row'>
                 <span style={statusStyle}>status: <span style={{color:statusColor}}>{status}</span></span>
             </div>       
-            <div className='row'>
-                <h3>History <button onClick={this.addEntry} type="button" className="btn btn-success" style={{marginLeft:10}}><span className="glyphicon glyphicon-plus" aria-hidden="true"></span>add an entry</button></h3>
-            </div>
             <div className='row'>
                 <div className='col-md-12'>
                     <RequestHistoryTable ref='table'></RequestHistoryTable>

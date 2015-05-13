@@ -13,7 +13,9 @@ add address field to maps
 - 2.2 MB of JS?!
 - too many pins make it hard to see. Opacity?
 - admin icons: differentiate between open/closed issues 
-
+- perf with 100k requests
+- how to notify of success when an action is done?
+- Do they need time of day on updates?
 
 # Changed since last time
 - request form
@@ -22,8 +24,6 @@ add address field to maps
 - filtering, services display
 - pretty much everything
 
-
-------------------
 ------------------
 
 ## Home page
