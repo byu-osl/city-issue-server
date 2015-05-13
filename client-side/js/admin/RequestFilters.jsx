@@ -43,8 +43,12 @@ var RequestFilters = React.createClass({
 			return (selectedServices[service] === true)
 		}, this);
 
-		var self = this;
-		$(window).trigger('map:filterChanged', {
+		// Caught by the AdminMap and Requests section to filter the map and
+		// the table. Pass an array for each one, and make sure to follow the
+		// request model exactly (hence status and service_name, which are 
+		// properties of every request.
+
+		$(window).trigger('requests:filterChanged', {
 			status: status,
 			service_name: selectedServices
 		});

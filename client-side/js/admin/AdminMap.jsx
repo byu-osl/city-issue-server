@@ -87,7 +87,7 @@ var AdminMap = React.createClass({
 	componentDidMount: function () {
 		var self = this;
 		$(document).ready(function(){self.initializeMap()});
-		$(window).on('map:filterChanged', this.setFilter)
+		$(window).on('requests:filterChanged', this.setFilter)
 	},
 
 	render: function () {

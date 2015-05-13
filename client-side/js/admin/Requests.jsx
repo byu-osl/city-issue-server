@@ -9,24 +9,35 @@ var AdminMap        = require('./AdminMap.jsx');
 var Router          = require('react-router');
 var Link            = Router.Link;
 var NavigationMixin = Router.Navigation
+var _               = require('../_.js');
+
 
 var Requests = React.createClass({
 	mixins: [NavigationMixin],
 
 	getInitialState: function () {
 		return {
-			requests: []
+			requests: [],
+			filters: {}
 		}
 	},
 
 	componentDidMount: function () {
 		api.getRequests(function(requests){
 			this.setState({
-				requests: requests.map(transformRequest)
+				requests: requests,
 			});
 
 			this.refs.map.loadRequests(requests);
 		}, this);
+
+		$(window).on('requests:filterChanged', this.setFilter)
+	},
+
+	setFilter: function (event, filters) {
+		this.setState({
+			filters: filters
+		});
 	},
 
 	rowClicked: function (event) {
@@ -52,10 +63,12 @@ var Requests = React.createClass({
 			direction: 'desc'
 		}
 
+		var rows = this.renderRows();
+
         return (
         	<div className='col-sm-10' style={{paddingRight:0}}>
 	        	<h2>Requests</h2>
-        		<AdminMap ref='map' requests={this.state.requests} />
+        		<AdminMap ref='map'/>
         		<label style={labelStyle}>Search <span className='small'>by category, date, status, description, or location</span></label>
         		<div className='table-responsive'>
 	        		<Table 
@@ -65,22 +78,37 @@ var Requests = React.createClass({
 	        		className    = 'table-hover table' 
 	        		itemsPerPage = {1000}
 	        		>
-	        			{this.state.requests.map(this.renderRow, this)}
+	        			{rows}
 	        		</Table>
         		</div>
         	</div>
         );
     },
 
-    renderRow: function (request) {
-    	var rowStyle = {
-    		cursor: 'pointer'
-    	};
+    renderRows: function () {
+  		var rowStyle = {
+  			cursor: 'pointer'
+  		};
 
-    	return (
-        	<Row data-id={request._id} style={rowStyle} onClick={this.rowClicked} data={request}></Row>
-    	)
-    },
+    	var filters = this.state.filters;
+
+    	return this.state.requests.filter(function applyFilters (request) {
+    		var allGood = true;
+    		_.keys(filters).forEach(function (filter){
+    			if (!_.contains(filters[filter], request[filter])) {
+    				allGood = false
+    			} 
+    		});
+    		return allGood;
+
+    	}, this).map(function formatRequest (request) {
+
+    		request = transformRequest(request);
+			return (
+		    	<Row data-id={request._id} style={rowStyle} onClick={this.rowClicked} data={request}></Row>
+			)
+    	}, this);
+	}
 });
 
 module.exports = Requests;

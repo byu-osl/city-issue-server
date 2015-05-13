@@ -89,10 +89,14 @@ a.reactable-page-button {
 }
 
 input[type=checkbox], input[type=radio] {
-	margin: 0 0 0;
+	margin: 0 0 0 0;
 	line-height: 13px;
 	position: relative;
 	top: 2px;
+}
+
+.checkbox {
+	margin-bottom: 5px;
 }
 
 label {
