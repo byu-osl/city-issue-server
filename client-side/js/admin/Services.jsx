@@ -1,16 +1,18 @@
 'use strict';
-var React     = require('react');
-var api       = require('../server-api.js');
-var mapMixin  = require('../mixins/mapMixin.js');
-var Reactable = require('reactable');
-var Table     = Reactable.Table
-var unsafe    = Reactable.unsafe
+var React        = require('react');
+var api          = require('../server-api.js');
+var mapMixin     = require('../mixins/mapMixin.js');
+var Reactable    = require('reactable');
+var Table        = Reactable.Table
+var unsafe       = Reactable.unsafe
+var ToggleButton = require('../components/ToggleButton.jsx');
 
 var Services = React.createClass({
 
 	getInitialState: function () {
 		return {
-			services: []
+			services: [],
+			addingAService: false
 		}
 	},
 
@@ -24,6 +26,12 @@ var Services = React.createClass({
 		newService.Closed = metaData.closedCount;
 		newService.Total  = metaData.total;
 		return newService;
+	},
+
+	// TODO: dangerously similar to RequestHistoryTable
+	toggleAdding: function () {
+		var addingAService = !this.state.addingAService;
+		this.setState({addingAService: addingAService});
 	},
 
 	componentDidMount: function () {
@@ -48,9 +56,17 @@ var Services = React.createClass({
 			left: 7,
 		}
 
+
         return (
 			<div className='col-md-10' style={{paddingRight:0}}>
-	        	<h2>Services</h2>
+	        	<h2>Services
+		        	<ToggleButton
+		        		condition={this.state.addingAService}
+		        		actionText='add a service'
+		        		onClick={this.toggleAdding}
+		        	></ToggleButton
+		>	
+	        	</h2>
 	        	<div className='table-responsive'>
 	        		<Table 
 	        		sortable     = {true} 

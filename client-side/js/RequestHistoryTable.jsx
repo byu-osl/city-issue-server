@@ -7,6 +7,9 @@ var Row       = Reactable.Tr;
 var Cell      = Reactable.Td;
 var styles    = require('./styles.js');
 var api       = require('./server-api.js');
+var ToggleButton = require('./components/ToggleButton.jsx');
+var Checkbox = require('./components/Checkbox.jsx');
+var Input = require('./components/Input.jsx');
 
 var RequestHistoryTable = React.createClass({
 	getInitialState: function () {
@@ -30,23 +33,11 @@ var RequestHistoryTable = React.createClass({
         this.setState({addingAnEntry: addingAnEntry});
     },
 
-    dateChanged: function (event) {
-        this.setState({
-            date: event.target.value
-        });
-    },
-
-    descriptionChanged: function (event) {
-        this.setState({
-            description: event.target.value
-        });
-    },
-
     submitForm: function () {
         var data = {
             requestID: this.state.request._id,
-            date: this.state.date,
-            description: this.state.description
+            date: this.refs.date.value(),
+            description: this.refs.description.value()
         }
 
         api.addHistoryEntry(data, function historySubmitted (newHistory) {
@@ -59,71 +50,64 @@ var RequestHistoryTable = React.createClass({
     },
 
     componentDidUpdate: function () {
+        // TODO: takes focus when it shouldn't
         if (this.state.addingAnEntry) {
-            React.getDOMNode(this.refs.description).focus();
+            this.refs.description.focus();
         }
     },
 
     render: function() {
-    	if (isUndefined(this.state.history)) {return (<div> </div>) }
 
-    	var sortOptions = [{column: 'Date', sortFunction: Reactable.Sort.Date}]
+if (isUndefined(this.state.history)) {return (<div> </div>) }
 
-    	var defaultSort = {
-    		column: 'Date',
-    		direction: 'desc'
-    	}
+var sortOptions = [{column: 'Date', sortFunction: Reactable.Sort.Date}]
 
-        var addRowStyle = styles.visibleIf(this.state.addingAnEntry)
-        var buttonClass = this.state.addingAnEntry? 'btn btn-danger' : 'btn btn-success';
-        var buttonIcon  = this.state.addingAnEntry? 'glyphicon glyphicon-minus' : 'glyphicon glyphicon-plus';
-        var buttonText  = this.state.addingAnEntry? 'cancel' : 'add an entry';
+var defaultSort = {
+column: 'Date',
+direction: 'desc'
+}
 
-        return (
-        	<div className='container'>
-                <h3>History 
-                    <button 
-                    onClick={this.toggleAdding} type='button' 
-                    className={buttonClass}
-                    style={{marginLeft:10}}>
-                        <span aria-hidden='true' className={buttonIcon} 
-                        ></span>{buttonText}
-                    </button>
-                </h3>
-                <div style={addRowStyle} className='col-sm-12'>
-                    <div className='form-group'>
-                        <label htmlFor='date' style={{marginRight:10}}>Date</label>
-                        <input ref='date' value={this.state.date} type='text' 
-                        onChange={this.dateChanged} 
-                        style={{marginRight:20}} 
-                        className='form-control'/>
-                    </div>
-                    <div className='form-group'>
-                        <label style={{marginRight:10}} htmlFor='description'>Description</label>
-                        <input ref='description' value={this.state.description} type='text' 
-                         onChange={this.descriptionChanged} 
-                         className='form-control'/>
-                    </div>
-                    <div style={styles.visibleIf(this.state.request.status==='open')} className='checkbox'>
-                        <label>
-                            <input type='checkbox' ref='close'/> close this issue
-                        </label>
-                    </div>
-                    <div style={styles.visibleIf(this.state.request.status==='closed')} className='checkbox'>
-                        <label>
-                            <input type='checkbox' ref='open'/> open this issue
-                        </label>
-                    </div>
-                    <button onClick={this.submitForm} type="submit" className="btn btn-primary">Submit</button>
-                </div>
-	        	<Table 
-	            className = 'table-responsive table-hover table' 
-	        	sortable={sortOptions}
-	        	defaultSort={defaultSort}
-	        	>
-                {this.state.history.map(this.renderRow, this)}
-	        	</Table>
-        	</div>
+var addRowStyle = styles.visibleIf(this.state.addingAnEntry)
+
+return (
+<div className='container'>
+    <h3>History 
+        <ToggleButton
+            condition={this.state.addingAnEntry}
+            actionText='add an entry'
+            onClick={this.toggleAdding}
+        ></ToggleButton>
+    </h3>
+    <div style={addRowStyle} className='col-sm-12'>
+        <Input
+            ref='date'
+            label='Date'
+            initialValue={new Date().toDateString().substring(4)}
+        />
+        <Input
+            ref='description'
+            label='Description'
+        />
+        <Checkbox 
+            style={styles.visibleIf(this.state.request.status==='open')} 
+            label='close this issue'
+            ref='close'
+        />
+        <Checkbox 
+            style={styles.visibleIf(this.state.request.status==='closed')}
+            label='open this issue' 
+            ref='open'
+        />
+        <button onClick={this.submitForm} type="submit" className="btn btn-primary">Submit</button>
+    </div>
+	<Table 
+    className = 'table-responsive table-hover table' 
+	sortable={sortOptions}
+	defaultSort={defaultSort}
+	>
+    {this.state.history.map(this.renderRow, this)}
+	</Table>
+</div>
         );
     },
 
