@@ -7,12 +7,16 @@ var routes 		   = require('./routes');
 
 var app = express();
 app.use(require('./utility/customizeResponse'));
+var dbPath = 'mongodb://localhost/city-issues'
 
-// mongoose.set('debug', true);
-var dbPath = process.env.DB || 'mongodb://localhost/city-issues';
+// Removing this line will drop the entire production database, so probably ought not do that.
+if (!isUndefined(global.TESTING_DB)) {
+	dbPath = global.TESTING_DB;
+}
+
 console.log("dbPath: " + dbPath);
 
-mongoose.connect('mongodb://localhost/city-issues');
+mongoose.connect(dbPath);
 app.connection = mongoose.connection;
 app.connection.on('error', handleDBError);
 
@@ -37,6 +41,5 @@ module.exports = app;
 
 function handleDBError(error) {
 	console.log(error);
-    console.log('Error connecting to DB. Is MongoDB running? (sudo service mongod start)');
-    console.log('Try "sudo service mongod start". If mongod is an unrecognized service, you will need to install MongoDB.');
+    console.log('Error connecting to DB. Is MongoDB running? Try "sudo service mongod start". If mongod is an unrecognized service, you will need to install MongoDB.');
 }

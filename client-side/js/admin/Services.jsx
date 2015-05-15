@@ -17,7 +17,8 @@ var Services = React.createClass({
 		return {
 			errorType: null,
 			services: [],
-			addingAService: false
+			addingAService: false,
+			serviceMetadata: {}
 		}
 	},
 

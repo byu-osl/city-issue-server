@@ -5,17 +5,10 @@ add address field to maps
 
 # Questions
 
-- Weirdness in requestFilters triggering
-
-- Google maps quota - 25k per day
-    + need to cache the map
-- cache
 - 2.2 MB of JS?!
-- too many pins make it hard to see. Opacity?
 - admin icons: differentiate between open/closed issues 
-- perf with 100k requests
-- how to notify of success when an action is done?
 - Do they need time of day on updates?
+- Prod db exploding with npm test
 
 # Changed since last time
 - request form

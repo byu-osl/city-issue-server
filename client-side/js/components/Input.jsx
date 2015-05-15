@@ -38,6 +38,13 @@ var Input = React.createClass({
 		this.props.onChange(event);
 	},
 
+	componentWillReceiveProps: function (newProps) {
+		if (!isUndefined(newProps.initialValue) && this.state.value.length === 0) {
+			this.setState({value: newProps.initialValue})
+		}
+	},
+
+
     render: function() {
         return (
         	<div style={this.props.style} className='form-group'>

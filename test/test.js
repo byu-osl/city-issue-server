@@ -2,7 +2,10 @@
 // Each describe call matches up with one of the API methods listed
 // on http://wiki.open311.org/GeoReport_v2/
 process.env.PORT = 3001;
-process.env.DB   = 'mongodb://localhost/city-issues-TEST';
+
+// Removing this line will drop the entire prooduction database, so probably ought not do that.
+global.TESTING_DB = 'mongodb://localhost/city-issues-TEST';
+
 
 var server   = require('../server.js');
 var request  = require('supertest');
@@ -80,7 +83,6 @@ describe('GET Service List', function(){
 				var service = services[0];
 				service.should.have.property('service_code');
 				service.should.have.property('service_name');
-				service.should.have.property('metadata');
 				done();
 			});
 	});

@@ -6,10 +6,11 @@ var SegmentedControl = React.createClass({
 	getDefaultProps: function () {
 		return {
 			required:     false,
-			key:          'id',
+			id:          'id',
 			errorMessage: 'This field is required.',
 			data:         [],
 			onClick:      function(){},
+			onChange:     function(){},
 			label:        'Pick one:',
 			buttonLabel:  'label',
 		}
@@ -39,6 +40,7 @@ var SegmentedControl = React.createClass({
 
 	itemClicked: function (id, event) {
 		this.setState({selectedItem:id});
+		this.props.onChange(id, event);
 		this.props.onClick(id, event);
 	},
 

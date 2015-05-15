@@ -35,6 +35,13 @@ var ContactInfo = React.createClass({
     	}
     },
 
+    methodChanged: function (id, event) {
+    	debugger;
+    	this.setState({
+    		contactMethod: id
+    	});
+    },
+
 	render: function () {
 		var nameStyle, passwordStyle, emailStyle, phoneStyle, accountCreationStyle
 
@@ -68,6 +75,7 @@ var ContactInfo = React.createClass({
 					ref='contactMethod'
 					label='Preferred contact method:'
 					data={buttonData}
+					onChange={this.methodChanged}
 				/>
 				<Input label='Name'  initialValue={this.props.user.name}  ref='name'  style={nameStyle}></Input>
 				<Email value={this.props.user.email} ref='email' style={emailStyle}></Email>
