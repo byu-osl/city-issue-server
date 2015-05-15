@@ -1,3 +1,4 @@
+'use strict';
 // Each describe call matches up with one of the API methods listed
 // on http://wiki.open311.org/GeoReport_v2/
 process.env.PORT = 3001;
@@ -9,7 +10,6 @@ var chai     = require('chai');
 var expect   = chai.expect;
 var Request  = require('../models/request');
 var Service  = require('../models/service');
-var proxyquire = '';
 var connection = server.connection;
 require('chai').should();
 
@@ -34,10 +34,9 @@ describe('GET Service Request', function (){
 		request.get('/requests/'+requestID1+'.json')
 			.expect(200)
 			.end(function (err, res){
-                var requests = res.body;
-				requests.length.should.equal(1);
-				requests[0].should.have.property('_id');
-				requests[0].should.have.property('status');
+                var request = res.body;
+				request.should.have.property('_id');
+				request.should.have.property('status');
 				done();
 			});
 	});
@@ -158,7 +157,7 @@ describe('POST Service Request', function(){
 		request.post('/requests.json')
 			.type('form')
 			.send(validRequestJSON).expect(200, function(err, res){
-				res.body[0].service_request_id.should.match(/([a-f]|[0-9])+/);
+				res.body.service_request_id.should.match(/([a-f]|[0-9])+/);
 				done();
 			});
 	});
