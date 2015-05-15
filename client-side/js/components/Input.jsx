@@ -5,7 +5,10 @@ var Input = React.createClass({
 	getDefaultProps: function () {
 		return {
 			initialValue: '',
-			onChange    : function(){}
+			onChange    : function(){},
+			label       : '',
+			type        : 'text',
+			placeholder : ''
 		}
 	},
 
@@ -15,8 +18,12 @@ var Input = React.createClass({
 		}
 	},
 
-	value: function () {
-		return this.state.value
+	value: function (valueToSet) {
+		if (!isUndefined(valueToSet)) {
+			this.setState({value:valueToSet});
+		} else {
+			return this.state.value
+		}
 	},
 
 	focus: function () {
@@ -33,12 +40,13 @@ var Input = React.createClass({
 
     render: function() {
         return (
-        	<div className='form-group'>
-                <label htmlFor={this.props.ref} style={{marginRight:10}}>{this.props.label}</label>
-                <input ref='input' value={this.state.value} type='text' 
+        	<div style={this.props.style} className='form-group'>
+                <label className='control-label' style={{marginRight:10}}>{this.props.label}</label>
+                <input ref='input' value={this.state.value} type={this.props.type} 
                 onChange={this.onChange} 
                 style={{marginRight:20}} 
-                className='form-control'/>
+                className='form-control'
+                placeholder={this.props.placeholder}/>
             </div>
 
         );

@@ -13,9 +13,11 @@
     "eqeqeq"    : true,
     "indent"    : 4,
     "newcap"    : true,
+    "undef"     : true,
 
     "node"      : true,    
     "browserify": true,
     "jquery"    : true,
-    "mocha"     : true
+    "mocha"     : true,
+    "unused"    : true
 }

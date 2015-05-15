@@ -25,6 +25,12 @@ var RequestPage = React.createClass({
 		}, this);
 	},
 
+    setRequest: function (request) {
+        this.setState({
+            request: request
+        });
+    },
+
     render: function() {
     	if (isUndefined(this.state.request)) {return <div></div>; }
     	var request = this.state.request;
@@ -37,7 +43,7 @@ var RequestPage = React.createClass({
     		fontSize: 18,
     	};
 
-    	var statusColor = request.status === 'closed' ? 'green' : 'rgb(255, 202, 37)'
+    	var statusColor = request.status === 'closed' ? 'green' : 'rgb(255, 153, 17)'
     	var status = request.status === 'closed' ? 'closed \u2713' : 'open';
     	var date = new Date(request.requested_datetime).toDateString().substring(4);
 
@@ -51,7 +57,7 @@ var RequestPage = React.createClass({
             </div>       
             <div className='row'>
                 <div className='col-md-12'>
-                    <RequestHistoryTable ref='table'></RequestHistoryTable>
+                    <RequestHistoryTable setRequest={this.setRequest} ref='table'></RequestHistoryTable>
                 </div>
             </div>
          	<div className='row'>

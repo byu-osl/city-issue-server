@@ -81,7 +81,7 @@ var AdminMap = React.createClass({
 			} else {
 				marker.setMap(self.state.map)
 			}
-		});
+		}, this);
 	},
 
 	componentDidMount: function () {

@@ -26,6 +26,7 @@
     "debug": "^2.1.1",
     "express": "^4.10.7",
     "jsonwebtoken": "^5.0.0",
+    "jwt-simple": "^0.3.0",
     "mocha": "^2.2.1",
     "moment": "^2.10.2",
     "mongoose": "^3.8.21",

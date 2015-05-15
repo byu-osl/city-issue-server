@@ -1,3 +1,86 @@
+To do list
+------------
+- [ ] Admin page: Manually add/delete a request?
+- [ ] publish documentation for endpoints
+- [ ] Admin page: edit/manage service categories (sidewalk, potholes, irrigation, etc)
+- [ ] Admin page: add links to edit the requests
+- [ ] edit
+- [ ] Admin map: submitter contact info on the admin map
+- [ ] Admin map: submitter contact info when you click on a request
+- [ ] Admin map: color/icon categorize different service types
+- [ ]  Water; Pressurized Irrigation; Sewer; Storm Drains, Streets; Sidewalks; Parks & Trails; Street Lights; Signs; Facilities; Property Cedar Hills(other than retention basins, parks & common areas= example: Hillside); Property Residential;
+- [ ] Admin map: date range
+- [ ] Status updates: allow images
+- [ ] Status updates: keep track of which admin edited the status
+- [ ] Status updates: email updates for residents
+- [ ] Request submission: show open requests on the map
+- [ ] Requests: create a page to view individual requests
+- [ ] Requests: be able to associate documents
+- [ ] Requests: allow prioritization
+- [ ] Data importation to iWorq?
+- [ ] PNG issues on form submission
+- [ ] 
+
+
+Annoyances / things to optimize or fix
+----------------------------------------
+- trivial issue requests / too many requests
+- duplication of data in different systems
+- techs coming in to check for orders
+- keeping track of paper orders
+- techs finding exactly where issues are at (sometimes they call the residents)
+
+Priorities (no particular order)
+---------------------------------
+- data importation
+- easy to use status update/history system
+- prioritization of issues
+- location accuracy
+- color categorization
+
+
+0000 0000 0000 0000 0000
+1:0000
+11111
+
+Questions
+-----------------
+- How many issues do you have stored in iWorq? How often are you adding requests?
+- Do you want to import stuff *from* iWorq or *to* iWorq? What will be the purpose of iWorq after this app is in place? 
+- Would it be good for techs to enter in the info themselves instead of Brenda?
+- What are all of the different categories you want colors/icons for?
+- How would you like to prioritize issues? High, medium, low?
+- Do you have any annoyances you'd like to add to the list that the app could help with? Are the ones I listed accurate?
+- Do you have any other priorities or features you'd like to the current lists?
+- Any other thoughts that you've come up with since I stopped by yesterday?
+- Do people only make reports via phone?
+
+- Feature idea: we could prioritize things based on the category. Maybe that would help with people submitting things that are less important.
+
+Notes
+----------------------
+- Go over to the city and figure out exactly how their system works
+    + features, workflow, application itself, exporting options
+    + non-request-related features
+    + go with Dr Zappala
+    + call and set it up
+    + domain for server
+- submit to saved button for like everything
+- priority settings for administrative
+- cityreports.org
+
+Feature ideas
+-----------------------
+highlight new requests on the map
+google analytics
+disable clicking outside of cedar hills
+spell check
+
+
+
+
+
+
 Notes
 --------------
 + Search
@@ -12,7 +95,7 @@ Notes
     * work orders - techs come and pick these up in the office
         - status updates are made and signed off
 + Current software
-    * iWorks
+    * iWorq
         - keeps track of issues.
         - already has tons of information, and not just issue tracking. Not sure what the other features are that could be important. Sounds like street dimensions are a part of it, maybe helps keep track of budget somehow. Could have a database with 100k requests already.
         - Importing data is important! Wouldn't be a deal breaker, but wouldn't be fun. Could end up having tons of duplicate data between the programs they use.
@@ -54,53 +137,3 @@ Notes
     * issue history seems pretty important
     * color coordination on the map is more important for categories
     * sorting by date should be the default
-
-- how can we indicate open/closed on the icons?
-- 
-
-Annoyances / things to optimize or fix
-----------------------------------------
-- trivial issue requests / too many requests
-- duplication of data in different systems
-- techs coming in to check for orders
-- keeping track of paper orders
-- techs finding exactly where issues are at (sometimes they call the residents)
-
-Priorities (no particular order)
----------------------------------
-- data importation
-- easy to use status update/history system
-- prioritization of issues
-- location accuracy
-- color categorization
-
-To do list
-------------
-- [ ] Admin page: Manually add/delete a request?
-- [ ] Admin page: edit/manage service categories (sidewalk, potholes, irrigation, etc)
-- [ ] Admin page: add links to edit the requests
-- [ ] Admin map: submitter contact info on the admin map
-- [ ] Admin map: submitter contact info when you click on a request
-- [ ] Admin map: color/icon categorize different service types
-- [ ] Status updates: allow images
-- [ ] Status updates: keep track of which admin edited the status
-- [ ] Status updates: email updates for residents
-- [ ] Request submission: show open requests on the map
-- [ ] Requests: create a page to view individual requests
-- [ ] Requests: be able to associate documents
-- [ ] Requests: allow prioritization
-- [ ] Data importation from/to iWorks?
-
-Questions
------------------
-- How many issues do you have stored in iWorks? How often are you adding requests?
-- Do you want to import stuff *from* iWorks or *to* iWorks? What will be the purpose of iWorks after this app is in place? 
-- Would it be good for techs to enter in the info themselves instead of Brenda?
-- What are all of the different categories you want colors/icons for?
-- How would you like to prioritize issues? High, medium, low?
-- Do you have any annoyances you'd like to add to the list that the app could help with? Are the ones I listed accurate?
-- Do you have any other priorities or features you'd like to the current lists?
-- Any other thoughts that you've come up with since I stopped by yesterday?
-- Do people only make reports via phone?
-
-- Feature idea: we could prioritize things based on the category. Maybe that would help with people submitting things that are less important.

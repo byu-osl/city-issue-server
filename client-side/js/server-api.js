@@ -2,11 +2,11 @@
 
 var api = {};
 api.cache = {};
-var FIVE_MINUTES = 1000 * 60 * 5;
+var TEN_MINUTES = 1000 * 60 * 10;
 
 setInterval(function resetCache() {
 	api.cache = {};
-}, FIVE_MINUTES);
+}, TEN_MINUTES);
 
 var addToCache = function(key, value) {
 	api.cache[key] = value;
@@ -37,6 +37,13 @@ api.postRequest = function (data, cb, thisArg) {
     	resetCacheItem('requests');
     	cb.call(thisArg, request);
     });
+}
+
+api.updateRequest = function (data, cb, thisArg) {
+	$.post('/requests/update', data, function (request){
+		resetCacheItem('requests');
+		cb.call(thisArg, request);
+	});
 }
 
 api.getRequest = function (id, cb, thisArg){
@@ -80,6 +87,13 @@ api.addHistoryEntry = function (options, cb, thisArg) {
 ////////////////////////////////
 // Services
 ////////////////////////////////
+
+api.addService = function(options, cb, thisArg) {
+	$.post('/services', options, function (newService) {
+		cb.call(thisArg, newService);
+		resetCacheItem('services');
+	});
+}
 
 api.getServices = function (cb, thisArg) {
 	if (isInCache('services')) {

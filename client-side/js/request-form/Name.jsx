@@ -7,8 +7,7 @@ var Name = React.createClass({
 	getInitialState: function () {
 		var name = this.props.value || '';
 	    return {
-	        name: name,
-	        visible: false
+	        name: name
 	    };
 	},
 

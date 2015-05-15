@@ -32,7 +32,6 @@ var RequestForm = React.createClass({
                 if (data.authenticated === false) {
                     this.setState(loggedOutUser);
                 } else {
-                    console.log('Authenticated.');
                     _.assign(user, data);
                     user.loggedIn = true;
                     this.setState({user:user});

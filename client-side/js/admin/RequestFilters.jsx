@@ -112,7 +112,7 @@ var RequestFilters = React.createClass({
     	}
 
     	return (
-	    	<div className="checkbox">
+	    	<div key={service.service_code} className="checkbox">
 	    	    <label style={labelStyle}>
 	    	        <input onChange={this.serviceChanged} checked={this.state.selectedServices[service.service_name]} type="checkbox" value={service.service_name}/> {service.service_name}
 	    	    </label>

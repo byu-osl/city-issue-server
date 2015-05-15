@@ -32,10 +32,10 @@ module.exports = React.createClass({
     usedDetection: function () {return this.state.usedDetection},
 
     setLocation: function (positionData) {
-        var lat = positionData.coords.latitude;
-        var long = positionData.coords.longitude;
+        var lat  = positionData.coords.latitude;
+        var lng = positionData.coords.longitude;
 
-        this.refs.map.setMarkerPosition(lat, long);
+        this.refs.map.setMarkerPosition(lat, lng);
 
         this.setState({
             usedDetection: true,
@@ -50,7 +50,7 @@ module.exports = React.createClass({
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(this.setLocation, null, {enableHighAccuracy:true});
         } else {
-            // report that they don't have 
+            // report that they don't have geolocation available
         }
     },
 

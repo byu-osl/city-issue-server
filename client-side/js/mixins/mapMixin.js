@@ -1,17 +1,33 @@
 'use strict';
 
-var _ = require('../_.js');
+var _   = require('../_.js');
+var api = require('../server-api.js');
 
 // TODO: cache maps rather than taking the time to add markers so much
 
 module.exports = {
 	loadRequests: function (requests, options) {
+		var services;
 		options = this.setDefaults(options);
-		var map = this.state.map;
 		this.setState({requests:requests});
-		var markers = requests.map(function(request, index) {
-			if (isUndefined(request.lat)) {return;}
-			
+
+		if (this.state.services) {
+			services = this.state.services;
+			this.constructMarkers(requests, options);
+		} else {
+			api.getServices(function gotServices(services) {
+	            this.setState({
+	                services: services
+	            });
+		        this.constructMarkers(requests, options);
+	        }, this);
+		}
+	},
+
+	constructMarkers: function (requests, options) {
+		var map = this.state.map;
+
+		var markers = requests.filter(hasLatitude).map(function constructMarker(request, index) {
 			var infoWindow = new google.maps.InfoWindow({
 				content: this.renderInfoWindow(request)
 			});
@@ -47,7 +63,7 @@ module.exports = {
 
 	setDefaults: function (options) {
 		var defaultOptions = {
-			status: ['open', 'closed']
+			status: ['open']
 		};
 
 		if (isUndefined(options)) {
@@ -56,4 +72,8 @@ module.exports = {
 
 		return _.assign(defaultOptions, options);
 	}
+}
+
+function hasLatitude(request) {
+	return !isUndefined(request.lat)
 }

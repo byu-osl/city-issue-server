@@ -1,3 +1,4 @@
+'use strict';
 var mongoose = require('mongoose');
 var serviceSchema = new mongoose.Schema({
     description:  String,  // of the service type
@@ -6,6 +7,7 @@ var serviceSchema = new mongoose.Schema({
     group:        String,  // "sanitation"
     service_code: String,  // unique ID for this type
     service_name: String,  // human readable name
+    marker_image: String,
     
     // type: 
     //   realtime: The service request ID will be returned immediately after the service request is submitted. 

@@ -11,7 +11,7 @@ router.get('/', listServices);
 router.get(':serviceCode.json', getServiceDescription);
 router.get('/metadata', getMetadata);
 
-router.post('/add', addService);
+router.post('/', addService);
 router.post('/delete', isAdmin, deleteService);
 
 // provide a list of acceptable 311 service request types and their associated service codes. 
@@ -55,9 +55,15 @@ function addService(req, res) {
 	service.save(function serviceSaved (error, service) {
 		if (error) {
 			res.send500('Error while trying to save the service.');
-		} else {
-			res.send(service);
 		}
+		
+		Service.findByIdAndUpdate(service._id, {$set:{service_code:service._id}}, function (error, service){
+			if (error) {
+				res.send500('Error while trying to save the service code.');
+			} else {
+				res.send(service);
+			}
+		});
 	});
 }
 
@@ -77,11 +83,11 @@ function getMetadata (req, res) {
 	Service.find(function(error, services){
 		services.forEach(function (service, index) {
 			Request.count({service_code: service.service_code, status:'open'}, function(error, openCount) {
-				results[service.service_name] = {};
-				results[service.service_name].openCount = openCount;
+				results[service.service_code] = {};
+				results[service.service_code].openCount = openCount;
 				Request.count({service_code: service.service_code, status: 'closed'}, function(error, closedCount) {
-					results[service.service_name].closedCount = closedCount;
-					results[service.service_name].total = openCount + closedCount;
+					results[service.service_code].closedCount = closedCount;
+					results[service.service_code].total = openCount + closedCount;
 					servicesDone++;
 					if (servicesDone === services.length) {
 						res.send(results);
@@ -91,11 +97,5 @@ function getMetadata (req, res) {
 		});
 	});
 }
-
-function countOpenRequests(serviceCode) {
-
-
-}
-
 
 module.exports = router;

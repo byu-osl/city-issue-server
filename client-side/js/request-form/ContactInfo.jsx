@@ -1,41 +1,30 @@
 'use strict';
 var React  = require('react');
 
-// When the props say that there is a user, set the appropriate
-
-var Name = require('./Name.jsx');
-var Email = require('./Email.jsx');
+var Email    = require('./Email.jsx');
 var Password = require('./Password.jsx');
-var Phone = require('./Phone.jsx');
-var styles = require('../styles.js');
-var _ = require('../_.js');
+var Phone    = require('./Phone.jsx');
+var styles   = require('../styles.js');
+var Input    = require('../components/Input.jsx');
+var SegmentedControl = require('../components/SegmentedControl.jsx');
 
 var ContactInfo = React.createClass({
 
 	getInitialState: function () {
 		return {
-			contactMethod: 'none',
-			creatingAccount: false
+			creatingAccount: false,
+			contactMethod: 'none'
 		}
 	},
 
 	getContactMethod: function () {return this.state.contactMethod},
 	getEmail:         function () {return this.refs.email.getEmail()},
 	getPhoneNumber:   function () {return this.refs.phone.getPhoneNumber()},
-	getName:          function () {return this.refs.name.getName()},
+	getName:          function () {return this.refs.name.value()},
 	getPassword:      function () {return this.refs.password.getPassword()},
 
     toggleAccountCreation: function () {
         this.setState({creatingAccount:!this.state.creatingAccount});
-    },
-
-    optionChanged: function () {
-    	var value = $('input', event.target).val();
-    	if (isUndefined(value)) {
-    		var parent = $(event.target).parent() 
-			value = $('input', parent).val();
-    	}
-    	this.setState({contactMethod: value});
     },
 
     componentWillReceiveProps: function (newProps) {
@@ -47,8 +36,7 @@ var ContactInfo = React.createClass({
     },
 
 	render: function () {
-		var nameStyle, passwordStyle, emailStyle, phoneStyle, accountCreationStyle, autofocus;
-		var contactForms = [];
+		var nameStyle, passwordStyle, emailStyle, phoneStyle, accountCreationStyle
 
 		passwordStyle = styles.visibleIf(this.state.creatingAccount === true && this.state.contactMethod !== 'none');
 		nameStyle     = styles.hiddenIf(this.state.contactMethod === 'none');
@@ -63,28 +51,25 @@ var ContactInfo = React.createClass({
 
 		var activeClass   = 'btn btn-primary active';
 		var inactiveClass = 'btn btn-primary';
+
+		var buttonData = [
+			{id: 'none',  label: 'No thanks'},
+			{id: 'email', label: 'Email'},
+			{id: 'text',  label: 'Text/SMS'},
+			{id: 'phone', label: 'Phone call'}
+		].map(function(item){
+			item.className = (this.state.contactMethod === item.id) ? activeClass : inactiveClass;
+			return item;
+		}, this);
 			 
 		return (
 			<div>
-				<label style={styles.block} className='control-label'>Preffered contact method:</label>
-				<div style={styles.spaceBelow} className='btn-group' data-toggle='buttons'>
-					<label onClick={this.optionChanged} value='none' htmlFor='none' className={this.state.contactMethod === 'none' ? activeClass : inactiveClass}>
-						No thanks
-						<input type='radio' value='none' />
-					</label>
-					<label onClick={this.optionChanged} value='email' htmlFor='email' className={this.state.contactMethod === 'email' ? activeClass : inactiveClass}>
-						Email
-						<input type='radio' value='email' />
-					</label>
-					<label onClick={this.optionChanged} value='text' htmlFor='text' className={this.state.contactMethod === 'text' ? activeClass : inactiveClass}>
-						Text/SMS
-						<input type='radio' value='text' />
-					</label>
-					<label onClick={this.optionChanged} value='phone' htmlFor='phone' className={this.state.contactMethod === 'phone' ? activeClass : inactiveClass}>Phone call
-						<input type='radio' value='phone' />
-					</label>
-				</div>
-				<Name  value={this.props.user.name}  ref='name'  style={nameStyle}></Name>
+				<SegmentedControl
+					ref='contactMethod'
+					label='Preferred contact method:'
+					data={buttonData}
+				/>
+				<Input label='Name'  initialValue={this.props.user.name}  ref='name'  style={nameStyle}></Input>
 				<Email value={this.props.user.email} ref='email' style={emailStyle}></Email>
 				<Phone value={this.props.user.phone_number} ref='phone' style={phoneStyle}></Phone>
 				<div style={accountCreationStyle} className='checkbox'>

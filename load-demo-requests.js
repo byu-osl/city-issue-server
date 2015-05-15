@@ -79,14 +79,21 @@ function getRandomDate(start, end) {
 }
 
 function getService() {
-    var code = Math.floor(randomInRange(1,6))
+    var code = Math.floor(randomInRange(1,13))
     var name;
     switch (code) {
-        case 1: name = 'streetlight'; break;
-        case 2: name = 'pothole'; break;
-        case 3: name = 'vandalism'; break;
-        case 4: name = 'sidewalk'; break;
-        case 5: name = 'irrigation'; break;
+        case 1: name = 'Water'; break;
+        case 2: name = 'Pressurized Irrigation'; break;
+        case 3: name = 'Sewer'; break;
+        case 4: name = 'Storm Drains'; break;
+        case 5: name = 'Streets'; break;
+        case 6: name = 'Sidewalks'; break;
+        case 7: name = 'Parks & Trails'; break;
+        case 8: name = 'Streetlights'; break;
+        case 9: name = 'Signs'; break;
+        case 10: name = 'Facilities'; break;
+        case 11: name = 'Cedar Hills Property'; break;
+        case 12: name = 'Residential Property'; break;
     }
 
     return {

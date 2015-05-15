@@ -3,7 +3,7 @@ var React  = require('react');
 
 var Checkbox = React.createClass({
 
-	checked: function() {
+	isChecked: function() {
 		return React.getDOMNode(this.refs.input).checked
 	},
 

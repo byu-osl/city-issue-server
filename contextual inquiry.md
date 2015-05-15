@@ -11,7 +11,7 @@ Tasks:
             - Required fields?
             - Notification options
         * Biggest complaints?
-        * Nicest things?
+        * Nicest things
         * What would you change?
         * At the end of the summer, you are super successful. Why?
         * What info would be crucial for users to know? What would help improve the city's image?
