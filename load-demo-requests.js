@@ -19,6 +19,50 @@ var longMin = -111.773320;
 var longMax = -111.738301;
 var stdDeviation = 0.005;
 
+var images = [
+'marker-brown.png',
+'marker-dark-blue.png',
+'marker-dark-green.png',
+'marker-dark-orange.png',
+'marker-dark-pink.png',
+'marker-dark-purple.png',
+'marker-dark-red.png',
+'marker-gray.png',
+'marker-green.png',
+'marker-light-blue.png',
+'marker-light-green.png',
+'marker-light-orange.png',
+'marker-light-purple.png',
+'marker-light-red.png',
+'marker-light-yellow.png',
+'marker-red.png',
+'marker-white.png',
+'marker-yellow.png'
+];
+
+[
+'Sewer',
+'Water',
+'Storm Drains',
+'Pressurized Irrigation',
+'Streets',
+'Sidewalks',
+'Parks & Trails',
+'Streetlights',
+'Signs',
+'Facilities',
+'Cedar Hills Property',
+'Residential Property'
+].forEach(function (type, index){
+    new Service({
+        marker_image: '/images/' + images[index],
+        service_name: type,
+        service_code: index
+    }).save(log.bind(null, type))
+});
+
+
+
 for (var i = 0; i < 90; i++) {
     var service = getService();
     new Request({
@@ -30,7 +74,7 @@ for (var i = 0; i < 90; i++) {
         media_url: 'http://lorempixel.com/300/300/city',
         status: getStatus(),
         requested_datetime: getRandomDate(new Date('2015/02/08'), new Date())
-    }).save(log);
+    }).save(log.bind(i));
 }
 
 function log () {
@@ -82,18 +126,18 @@ function getService() {
     var code = Math.floor(randomInRange(1,13))
     var name;
     switch (code) {
-        case 1: name = 'Water'; break;
-        case 2: name = 'Pressurized Irrigation'; break;
-        case 3: name = 'Sewer'; break;
-        case 4: name = 'Storm Drains'; break;
-        case 5: name = 'Streets'; break;
-        case 6: name = 'Sidewalks'; break;
-        case 7: name = 'Parks & Trails'; break;
-        case 8: name = 'Streetlights'; break;
-        case 9: name = 'Signs'; break;
-        case 10: name = 'Facilities'; break;
-        case 11: name = 'Cedar Hills Property'; break;
-        case 12: name = 'Residential Property'; break;
+        case 1: name  = 'Water'                   ; break;
+        case 2: name  = 'Pressurized Irrigation'                   ; break;
+        case 3: name  = 'Sewer'                   ; break;
+        case 4: name  = 'Storm Drains'                   ; break;
+        case 5: name  = 'Streets'                   ; break;
+        case 6: name  = 'Sidewalks'                   ; break;
+        case 7: name  = 'Parks & Trails'                   ; break;
+        case 8: name  = 'Streetlights'                   ; break;
+        case 9: name  = 'Signs'                   ; break;
+        case 10: name = 'Facilities'                   ; break;
+        case 11: name = 'Cedar Hills Property'                   ; break;
+        case 12: name = 'Residential Property'                   ; break;
     }
 
     return {
