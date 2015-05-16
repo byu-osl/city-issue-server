@@ -22,10 +22,12 @@ var RadioGroup = React.createClass({
 	},
 
 	valueChanged: function (event) {
+        var newValue = event.target.value;
 		this.setState({
-			value: event.target.value
-		});
-		this.props.onChange(event.target.value)
+			value: newValue
+		}, function (){
+		    this.props.onChange(newValue)
+        });
 	},
 
     render: function() {

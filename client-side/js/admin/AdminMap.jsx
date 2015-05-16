@@ -13,7 +13,6 @@ var mapOptions = {
 	mapTypeId: google.maps.MapTypeId.HYBRID
 }
 
-
 var AdminMap = React.createClass({
 	mixins: [mapMixin],
 
@@ -36,6 +35,34 @@ var AdminMap = React.createClass({
 		this.state.map = map;
 	},
 
+	setFilter: function (event, options) {
+		options = this.setDefaults(options);
+
+		this.state.markers.forEach(function (marker){
+			this.filterMarker(marker, options);
+		}, this);
+	},
+
+	componentDidMount: function () {
+		var self = this;
+		$(document).ready(function(){self.initializeMap()});
+
+		// Emitted by RequestFilters.jsx
+		$(window).on('requests:filterChanged', this.setFilter)
+	},
+
+	render: function () {
+		var style = {
+			width: '100%',
+			height: $(window).width() < 500 ? 300 : 500,
+			maxHeight: $(window).height() / 1.5
+		}
+
+		return (
+			<div onBlur={this.props.onBlur} style={style} className='map-canvas'></div>
+		)
+	},
+
 	renderInfoWindow: function (request) {
 		var imageStyle = styles.hiddenIf((isUndefined(request.media_url) || !request.media_url));
 
@@ -55,48 +82,7 @@ var AdminMap = React.createClass({
 		);
 
 		return React.renderToStaticMarkup(content);
-	},
-
-	setFilter: function (event, options) {
-		var self = this;
-		options = this.setDefaults(options);
-
-		this.state.markers.forEach(function (marker) {
-			var allGood = true;
-
-			_.keys(options).forEach(function (option){
-				if (!_.contains(options[option], marker.request[option])) {
-					allGood = false
-				} 
-			});
-
-			if (!allGood) {
-				marker.setMap(null)
-			} else {
-				marker.setMap(self.state.map)
-			}
-		}, this);
-	},
-
-	componentDidMount: function () {
-		var self = this;
-		$(document).ready(function(){self.initializeMap()});
-		$(window).on('requests:filterChanged', this.setFilter)
-	},
-
-	render: function () {
-		var style = {
-			width: '100%',
-			height: $(window).width() < 500 ? 300 : 500,
-			maxHeight: $(window).height() / 1.5
-		}
-
-		return (
-			<div onBlur={this.props.onBlur} style={style} className='map-canvas'></div>
-		)
 	}
-
 });
 
 module.exports = AdminMap;
-

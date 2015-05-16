@@ -69,6 +69,9 @@ var SegmentedControl = React.createClass({
 	    	<label 
 	    	className={className}
 	    	key={id} 
+	    	style={{
+	    		margin: '5px 5px 0px 0px'
+	    	}}
 	    	onClick={this.itemClicked.bind(this, id)}>
 	    	    <input 
 	    	    type='radio' 

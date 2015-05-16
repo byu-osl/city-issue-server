@@ -52,8 +52,7 @@ var Services = React.createClass({
             api.getServiceMetadata(function(data){
 				this.setState({
 					serviceMetadata: data
-				});
-				this.state.serviceMetadata = data;
+				}); this.state.serviceMetadata = data;
 				this.setState({
 					services: services
 				});

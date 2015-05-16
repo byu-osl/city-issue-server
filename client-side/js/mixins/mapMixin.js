@@ -18,13 +18,14 @@ module.exports = {
 			api.getServices(function gotServices(services) {
 	            this.setState({
 	                services: services
+	            }, function (){
+			        this.constructMarkers(requests, options);
 	            });
-		        this.constructMarkers(requests, options);
 	        }, this);
 		}
 	},
 
-	constructMarkers: function (requests) {
+	constructMarkers: function (requests, options) {
 		var map = this.state.map;
 
 		var markers = requests.filter(hasLatitude).map(function constructMarker(request) {
@@ -45,21 +46,12 @@ module.exports = {
 			});
 
 			marker.request = request;
+
+			this.filterMarker(marker, options);
 			return marker;
 		}, this);	
 
 		this.setState({markers:markers})
-	},
-
-	getImageType: function (serviceName) {
-		switch(serviceName) {
-			case 'pothole':     return '../../../images/marker-orange.png'; 
-			case 'streetlight': return '../../../images/marker-yellow.png'; 
-			case 'irrigation':  return '../../../images/marker-blue.png'; 
-			case 'sidewalk':    return '../../../images/marker-white.png'; 
-			case 'vandalism':   return '../../../images/marker-purple.png'; 
-			default:            return '../../../images/marker-gray.png'
-		}
 	},
 
 	setDefaults: function (options) {
@@ -72,7 +64,27 @@ module.exports = {
 		}
 
 		return _.assign(defaultOptions, options);
-	}
+	},
+
+	filterMarker: function (marker, options) {
+		var allGood = true;
+
+		_.keys(options).forEach(function (option){
+			if (typeof options[option] === 'string') {
+				options[option] = [options[option]]
+			}
+			
+			if (!_.contains(options[option], marker.request[option])) {
+				allGood = false
+			} 
+		});
+
+		if (!allGood) {
+			marker.setMap(null)
+		} else {
+			marker.setMap(this.state.map)
+		}
+	},
 }
 
 function hasLatitude(request) {

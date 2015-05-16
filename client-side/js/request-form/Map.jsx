@@ -27,7 +27,8 @@ var markerOptions = {
 	animation: google.maps.Animation.DROP,
 	draggable: true,
 	position:  cityCenter,
-	title:     'Issue location'
+	title:     'Issue location',
+	icon: '/images/marker-red-2.png'
 }
 
 var geocoder = new google.maps.Geocoder();

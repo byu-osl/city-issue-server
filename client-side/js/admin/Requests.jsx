@@ -28,7 +28,7 @@ var Requests = React.createClass({
 				requests: requests,
 			});
 
-			this.refs.map.loadRequests(requests);
+			this.refs.map.loadRequests(requests, {status:'open'});
 		}, this);
 
 		$(window).on('requests:filterChanged', this.setFilter)

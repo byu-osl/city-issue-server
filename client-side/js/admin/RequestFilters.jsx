@@ -14,25 +14,20 @@ var RequestFilters = React.createClass({
 		}
 	},
 
-	uncheckAllServices: function () {
-		_.map(this.state.selectedServices, function (){
-			return false;
+	changeAllServices: function(boolean) {
+		var newSelections = _.mapObject(this.state.selectedServices, function (){
+			return boolean;
 		});
 
 		this.setState({
-			selectedServices: this.state.selectedServices
-		});
+			selectedServices: newSelections
+		}, function (){
+			this.triggerFilterChanged();
+		}); 
 	},
 
-	checkAllServices: function () {
-		_.map(this.state.selectedServices, function (){
-			return true;
-		});
-
-		this.setState({
-			selectedServices: this.state.selectedServices
-		});
-	},
+	uncheckAllServices: function (){this.changeAllServices(false);},
+	checkAllServices:   function (){this.changeAllServices(true);},
 
 	serviceChanged: function (event) {	
 		var newSelections = this.state.selectedServices;
@@ -40,16 +35,19 @@ var RequestFilters = React.createClass({
 
 		this.setState({
 			selectedServices: newSelections
-		});
-
-		this.triggerMapUpdate(this.refs.status.value(), newSelections);
+		}, function (){
+			this.triggerFilterChanged();
+		}); 
 	},
 
-	statusChanged: function (value) {
-		this.triggerMapUpdate(value, this.state.selectedServices);
+	statusChanged: function () {
+		this.triggerFilterChanged();
 	},
 
-	triggerMapUpdate: function(status, selectedServices) {
+	triggerFilterChanged: function() {
+		var status = this.refs.status.value();
+		var selectedServices = this.state.selectedServices;
+
 		if (status === 'all') { 
 			status = ['open', 'closed']
 		} else {
@@ -81,7 +79,6 @@ var RequestFilters = React.createClass({
 				selectedServices: selectedServices,
 				services: services
 			});
-			
         }, this);
 	},
 
@@ -91,7 +88,6 @@ var RequestFilters = React.createClass({
     		marginLeft: 10
     	}
 
-// TODO: all filter for categories
         return (
 			<div>
 	        	<RadioGroup
@@ -131,5 +127,3 @@ var RequestFilters = React.createClass({
 });
 
 module.exports = RequestFilters;
-
-// TODO: filter table too :/
