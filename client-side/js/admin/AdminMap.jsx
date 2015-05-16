@@ -3,11 +3,6 @@ var React      = require('react');
 var mapMixin   = require('../mixins/mapMixin.js');
 var styles     = require('../styles.js');
 var _          = require('../_.js');
-var Router     = require('react-router');
-var Link       = Router.Link
-var Marker     = google.maps.Marker;
-var cityCenter = new google.maps.LatLng(40.4122994, -111.75418)
-
 
 var mapOptions = {
 	center: {
@@ -18,7 +13,6 @@ var mapOptions = {
 	mapTypeId: google.maps.MapTypeId.HYBRID
 }
 
-var geocoder = new google.maps.Geocoder();
 
 var AdminMap = React.createClass({
 	mixins: [mapMixin],
@@ -27,7 +21,7 @@ var AdminMap = React.createClass({
 		return {
 			map: undefined,
 			requests: [],
-			markers: []
+			markers:  []
 		}
 	},
 

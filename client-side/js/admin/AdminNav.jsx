@@ -23,7 +23,7 @@ render: function() {
     		<ul className='list-unstyled'>
     			<li>
                     <Link activeStyle={styles.bold} to='requests'>Requests</Link>
-                    <RequestFilters services={this.props.services} style={requestFiltersStyle}/>
+                    <RequestFilters style={requestFiltersStyle}/>
                 </li>
     			<li><Link activeStyle={styles.bold} to='services'>Service Types</Link></li>
     			<li><Link activeStyle={styles.bold} to='users'>Users</Link></li>

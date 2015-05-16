@@ -9,13 +9,9 @@ add address field to maps
 - admin icons: differentiate between open/closed issues 
 - Do they need time of day on updates?
 - Prod db exploding with npm test
+- There are so many service types that it will be hard to remember colors?
 
 # Changed since last time
-- request form
-- visit to cedar hills
-- admin maps
-- filtering, services display
-- pretty much everything
 
 ------------------
 

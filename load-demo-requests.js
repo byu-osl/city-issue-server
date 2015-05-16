@@ -1,9 +1,9 @@
 'use strict';
 
 var mongoose   = require('mongoose');
-var Request = require('./models/request');
-var Service = require('./models/service');
-var randgen = require('randgen');
+var Request    = require('./models/request');
+var Service    = require('./models/service');
+var randgen    = require('randgen');
 var loremIpsum = require('lorem-ipsum');
 
 mongoose.connect('mongodb://localhost/city-issues');
@@ -13,10 +13,10 @@ db.once('open', function dbConnected() {
     console.log('DB connected.');
 });
 
-var latMin = 40.392299;
-var latMax = 40.431967;
-var longMin = -111.773320;
-var longMax = -111.738301;
+// var latMin = 40.392299;
+// var latMax = 40.431967;
+// var longMin = -111.773320;
+// var longMax = -111.738301;
 var stdDeviation = 0.005;
 
 var images = [
@@ -40,7 +40,7 @@ var images = [
 'marker-yellow.png'
 ];
 
-[
+var services = [
 'Sewer',
 'Water',
 'Storm Drains',
@@ -53,7 +53,9 @@ var images = [
 'Facilities',
 'Cedar Hills Property',
 'Residential Property'
-].forEach(function (type, index){
+];
+
+services.forEach(function (type, index){
     new Service({
         marker_image: '/images/' + images[index],
         service_name: type,
@@ -123,28 +125,11 @@ function getRandomDate(start, end) {
 }
 
 function getService() {
-    var code = Math.floor(randomInRange(1,13))
-    var name;
-    switch (code) {
-        case 1: name  = 'Water'                   ; break;
-        case 2: name  = 'Pressurized Irrigation'                   ; break;
-        case 3: name  = 'Sewer'                   ; break;
-        case 4: name  = 'Storm Drains'                   ; break;
-        case 5: name  = 'Streets'                   ; break;
-        case 6: name  = 'Sidewalks'                   ; break;
-        case 7: name  = 'Parks & Trails'                   ; break;
-        case 8: name  = 'Streetlights'                   ; break;
-        case 9: name  = 'Signs'                   ; break;
-        case 10: name = 'Facilities'                   ; break;
-        case 11: name = 'Cedar Hills Property'                   ; break;
-        case 12: name = 'Residential Property'                   ; break;
-    }
-
+    var code = Math.floor(randomInRange(0,12))
     return {
         code: code,
-        name: name
+        name: services[code]
     }
-
 }
 
 function getDictionary() {

@@ -1,16 +1,37 @@
 'use strict';
-var React  = require('react');
-var api = require('../server-api.js');
-var styles = require('../styles.js');
-var _ = require('../_.js');
+var React      = require('react');
+var styles     = require('../styles.js');
+var _          = require('../_.js');
+var api        = require('../server-api.js');
+var RadioGroup = require('../components/RadioGroup.jsx');
 
 var RequestFilters = React.createClass({
 
 	getInitialState: function () {
 		return  {
-			selectedServices: undefined,
-			status: 'all'
+			selectedServices: {},
+			services: []
 		}
+	},
+
+	uncheckAllServices: function () {
+		_.map(this.state.selectedServices, function (){
+			return false;
+		});
+
+		this.setState({
+			selectedServices: this.state.selectedServices
+		});
+	},
+
+	checkAllServices: function () {
+		_.map(this.state.selectedServices, function (){
+			return true;
+		});
+
+		this.setState({
+			selectedServices: this.state.selectedServices
+		});
 	},
 
 	serviceChanged: function (event) {	
@@ -21,15 +42,11 @@ var RequestFilters = React.createClass({
 			selectedServices: newSelections
 		});
 
-		this.triggerMapUpdate(this.state.status, newSelections);
+		this.triggerMapUpdate(this.refs.status.value(), newSelections);
 	},
 
-	statusChanged: function (event) {
-		this.setState({
-			status: event.target.value,
-		});
-
-		this.triggerMapUpdate(event.target.value, this.state.selectedServices);
+	statusChanged: function (value) {
+		this.triggerMapUpdate(value, this.state.selectedServices);
 	},
 
 	triggerMapUpdate: function(status, selectedServices) {
@@ -54,24 +71,21 @@ var RequestFilters = React.createClass({
 		});
 	},
 
-	componentWillReceiveProps: function (nextProps) {
-		if (isUndefined(this.state.selectedServices)) {
+	componentWillMount: function () {
+		api.getServices(function gotServices(services) {
 			var selectedServices = {};
-			nextProps.services.forEach(function (service){
+			services.forEach(function (service){
 				selectedServices[service.service_name] = true;
 			});
 			this.setState({
-				selectedServices: selectedServices
+				selectedServices: selectedServices,
+				services: services
 			});
-		}
+			
+        }, this);
 	},
 
-
     render: function() {
-    	var labelStyle = {
-    		fontWeight: '500'
-    	}
-
     	var containerStyle = {
     		marginBottom: 15,
     		marginLeft: 10
@@ -79,28 +93,23 @@ var RequestFilters = React.createClass({
 
 // TODO: all filter for categories
         return (
-			<div style={_.assign(containerStyle, this.props.style)}>
+			<div>
+	        	<RadioGroup
+	        	label='Status'
+	        	ref='status'
+	        	data={[
+	        		{value: 'all' },
+	        		{value: 'open' },
+	        		{value: 'closed' },
+	        	]}
+	        	onChange={this.statusChanged}
+	        	style={_.assign(containerStyle, this.props.style)}
+	        	initialValue='open'/>
 
-				<div className="form-group">
-					<span style={styles.bold}>Status</span>
-					<div className="checkbox">
-					    <label style={labelStyle}>
-					        <input checked={this.state.status === 'all'} name='status' type="radio" value='all' onChange={this.statusChanged}/> all
-					    </label>
-					</div>
-					<div className="checkbox">
-					    <label style={labelStyle}>
-					        <input checked={this.state.status === 'open'} name='status' type="radio" value='open' onChange={this.statusChanged}/> open
-					    </label>
-					</div>
-					<div className="checkbox">
-					    <label style={labelStyle}>
-					        <input checked={this.state.status === 'closed'} name='status' type="radio" value='closed' onChange={this.statusChanged}/> closed
-					    </label>
-					</div>
-				</div>
-				<div className="form-group"><span style={styles.bold}>Type</span>
-					{this.props.services.map(this.renderService, this)}
+				<div ref='types' className="form-group"><span style={styles.bold}>Type</span><br/>
+					<button type="button" className="btn btn-default btn-xs" onClick={this.checkAllServices}>check all</button>
+					<button type="button" className="btn btn-default btn-xs" onClick={this.uncheckAllServices}>uncheck all</button>
+					{this.state.services.map(this.renderService, this)}
 				</div>
 			</div>
         );

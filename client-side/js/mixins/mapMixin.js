@@ -24,19 +24,20 @@ module.exports = {
 		}
 	},
 
-	constructMarkers: function (requests, options) {
+	constructMarkers: function (requests) {
 		var map = this.state.map;
 
-		var markers = requests.filter(hasLatitude).map(function constructMarker(request, index) {
+		var markers = requests.filter(hasLatitude).map(function constructMarker(request) {
 			var infoWindow = new google.maps.InfoWindow({
 				content: this.renderInfoWindow(request)
 			});
 
+			var service = _.findWhere(this.state.services, {service_code:request.service_code})
 			var marker = new google.maps.Marker({
 				position: new google.maps.LatLng(request.lat, request.long),
 				map:      map,
 				title:    request.service_name,
-				icon:     this.getImageType(request.service_name)
+				icon:     service.marker_image
 			});
 
 			google.maps.event.addListener(marker, 'click', function () {
