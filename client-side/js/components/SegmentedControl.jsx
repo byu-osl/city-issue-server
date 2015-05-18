@@ -1,6 +1,6 @@
 'use strict';
 var React  = require('react');
-var styles = require('../styles.js');
+var styles = require('styles');
 
 var SegmentedControl = React.createClass({
 	getDefaultProps: function () {

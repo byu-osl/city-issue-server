@@ -1,12 +1,11 @@
 'use strict';
 var React              = require('react');
-var api                = require('../server-api');
-var _                  = require('../_');
+var api                = require('server-api');
+var _                  = require('_');
 var LocationSection    = require('./LocationSection.jsx');
 var CategorySection    = require('./CategorySection.jsx');
 var DescriptionSection = require('./DescriptionSection.jsx');
 var ContactInfo        = require('./ContactInfo.jsx');
-var styles             = require('../styles.js');
 var Router             = require('react-router');
 var NavigationMixin    = Router.Navigation
 var loggedOutUser      = {
@@ -58,6 +57,7 @@ var RequestForm = React.createClass({
         long = this.refs.location.getLong();
         lat  = this.refs.location.getLat();
 
+        debugger;
         api.postRequest({
             address_string: location,
             contact_method: contactMethod,

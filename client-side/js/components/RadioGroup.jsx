@@ -1,6 +1,6 @@
 'use strict';
 var React  = require('react');
-var styles = require('../styles.js');
+var styles = require('styles');
 
 var RadioGroup = React.createClass({
 	getDefaultProps: function () {
@@ -44,6 +44,8 @@ var RadioGroup = React.createClass({
     		fontWeight: '500'
     	}
 
+
+
     	var checked = false;
 
     	if (!isUndefined(this.state.value) && this.state.value === data.value) {
@@ -57,7 +59,7 @@ var RadioGroup = React.createClass({
     	}
 
     	return (
-    		<div className="checkbox">
+    		<div className="radio" style={{marginBottom:5, marginTop: 5}}>
     		    <label style={labelStyle}>
     		        <input 
     		        checked={checked} 

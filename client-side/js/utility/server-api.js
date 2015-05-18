@@ -3,6 +3,7 @@
 var api = {};
 api.cache = {};
 var TEN_MINUTES = 1000 * 60 * 10;
+var BASE_PATH = 'http://localhost:3000';
 
 setInterval(function resetCache() {
 	api.cache = {};
@@ -33,14 +34,14 @@ var resetCacheItem = function(key) {
 ////////////////////////////////
 
 api.postRequest = function (data, cb, thisArg) {
-    $.post('/requests.json', data, function(request) {
+    $.post(BASE_PATH + '/requests.json', data, function(request) {
     	resetCacheItem('requests');
     	cb.call(thisArg, request);
     });
 }
 
 api.updateRequest = function (data, cb, thisArg) {
-	$.post('/requests/update', data, function (request){
+	$.post(BASE_PATH + '/requests/update', data, function (request){
 		resetCacheItem('requests');
 		cb.call(thisArg, request);
 	});
@@ -51,7 +52,7 @@ api.getRequest = function (id, cb, thisArg){
 		cb.call(thisArg, getFromCache(id));
 		return;
 	} else {
-		$.get('/requests/'+id+'.json', function (request){
+		$.get(BASE_PATH + '/requests/'+id+'.json', function (request){
 			addToCache(id, request)
 			cb.call(thisArg, request);
 		}.bind(this));
@@ -72,14 +73,14 @@ api.getRequests = function(options, cb, thisArg) {
 		options = {};
 	}
 
-	$.get('/requests', options, function gotRequests(requests){
+	$.get(BASE_PATH + '/requests', options, function gotRequests(requests){
 		addToCache('requests', requests);
 		cb.call(thisArg, requests);
 	}.bind(this));
 }
 
 api.addHistoryEntry = function (options, cb, thisArg) {
-	$.post('/requests/addHistoryEntry', options, function postedHistory (newHistory) {
+	$.post(BASE_PATH + '/requests/addHistoryEntry', options, function postedHistory (newHistory) {
 		cb.call(thisArg, newHistory);
 	});
 }
@@ -89,7 +90,7 @@ api.addHistoryEntry = function (options, cb, thisArg) {
 ////////////////////////////////
 
 api.addService = function(options, cb, thisArg) {
-	$.post('/services', options, function (newService) {
+	$.post(BASE_PATH + '/services', options, function (newService) {
 		cb.call(thisArg, newService);
 		resetCacheItem('services');
 	});
@@ -101,7 +102,7 @@ api.getServices = function (cb, thisArg) {
 		return;
 	}
 
-    $.get('/services.json', function(data) {
+    $.get(BASE_PATH + '/services.json', function(data) {
     	addToCache('services', data)
 		cb.call(thisArg, data);
     }.bind(this));
@@ -113,10 +114,10 @@ api.getServiceMetadata = function (cb, thisArg) {
 		return;
 	}
 
-	$.get('/services/metadata', function(metadata) {
+	$.get(BASE_PATH + '/services/metadata', function(metadata) {
 		addToCache('service-metadata', metadata);
 		cb.call(thisArg, metadata)
-	}.bind(this));
+	}.bind(this)); 
 }
 
 ////////////////////////////////
@@ -125,11 +126,11 @@ api.getServiceMetadata = function (cb, thisArg) {
 
 api.registerUser = function (data, cb) {
 	resetCacheItem('users');
-	$.post('/register', data, cb);
+	$.post(BASE_PATH + '/register', data, cb);
 }
 
 api.authenticate = function (token, cb, thisArg) {
-	$.post('/authenticate', {token:token}, function authDone(data){
+	$.post(BASE_PATH + '/authenticate', {token:token}, function authDone(data){
 		cb.call(thisArg, data);
 	});
 }

@@ -2,9 +2,8 @@
 var React        = require('react');
 var AdminNav     = require('./AdminNav.jsx');
 var Router       = require('react-router');
-var Link         = require('react-router').Link;
-var RouteHandler = require('react-router').RouteHandler;
-var api          = require('../server-api.js');
+var RouteHandler = Router.RouteHandler;
+var api          = require('server-api');
 
 var AdminPage = React.createClass({
 

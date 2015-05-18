@@ -1,9 +1,8 @@
 'use strict';
 var React            = require('react');
-var api              = require('../server-api');
-var styles           = require('../styles.js');
-var SegmentedControl = require('../components/SegmentedControl.jsx');
-var _                = require('../_.js');
+var api              = require('server-api');
+var SegmentedControl = require('SegmentedControl.jsx');
+var _                = require('_');
 
 var CategorySection = React.createClass({
 
@@ -16,7 +15,7 @@ var CategorySection = React.createClass({
     getSelectedService:     function() {return this.refs.category.getSelectedItem()},
     getSelectedServiceName: function() {
         var id = this.refs.category.getSelectedItem();
-        return _.findWhere(this.state.services, {service_code:id});
+        return _.findWhere(this.state.services, {service_code:id}).service_name;
     },
 
     validate: function() {

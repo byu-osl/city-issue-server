@@ -1,8 +1,8 @@
 'use strict';
 var React      = require('react');
 var mapMixin   = require('../mixins/mapMixin.js');
-var styles     = require('../styles.js');
-var _          = require('../_.js');
+var styles     = require('styles');
+var _          = require('_');
 
 var mapOptions = {
 	center: {
@@ -38,8 +38,8 @@ var AdminMap = React.createClass({
 	setFilter: function (event, options) {
 		options = this.setDefaults(options);
 
-		this.state.markers.forEach(function (marker){
-			this.filterMarker(marker, options);
+		this.state.markers.forEach(marker => {
+			this.filterMarker(marker, options)
 		}, this);
 	},
 

@@ -1,6 +1,6 @@
 'use strict';
 var React  = require('react');
-var api       = require('../server-api.js');
+var api    = require('server-api');
 
 var Users = React.createClass({
 	getInitialState: function () {

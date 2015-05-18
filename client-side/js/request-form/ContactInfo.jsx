@@ -1,12 +1,8 @@
 'use strict';
-var React  = require('react');
-
-var Email    = require('./Email.jsx');
-var Password = require('./Password.jsx');
-var Phone    = require('./Phone.jsx');
-var styles   = require('../styles.js');
-var Input    = require('../components/Input.jsx');
-var SegmentedControl = require('../components/SegmentedControl.jsx');
+var React            = require('react');
+var styles           = require('styles');
+var Input            = require('Input.jsx');
+var SegmentedControl = require('SegmentedControl.jsx');
 
 var ContactInfo = React.createClass({
 
@@ -18,13 +14,17 @@ var ContactInfo = React.createClass({
 	},
 
 	getContactMethod: function () {return this.state.contactMethod},
-	getEmail:         function () {return this.refs.email.getEmail()},
-	getPhoneNumber:   function () {return this.refs.phone.getPhoneNumber()},
+	getEmail:         function () {return this.refs.email.value()},
+	getPhoneNumber:   function () {return this.refs.phone.value()},
 	getName:          function () {return this.refs.name.value()},
-	getPassword:      function () {return this.refs.password.getPassword()},
+	getPassword:      function () {return this.refs.password.value()},
 
     toggleAccountCreation: function () {
-        this.setState({creatingAccount:!this.state.creatingAccount});
+        this.setState({creatingAccount:!this.state.creatingAccount}, function (){
+        		if (this.state.creatingAccount) {
+        			this.refs.password.focus();
+        		}
+        });
     },
 
     componentWillReceiveProps: function (newProps) {
@@ -35,11 +35,10 @@ var ContactInfo = React.createClass({
     	}
     },
 
-    methodChanged: function (id, event) {
-    	debugger;
+    methodChanged: function (id) {
     	this.setState({
     		contactMethod: id
-    	});
+    	}, this.refs.name.focus);
     },
 
 	render: function () {
@@ -68,7 +67,7 @@ var ContactInfo = React.createClass({
 			item.className = (this.state.contactMethod === item.id) ? activeClass : inactiveClass;
 			return item;
 		}, this);
-			 
+
 		return (
 			<div>
 				<SegmentedControl
@@ -78,14 +77,14 @@ var ContactInfo = React.createClass({
 					onChange={this.methodChanged}
 				/>
 				<Input label='Name'  initialValue={this.props.user.name}  ref='name'  style={nameStyle}></Input>
-				<Email value={this.props.user.email} ref='email' style={emailStyle}></Email>
-				<Phone value={this.props.user.phone_number} ref='phone' style={phoneStyle}></Phone>
+				<Input label='Email' initialValue={this.props.user.email} ref='email' style={emailStyle}/>
+				<Input label='Phone' initialValue={this.props.user.phone_number} ref='phone' style={phoneStyle}/>
 				<div style={accountCreationStyle} className='checkbox'>
                     <label>
                         <input type='checkbox' onChange={this.toggleAccountCreation}/> Create an account <span className="small">(save your information for the next time you submit an issue)</span>
                     </label>
                 </div>
-                <Password creatingAccount={this.state.creatingAccount} style={passwordStyle} ref='password'/>
+                <Input label='Password' style={passwordStyle} type='password' ref='password'/>
 			</div>
 		)
 	},

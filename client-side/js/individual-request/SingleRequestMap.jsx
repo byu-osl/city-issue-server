@@ -1,8 +1,6 @@
 'use strict';
 var React      = require('react');
-var mapMixin   = require('./mixins/mapMixin.js');
-var api        = require('./server-api.js');
-var styles     = require('./styles.js');
+var mapMixin   = require('../mixins/mapMixin');
 
 var mapOptions = {
 	center: {
@@ -27,9 +25,7 @@ var Map = React.createClass({
 		
 		this.setState({
 			map:map,
-		});
-
-		this.state.map = map;
+		}); this.state.map = map;
 	},
 
 	setRequest: function (request) {
@@ -42,7 +38,7 @@ var Map = React.createClass({
 
 		marker.setMap(this.state.map);
 
-		if (!isUndefined(request.media_url)) {
+		if (!isUndefined(request.media_url) && request.media_url.length > 0) {
 			var infoWindow = new google.maps.InfoWindow({
 				content: '<img style="max-width:100%" src="'+request.media_url+'"/>'
 			});

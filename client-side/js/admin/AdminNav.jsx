@@ -1,8 +1,8 @@
 'use strict';
-var React  = require('react');
-var Router = require('react-router');
-var Link = Router.Link;
-var styles = require('../styles.js');
+var React          = require('react');
+var Router         = require('react-router');
+var Link           = Router.Link;
+var styles         = require('styles');
 var RequestFilters = require('./RequestFilters.jsx');
 
 var AdminNav = React.createClass({

@@ -27,6 +27,8 @@ This readme assumes you know very little about Node, React, etc.
 
 ## Installation and workflow
 
+**This needs updating. Currently, front end builds are done using webpack. <code>webpack -d --watch</code>**
+
 Install [Node.js](https://nodejs.org/) and [MongoDB](http://docs.mongodb.org/manual/installation/) (make sure it is running: run `mongo` in the terminal, and then `version()`. If Mongo is running, you will get a version number). After that, run this in your terminal:
 
 <code>git clone https://github.com/byu-osl/city-issue-server.git && cd city-issue-server</code>
@@ -59,7 +61,7 @@ The entry point of the application is [app.js](client-side/js/app.js). That file
 
 Gulp is now watching your files. Whenever you make a change in a JavaScript/JSX file, it will resolve all of the dependencies and throw everything into dist/build.js. Now, [http://localhost:3000/](http://localhost:3000/) should look something like this:
 
-![Issue tracker screenshot](https://raw.github.com/byu-osl/city-issue-server/master/screenshot.png)
+![Issue tracker screenshot](https://raw.github.com/byu-osl/city-issue-server/master/notes/screenshot.png)
 
 ## Contributing
 

@@ -1,7 +1,6 @@
 'use strict';
 // requests/addHistoryEntry
 
-var sendEmail = require('../utility/sendEmail');
 var express = require('express');
 var router  = express.Router();
 var Request = require('../models/request');
@@ -9,7 +8,10 @@ var Request = require('../models/request');
 router.post('/', addHistoryEntry);
 
 function addHistoryEntry(req, res) {
-	Request.findById(req.body.requestID, function(error, request){
+	console.log('req.body._id', req.body._id);
+	Request.findById(req.body._id, function(error, request){
+
+		
 		if (request) {
 			request.history.push({date: req.body.date, description: req.body.description});
 			request.markModified('history');

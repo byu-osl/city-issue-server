@@ -1,16 +1,14 @@
 'use strict';
 var React        = require('react');
-var api          = require('../server-api.js');
-var mapMixin     = require('../mixins/mapMixin.js');
+var api          = require('server-api');
 var Reactable    = require('reactable');
 var Table        = Reactable.Table
 var Row          = Reactable.Tr
 var unsafe       = Reactable.unsafe
-var ToggleButton = require('../components/ToggleButton.jsx');
-var Input        = require('../components/Input.jsx');
-var styles       = require('../styles.js');
-var _            = require('../_.js');
-var ImageInput   = require('../components/ImageInput.jsx');
+var ToggleButton = require('ToggleButton.jsx');
+var Input        = require('Input.jsx');
+var styles       = require('styles');
+var ImageInput   = require('ImageInput.jsx');
 
 var Services = React.createClass({
 	getInitialState: function () {

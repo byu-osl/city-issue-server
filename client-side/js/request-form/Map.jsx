@@ -1,11 +1,12 @@
 'use strict';
 var React      = require('react');
 var mapMixin   = require('../mixins/mapMixin.js');
-var api        = require('../server-api.js');
+var api        = require('server-api');
 var Marker     = google.maps.Marker;
-var styles     = require('../styles.js');
+var styles     = require('styles');
+var _ 		   = require('_');
+
 var cityCenter = new google.maps.LatLng(40.4122994, -111.75418)
-var _ 		   = require('../_');
 var mapOptions = {
 	center: {
 		lat: 40.4122994,

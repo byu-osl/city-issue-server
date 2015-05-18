@@ -1,16 +1,15 @@
 'use strict';
 var React  = require('react');
-
-var styles = require('../styles');
+var styles = require('styles');
 
 var DescriptionSection = React.createClass({
 
     getInitialState: function () {
         return  {
               description: '',
-              imageSrc: '',
+              imageSrc:    '',
               imageLoaded: false,
-              isValid: undefined
+              isValid:     undefined
         };
     },
 
@@ -25,7 +24,6 @@ var DescriptionSection = React.createClass({
             this.validate();
         }
 
-        var value = event.target.value;
         this.setState({description:event.target.value});
     },
 

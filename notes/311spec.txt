@@ -1,0 +1,90 @@
+This is just to help keep track of what has been done. Lines will be removed when they aren't needed anymore, or tacked onto the end if they are confusing.
+
+I'm not being very strict, but generally I remove it after a test is written or I think it isn't worth it.
+===============================
+
+POST Service Request
+Requires API Key    Yes
+Required Arguments
+
+Field Name  Description Notes & Requirements
+attribute   An array of key/value responses based on Service Definitions.   This takes the form of attribute[code]=value where multiple code/value pairs can be specified as well as multiple values for the same code in the case of a multivaluelist datatype (attribute[code1][]=value1&attribute[code1][]=value2&attribute[code1][]=value3) - see example. 
+
+This is only required if the service_code requires a service definition with required fields`.
+
+
+/////////////////////////
+
+GET Service Definition
+
+Response
+
+Field Name  Description Notes & Requirements
+service_definition ↴         
+service_code    Returns the service_code associated with the definition, the same one submitted for this call.   
+attributes ⇊         
+attribute ↴      
+variable    true denotes that user input is needed 
+
+false means the attribute is only used to present information to the user within the description field  Possible values: true, false.
+code    A unique identifier for the attribute    
+datatype    Denotes the type of field used for user input. 
+
+string: A string of characters without line breaks. Represented in an HTML form using an <input> tag 
+
+number: A numeric value. Represented in an HTML form using an <input> tag 
+
+datetime: The input generated must be able to transform into a valid ISO 8601 date. Represented in an HTML form using <input> tags 
+
+text: A string of characters that may contain line breaks. Represented in an HTML form using an <textarea> tag 
+
+singlevaluelist: A set of predefined values (specified in this response) where only one value may be selected. Represented in an HTML form using the <select> and <option> tags 
+
+multivaluelist: A set of predefined values (specified in this response) where several values may be selected. Represented in an HTML form using the <select multiple="multiple"> and <option> tags  Options: string, number, datetime, text, singlevaluelist, multivaluelist.
+required    true means that the value is required to submit service request 
+
+false means that the value not required.    Options: true, false.
+datatype_description    A description of the datatype which helps the user provide their input   
+order   The sort order that the attributes will be presented to the user. 1 is shown first in the list. Any positive integer not used for other attributes in the same service_code
+description An description of the attribute field with instructions for the user to find and identify the requested information  
+values ⇊         
+value ↴      
+key The unique identifier associated with an option for singlevaluelist or multivaluelist. This is analogous to the value attribute in an html option tag.   
+name    The human readable title of an option for singlevaluelist or multivaluelist. This is analogous to the innerhtml text node of an html option tag.     
+
+///////////////////////
+
+GET service_request_id from a token
+Conditional Yes - This call is only necessary if the response from POST Service Request contains a token
+Purpose Get the service_request_id from a temporary token. This is unnecessary if the response from creating a service request does not contain a token.
+URL [https://API endpoint]/tokens/[token id].[format]
+Sample URL  https://api.city.gov/dev/v2/tokens/123456.xml?jurisdiction_id=city.gov
+Formats XML (JSON available if denoted by Service Discovery)
+HTTP Method GET
+Requires API Key    No
+Required Arguments
+
+Field Name  Description Notes & Requirements
+jurisdiction_id     This is only required if the endpoint serves multiple jurisdictions
+token       This is obtained from the POST Service Requests method
+Response
+
+Field Name  Description Notes & Requirements
+service_requests ⇊       
+request ↴        
+service_request_id  The unique ID for the service request created. This can be used to call the GET Service Request method.  
+token   The token ID used to make this call.     
+Possible Errors
+
+The numbers represent the HTTP status code returned for each error type:
+
+404 - jurisdiction_id or token not found (specified in error response)
+400 - jurisdiction_id or token was not provided (specified in error response)
+400 - General Service error (Any failure during service query processing. Client will have to notify us)
+Example Response
+
+///////////////////////////
+
+all the required jurisdiction IDs
+
+///////////////////////////

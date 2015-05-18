@@ -1,15 +1,15 @@
 'use strict';
 var React           = require('react');
-var api             = require('../server-api.js');
+var api             = require('server-api.js');
 var Reactable       = require('reactable');
 var Table           = Reactable.Table;
 var unsafe          = Reactable.unsafe;
 var Row             = Reactable.Tr;
 var AdminMap        = require('./AdminMap.jsx');
 var Router          = require('react-router');
-var Link            = Router.Link;
 var NavigationMixin = Router.Navigation
-var _               = require('../_.js');
+var _               = require('_');
+var formatDate     = require('utils').formatDate;
 
 
 var Requests = React.createClass({
@@ -67,7 +67,7 @@ var Requests = React.createClass({
 
         return (
         	<div className='col-sm-10' style={{paddingRight:0}}>
-	        	<h2>Requests</h2>
+	        	<h2>Requeszsts</h2>
         		<AdminMap ref='map'/>
         		<label style={labelStyle}>Search <span className='small'>by category, date, status, description, or location</span></label>
         		<div className='table-responsive'>
@@ -117,7 +117,7 @@ function transformRequest (request) {
 	var newRequest = {};
 	newRequest.Image             = unsafe('<img style="max-width: 40px" src="'+request.media_url+'"/>');
 	newRequest.Category          = request.service_name;
-	newRequest['Date Submitted'] = new Date(request.requested_datetime).toDateString().substring(4)
+	newRequest['Date Submitted'] = formatDate(new Date(request.requested_datetime))
 	newRequest.Status            = request.status;
 	newRequest.Description       = request.description;
 	newRequest.Location          = request.address_string;

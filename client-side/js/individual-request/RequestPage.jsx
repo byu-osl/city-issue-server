@@ -2,9 +2,10 @@
 var React               = require('react');
 var Router              = require('react-router');
 var StateMixin          = Router.State;
-var api                 = require('./server-api.js');
+var api                 = require('server-api.js');
 var SingleRequestMap    = require('./SingleRequestMap.jsx');
 var RequestHistoryTable = require('./RequestHistoryTable.jsx');
+var formatDate     = require('utils').formatDate;
 
 var RequestPage = React.createClass({
 	mixins: [StateMixin],
@@ -12,7 +13,7 @@ var RequestPage = React.createClass({
 	getInitialState: function () {
 		return {
 			request: undefined
-		}
+		} 
 	},
 
 	componentWillMount: function () {
@@ -35,17 +36,13 @@ var RequestPage = React.createClass({
     	if (isUndefined(this.state.request)) {return <div></div>; }
     	var request = this.state.request;
 
-    	var imgStyle = {
-    		width: '100%'
-    	}
-
     	var statusStyle = {
     		fontSize: 18,
     	};
 
     	var statusColor = request.status === 'closed' ? 'green' : 'rgb(255, 153, 17)'
     	var status = request.status === 'closed' ? 'closed \u2713' : 'open';
-    	var date = new Date(request.requested_datetime).toDateString().substring(4);
+    	var date = formatDate(new Date(request.requested_datetime));
 
         return (
     	<div className='container request-page'>

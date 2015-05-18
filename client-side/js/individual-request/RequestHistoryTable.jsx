@@ -2,15 +2,14 @@
 var React        = require('react');
 var Reactable    = require('reactable');
 var Table        = Reactable.Table;
-var unsafe       = Reactable.unsafe;
 var Row          = Reactable.Tr;
-var Cell         = Reactable.Td;
-var styles       = require('./styles.js');
-var api          = require('./server-api.js');
-var ToggleButton = require('./components/ToggleButton.jsx');
-var Checkbox     = require('./components/Checkbox.jsx');
-var Input        = require('./components/Input.jsx');
-var _            = require('./_.js');
+var styles       = require('styles');
+var api          = require('server-api');
+var ToggleButton = require('ToggleButton.jsx');
+var Checkbox     = require('Checkbox.jsx');
+var Input        = require('Input.jsx');
+var _            = require('_');
+var formatDate     = require('utils').formatDate;
 
 // TODO: if something is submitted on the same day it can be out of order
 var RequestHistoryTable = React.createClass({
@@ -28,7 +27,7 @@ var RequestHistoryTable = React.createClass({
 		});
 	},
 
-    toggleAdding: function (event) {
+    toggleAdding: function () {
         var addingAnEntry = !this.state.addingAnEntry;
         this.setState({addingAnEntry: addingAnEntry}, function (){
             if (this.state.addingAnEntry) {
@@ -47,7 +46,7 @@ var RequestHistoryTable = React.createClass({
         }
 
         var data = {
-            requestID: this.state.request._id,
+            _id: this.state.request._id,
             date: this.refs.date.value(),
             description: this.refs.description.value(),
             status: status
@@ -94,32 +93,21 @@ var RequestHistoryTable = React.createClass({
                 ></ToggleButton>
             </h3>
             <div style={addRowStyle} className='col-sm-12'>
-                <Input
-                    ref='date'
-                    label='Date'
-                    initialValue={new Date().toDateString().substring(4)}
-                />
-                <Input
-                    ref='description'
-                    label='Description'
-                />
-                <Checkbox 
-                    style={styles.visibleIf(this.state.request.status==='open')} 
-                    label='close this issue'
-                    ref='close'
-                />
-                <Checkbox 
-                    style={styles.visibleIf(this.state.request.status==='closed')}
-                    label='open this issue' 
-                    ref='open'
-                />
+                <Input ref='date' label='Date' 
+                initialValue={formatDate(new Date())}/>
+                <Input ref='description' label='Description'/>
+                <Checkbox style={styles.visibleIf(this.state.request.status==='open')} 
+                label='close this issue'
+                ref='close'/>
+                <Checkbox style={styles.visibleIf(this.state.request.status==='closed')}
+                label='open this issue' 
+                ref='open'/>
                 <button onClick={this.submitForm} type="submit" className="btn btn-primary">Submit</button>
             </div>
         	<Table 
             className = 'table-responsive table-hover table' 
         	sortable={sortOptions}
-        	defaultSort={defaultSort}
-        	>
+        	defaultSort={defaultSort}>
             {this.state.history.map(this.renderRow, this)}
         	</Table>
         </div>
@@ -128,7 +116,7 @@ var RequestHistoryTable = React.createClass({
 
     renderRow: function (entry) {
         var newEntry = {};
-        newEntry.Date = new Date(entry.date).toDateString().substring(4);
+        newEntry.Date = formatDate(new Date(entry.date));
         newEntry.Description = entry.description;
 
         return (

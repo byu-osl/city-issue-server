@@ -1,9 +1,9 @@
 'use strict';
 var React      = require('react');
-var styles     = require('../styles.js');
-var _          = require('../_.js');
-var api        = require('../server-api.js');
-var RadioGroup = require('../components/RadioGroup.jsx');
+var styles     = require('styles');
+var _          = require('_');
+var api        = require('server-api');
+var RadioGroup = require('RadioGroup.jsx');
 
 var RequestFilters = React.createClass({
 
@@ -102,7 +102,7 @@ var RequestFilters = React.createClass({
 	        	style={_.assign(containerStyle, this.props.style)}
 	        	initialValue='open'/>
 
-				<div ref='types' className="form-group"><span style={styles.bold}>Type</span><br/>
+				<div style={containerStyle} ref='types' className="form-group"><span style={styles.bold}>Type</span><br/>
 					<button type="button" className="btn btn-default btn-xs" onClick={this.checkAllServices}>check all</button>
 					<button type="button" className="btn btn-default btn-xs" onClick={this.uncheckAllServices}>uncheck all</button>
 					{this.state.services.map(this.renderService, this)}

@@ -1,7 +1,7 @@
 'use strict';
 
-var _   = require('../_.js');
-var api = require('../server-api.js');
+var _   = require('_');
+var api = require('server-api');
 
 // TODO: cache maps rather than taking the time to add markers so much
 

@@ -1,8 +1,8 @@
 'use strict';
 
 var React  = require('react');
-var styles = require('../styles');
-var _ = require('../_');
+var styles = require('styles');
+var _ = require('_');
 
 var Map = require('./Map.jsx');
 
