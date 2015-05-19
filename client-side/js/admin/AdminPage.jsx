@@ -14,11 +14,11 @@ var AdminPage = React.createClass({
 	},
 
 	componentDidMount: function () {
-        api.getServices(function gotServices(services) {
+        api.getServices((services) => {
             this.setState({
                 services: services
             });
-        }, this);
+        });
     },
 
     render: function() {

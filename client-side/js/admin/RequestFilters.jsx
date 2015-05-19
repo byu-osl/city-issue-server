@@ -70,7 +70,7 @@ var RequestFilters = React.createClass({
 	},
 
 	componentWillMount: function () {
-		api.getServices(function gotServices(services) {
+		api.getServices(services => {
 			var selectedServices = {};
 			services.forEach(function (service){
 				selectedServices[service.service_name] = true;
@@ -79,7 +79,7 @@ var RequestFilters = React.createClass({
 				selectedServices: selectedServices,
 				services: services
 			});
-        }, this);
+        });
 	},
 
     render: function() {

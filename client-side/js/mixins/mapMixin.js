@@ -15,13 +15,13 @@ module.exports = {
 			services = this.state.services;
 			this.constructMarkers(requests, options);
 		} else {
-			api.getServices(function gotServices(services) {
+			api.getServices((services) => {
 	            this.setState({
 	                services: services
 	            }, function (){
 			        this.constructMarkers(requests, options);
 	            });
-	        }, this);
+	        });
 		}
 	},
 

@@ -8,6 +8,7 @@ var Input = React.createClass({
 		return {
 			initialValue: '',
 			onChange    : function(){},
+			onBlur      : function(){},
 			label       : '',
 			type        : 'text',
 			placeholder : ''
@@ -39,6 +40,10 @@ var Input = React.createClass({
 		});
 
 		this.props.onChange(event);
+	},
+
+	onBlur: () => {
+		this.props.onBlur();
 	},
 
 	componentWillReceiveProps: function (newProps) {

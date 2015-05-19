@@ -46,16 +46,16 @@ var Services = React.createClass({
 	},
 
 	componentDidMount: function () {
-		api.getServices(function gotServices(services) {
-            api.getServiceMetadata(function(data){
+		api.getServices((services) => {
+            api.getServiceMetadata((data) => {
 				this.setState({
 					serviceMetadata: data
 				}); this.state.serviceMetadata = data;
 				this.setState({
 					services: services
 				});
-			}, this);
-        }, this);
+			});
+        });
 	},
 
 	submitForm: function () {

@@ -44,8 +44,7 @@ var AdminMap = React.createClass({
 	},
 
 	componentDidMount: function () {
-		var self = this;
-		$(document).ready(function(){self.initializeMap()});
+		$(document).ready(() => {this.initializeMap()});
 
 		// Emitted by RequestFilters.jsx
 		$(window).on('requests:filterChanged', this.setFilter)

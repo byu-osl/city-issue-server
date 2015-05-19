@@ -1,6 +1,7 @@
 'use strict';
 var React  = require('react');
 var styles = require('styles');
+var IconButton = require('IconButton.jsx')
 
 var DescriptionSection = React.createClass({
 
@@ -14,7 +15,7 @@ var DescriptionSection = React.createClass({
     },
 
     validate: function() {
-        var isValid = this.state.description.length > 0 || this.getImage().length > 0
+        var isValid = this.state.description.length > 0;
         this.setState({isValid:isValid});
         return isValid;
     },
@@ -30,21 +31,20 @@ var DescriptionSection = React.createClass({
     handleImage: function(event) {
         var file = event.target.files[0];
         var reader = new FileReader();
-        var self = this;
 
-        reader.onloadend = function showFancyStoreUgly() {
+        reader.onloadend = () => {
             var compressedImage;
             var preCompressed = new Image();
             preCompressed.src = reader.result;
 
-            setTimeout(function storeCompressed() {
+            setTimeout(() => {
                 compressedImage = compressAndResizeImage(preCompressed).src;
-                self.setState({imageSrc: compressedImage});
+                this.setState({imageSrc: compressedImage});
             }, 0);
 
-            React.findDOMNode(self.refs.preview).src = reader.result;
-            self.setState({isValid:true});
-            self.setState({imageLoaded: true});
+            React.findDOMNode(this.refs.preview).src = reader.result;
+            this.setState({isValid:true});
+            this.setState({imageLoaded: true});
         };
 
         reader.readAsDataURL(file); 
@@ -66,10 +66,6 @@ var DescriptionSection = React.createClass({
         var validationState = '';
         var errorStyle = styles.hidden;
 
-        var buttonStyle = {
-            marginLeft: 10,
-            marginBottom: 2
-        };
 
         if (this.state.isValid === false) {
             validationState = ' has-error';
@@ -87,15 +83,12 @@ var DescriptionSection = React.createClass({
             <div className='form-group'>
                 <div className='row'>
                     <div className={validationState + 'col-md-6'}>
-                        <p style={errorStyle} className='bg-warning'>Please add an image or description.</p>
+                        <p style={errorStyle} className='bg-warning'>Please add a description.</p>
                         <label className='control-label'>Description</label>
-                        <button 
-                            style={buttonStyle}
-                            className='btn btn-default btn-xs' 
-                            onClick={this.handlePictureClick}>
-                            <span className='glyphicon glyphicon-camera'/>
-                            upload / take a picture
-                        </button>
+                        <IconButton 
+                            onClick={this.handlePictureClick}
+                            icon='camera'
+                            label='upload / take a picture'/>
                         <input onChange={this.handleImage} className='picture-input' type="file" accept="image/*" capture="camera"/>
                         <textarea 
                             name='description' 

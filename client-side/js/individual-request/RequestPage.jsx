@@ -19,11 +19,11 @@ var RequestPage = React.createClass({
 	componentWillMount: function () {
 		var id = this.getParams().id;
 
-		api.getRequest(id, function (request){
+		api.getRequest(id, (request) => {
 			this.setState({request:request});
 			this.refs.map.setRequest(request);
             this.refs.table.setRequest(request);
-		}, this);
+		});
 	},
 
     setRequest: function (request) {

@@ -11,11 +11,11 @@ var Users = React.createClass({
 
 
 	componentDidMount: function () {
-		api.getUsers(function(users){
+		api.getUsers((users) => {
 			this.setState({
 				users: users.map(this.transformUser)
 			});
-		}, this);
+		});
 	},
 
 	transformUser: function (user) {

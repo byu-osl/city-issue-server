@@ -34,7 +34,7 @@ var markerOptions = {
 
 var geocoder = new google.maps.Geocoder();
 
-var Map = React.createClass({
+var SubmissionMap = React.createClass({
 	mixins: [mapMixin],
 
 	getInitialState: function () {
@@ -88,18 +88,17 @@ var Map = React.createClass({
 	},
 
 	componentDidMount: function () {
-		var self = this;
 		this.initializeMap();
 
 		api.getRequests({
 			status: 'open'
 		}, this.loadRequests);
 
-		api.getServices(function gotServices(services) {
+		api.getServices((services) => {
             this.setState({
                 services: services
             });
-        }, this);
+        });
 	},
 
 	renderInfoWindow: function (request) {
@@ -138,4 +137,4 @@ var Map = React.createClass({
 
 });
 
-module.exports = Map;
+module.exports = SubmissionMap;

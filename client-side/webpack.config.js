@@ -26,10 +26,11 @@ module.exports = {
 		]
 	},
 
-	// plugins: [
+	plugins: [
+		new webpack.optimize.UglifyJsPlugin()
 	// 	new webpack.HotModuleReplacementPlugin(),
 	// 	new webpack.NoErrorsPlugin()
-	// ],
+	],
 
 	resolve: {
 		modulesDirectories: ['components','utility','../node_modules']

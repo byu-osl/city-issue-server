@@ -1,15 +1,14 @@
 'use strict';
 var React           = require('react');
 var api             = require('server-api.js');
-var Reactable       = require('reactable');
-var Table           = Reactable.Table;
-var unsafe          = Reactable.unsafe;
-var Row             = Reactable.Tr;
+var Table           = require('Table.jsx');
 var AdminMap        = require('./AdminMap.jsx');
 var Router          = require('react-router');
 var NavigationMixin = Router.Navigation
 var _               = require('_');
-var formatDate     = require('utils').formatDate;
+var {formatDate}    = require('utils');
+var Reactable		= require('reactable');
+var {unsafe}        = Reactable;
 
 
 var Requests = React.createClass({
@@ -23,13 +22,13 @@ var Requests = React.createClass({
 	},
 
 	componentDidMount: function () {
-		api.getRequests(function(requests){
+		api.getRequests((requests) => {
 			this.setState({
 				requests: requests,
 			});
 
 			this.refs.map.loadRequests(requests, {status:'open'});
-		}, this);
+		});
 
 		$(window).on('requests:filterChanged', this.setFilter)
 	},
@@ -40,8 +39,7 @@ var Requests = React.createClass({
 		});
 	},
 
-	rowClicked: function (event) {
-		var id = $(event.target).parent('tr').attr('data-id');
+	rowClicked: function (id, event) {
 		this.transitionTo('/requests/' + id);
 	},
 
@@ -52,75 +50,60 @@ var Requests = React.createClass({
 			left: 7,
 		};
 
-		var sortOptions = [
-			'Category',
-			{column: 'Date Submitted', sortFunction: Reactable.Sort.Date},
-			'Status', 
-		]
-
-		var defaultSort = {
-			column: 'Date Submitted',
-			direction: 'desc'
-		}
-
-		var rows = this.renderRows();
+		var rows = this.filterRows();
 
         return (
         	<div className='col-sm-10' style={{paddingRight:0}}>
-	        	<h2>Requeszsts</h2>
+	        	<h2>Requests</h2>
         		<AdminMap ref='map'/>
         		<label style={labelStyle}>Search <span className='small'>by category, date, status, description, or location</span></label>
-        		<div className='table-responsive'>
-	        		<Table 
-	        		filterable   = {['Category', 'Description', 'Date Submitted','Location', 'Status']} 
-	        		sortable     = {sortOptions} 
-	        		defaultSort  = {defaultSort}
-	        		className    = 'table-hover table' 
-	        		itemsPerPage = {1000}
-	        		>
-	        			{rows}
-	        		</Table>
-        		</div>
+        		<Table
+        		filterBy={['Category', 'Description', 'Date Submitted','Location', 'Status']}
+        		sortOptions={[
+					'Category',
+					{column: 'Date Submitted', sortFunction: Reactable.Sort.Date},
+					'Status', 
+				]}
+        		defaultSort={{
+					column: 'Date Submitted',
+					direction: 'desc'
+				}}
+				transform={this.transformRequest}
+				onRowClick={this.rowClicked}
+				data={rows}
+				editableColumns={['Category','Date Submitted', 'Status', 'Description', 'Location']}/>
         	</div>
         );
     },
 
-    renderRows: function () {
-  		var rowStyle = {
-  			cursor: 'pointer'
-  		};
-
+    filterRows: function () {
     	var filters = this.state.filters;
 
-    	return this.state.requests.filter(function applyFilters (request) {
+    	return this.state.requests.filter((request) => {
     		var allGood = true;
-    		_.keys(filters).forEach(function (filter){
+
+    		_.keys(filters).forEach((filter) => {
     			if (!_.contains(filters[filter], request[filter])) {
     				allGood = false
     			} 
     		});
+
     		return allGood;
+    	});
+	},
 
-    	}, this).map(function formatRequest (request) {
+	transformRequest: function (request) {
+		var newRequest = {};
+		newRequest.Image             = unsafe('<img style="max-width: 40px" src="'+request.media_url+'"/>');
+		newRequest.Category          = request.service_name;
+		newRequest['Date Submitted'] = formatDate(new Date(request.requested_datetime))
+		newRequest.Status            = request.status;
+		newRequest.Description       = request.description;
+		newRequest.Location          = request.address_string;
+		newRequest._id               = request._id;
+		return newRequest;
+	},
 
-    		request = transformRequest(request);
-			return (
-		    	<Row data-id={request._id} style={rowStyle} onClick={this.rowClicked} data={request}></Row>
-			)
-    	}, this);
-	}
 });
 
 module.exports = Requests;
-
-function transformRequest (request) {
-	var newRequest = {};
-	newRequest.Image             = unsafe('<img style="max-width: 40px" src="'+request.media_url+'"/>');
-	newRequest.Category          = request.service_name;
-	newRequest['Date Submitted'] = formatDate(new Date(request.requested_datetime))
-	newRequest.Status            = request.status;
-	newRequest.Description       = request.description;
-	newRequest.Location          = request.address_string;
-	newRequest._id               = request._id;
-	return newRequest;
-}
