@@ -65,15 +65,24 @@ var RequestFilters = React.createClass({
 
 		$(window).trigger('requests:filterChanged', {
 			status: status,
-			service_name: selectedServices
+			service_code: selectedServices
 		});
 	},
 
-	componentWillMount: function () {
+	componentWillMount: function (){
+		this.refreshServices();
+	},
+
+	componentWillReceiveProps: function () {
+		console.log('receiving props');
+		this.refreshServices();
+	},
+
+	refreshServices: function () {
 		api.getServices(services => {
 			var selectedServices = {};
-			services.forEach(function (service){
-				selectedServices[service.service_name] = true;
+			services.forEach((service) => {
+				selectedServices[service.service_code] = true;
 			});
 			this.setState({
 				selectedServices: selectedServices,
@@ -119,7 +128,7 @@ var RequestFilters = React.createClass({
     	return (
 	    	<div key={service.service_code} className="checkbox">
 	    	    <label style={labelStyle}>
-	    	        <input onChange={this.serviceChanged} checked={this.state.selectedServices[service.service_name]} type="checkbox" value={service.service_name}/> {service.service_name}
+	    	        <input onChange={this.serviceChanged} checked={this.state.selectedServices[service.service_code]} type="checkbox" value={service.service_code}/> {service.service_name}
 	    	    </label>
 	    	</div>
 		);

@@ -1,7 +1,7 @@
 'use strict';
 var React           = require('react');
 var api             = require('server-api.js');
-var Table           = require('Table.jsx');
+var EditableTable   = require('EditableTable.jsx');
 var AdminMap        = require('./AdminMap.jsx');
 var Router          = require('react-router');
 var NavigationMixin = Router.Navigation
@@ -39,8 +39,14 @@ var Requests = React.createClass({
 		});
 	},
 
-	rowClicked: function (id, event) {
+	rowClicked: function (id) {
 		this.transitionTo('/requests/' + id);
+	},
+
+	rowSaved: function (updatedValues) {
+		api.updateRequest(updatedValues, () => {
+
+		});
 	},
 
     render: function() {
@@ -53,26 +59,29 @@ var Requests = React.createClass({
 		var rows = this.filterRows();
 
         return (
-        	<div className='col-sm-10' style={{paddingRight:0}}>
-	        	<h2>Requests</h2>
-        		<AdminMap ref='map'/>
-        		<label style={labelStyle}>Search <span className='small'>by category, date, status, description, or location</span></label>
-        		<Table
-        		filterBy={['Category', 'Description', 'Date Submitted','Location', 'Status']}
-        		sortOptions={[
+    	<div className='col-sm-10' style={{paddingRight:0}}>
+        	<h2>Requests</h2>
+    		<AdminMap ref='map'/>
+    		<label style={labelStyle}>Search <span className='small'>by category, date, status, description, or location</span></label>
+    		<EditableTable
+				data        = {rows}
+				transform   = {this.transformRequest}
+				onRowClick  = {this.rowClicked}
+				onRowSave   = {this.rowSaved}
+	    		filterBy    = {['Category', 'Description', 'Date Submitted','Location', 'Status']}
+	    		sortOptions = {[
 					'Category',
 					{column: 'Date Submitted', sortFunction: Reactable.Sort.Date},
 					'Status', 
 				]}
-        		defaultSort={{
+	    		defaultSort ={{
 					column: 'Date Submitted',
 					direction: 'desc'
 				}}
-				transform={this.transformRequest}
-				onRowClick={this.rowClicked}
-				data={rows}
-				editableColumns={['Category','Date Submitted', 'Status', 'Description', 'Location']}/>
-        	</div>
+				editableColumns={['Category', 'Status', 'Description', 'Location']}
+				editableColumnKeys={['service_name', 'status', 'description', 'address_string']}
+			></EditableTable>
+    	</div>
         );
     },
 
@@ -102,7 +111,7 @@ var Requests = React.createClass({
 		newRequest.Location          = request.address_string;
 		newRequest._id               = request._id;
 		return newRequest;
-	},
+	}
 
 });
 

@@ -78,7 +78,8 @@ var Input = React.createClass({
                 <label className='control-label' style={{marginRight:10}}>{this.props.label}
                 	<a style={visLinkStyle} className='small' onClick={this.togglePasswordVisibility}>{visibilityText}</a></label>
 
-                <input ref='input' value={this.state.value} type={this.props.type} 
+                <input data-ref={this.props['data-ref']} ref='input' value={this.state.value}
+                type={this.props.type} 
                 onChange={this.onChange} 
                 style={{marginRight:20}} 
                 className='form-control'

@@ -96,7 +96,7 @@ function saveRequest(req, res) {
 
 // POST /requests/update
 function updateRequest (req, res) {
-	Request.findByIdAndUpdate (req.body._id, {$set:req.body} , function(error, request) {
+	Request.findByIdAndUpdate(req.body._id, {$set:req.body} , function(error, request) {
 		if (error) {
 			res.send500('Something went wrong while finding the matching request');
 		} else if (!request) {

@@ -1,10 +1,9 @@
 'use strict';
+
 var React        = require('react');
 var api          = require('server-api');
-var Reactable    = require('reactable');
-var Table        = Reactable.Table
-var Row          = Reactable.Tr
-var unsafe       = Reactable.unsafe
+var {unsafe}     = require('reactable');
+var EditableTable = require('EditableTable.jsx');
 var ToggleButton = require('ToggleButton.jsx');
 var Input        = require('Input.jsx');
 var styles       = require('styles');
@@ -18,21 +17,6 @@ var Services = React.createClass({
 			addingAService: false,
 			serviceMetadata: {}
 		}
-	},
-
-	transformService: function (service) {
-		var newService = {};
-		var metaData = this.state.serviceMetadata[service.service_code]
-		if (isUndefined(metaData)) {
-			metaData = {openCount:0, closedCount: 0, total: 0}
-		}
-		var src = service.marker_image;
-		newService[' '] = unsafe('<img style="height:20px" src="'+src+'"/>');
-		newService.Name   = service.service_name;
-		newService.Open   = metaData.openCount;
-		newService.Closed = metaData.closedCount;
-		newService.Total  = metaData.total;
-		return <Row key={service.service_code} data={newService}/>;
 	},
 
 	// TODO: dangerously similar to RequestHistoryTable
@@ -76,12 +60,14 @@ var Services = React.createClass({
 		}, this);	
 	},
 
+	rowSaved: function (service) {
+		api.updateService(service, () => {
+
+		});
+	},
+
+
     render: function() {
-    	var labelStyle = {
-			position: 'relative',
-			top: 8,
-			left: 7,
-		}
 
 		var formStyle  = styles.visibleIf(this.state.addingAService);
 		var errorStyle = styles.visibleIf(this.state.errorType);
@@ -108,17 +94,33 @@ var Services = React.createClass({
 		        	/>
 		        	<button onClick={this.submitForm} type="submit" className="btn btn-primary">Submit</button>
 	        	</form>
-	        	<div className='table-responsive'>
-	        		<Table 
-	        		sortable     = {true} 
-	        		className    = 'table-hover table' 
-	        		>
-	        			{this.state.services.map(this.transformService,this)}
-	        		</Table>
-	        	</div>
+	        	<EditableTable
+		        	sortOptions        = {true}
+		        	data               = {this.state.services}
+		        	transform          = {this.transformService}
+		        	editableColumns    = {['Name']}
+		        	editableColumnKeys = {['service_name']}
+		        	onRowSave          = {this.rowSaved}
+	        	></EditableTable>	
         	</div>
         );
     },
+
+	transformService: function (service) {
+		var newService = {};
+		var metaData = this.state.serviceMetadata[service.service_code]
+		if (isUndefined(metaData)) {
+			metaData = {openCount:0, closedCount: 0, total: 0}
+		}
+		var src = service.marker_image;
+		newService.Icon = unsafe('<img style="height:20px" src="'+src+'"/>');
+		newService.Name   = service.service_name;
+		newService.Open   = metaData.openCount;
+		newService.Closed = metaData.closedCount;
+		newService.Total  = metaData.total;
+		newService._id    = service._id;
+		return newService;
+	},
 });
 
 module.exports = Services;

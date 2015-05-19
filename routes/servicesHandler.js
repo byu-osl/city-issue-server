@@ -4,7 +4,6 @@ var router  = express.Router();
 var Service = require('../models/service');
 var Request = require('../models/request');
 var isAdmin = require('../utility/isAdmin.js')
-var async   = require('async');
 
 // services.json/...
 router.get('/', listServices);
@@ -13,6 +12,7 @@ router.get('/metadata', getMetadata);
 
 router.post('/', addService);
 router.post('/delete', isAdmin, deleteService);
+router.post('/update', updateService);
 
 // provide a list of acceptable 311 service request types and their associated service codes. 
 function listServices(req, res) {
@@ -67,7 +67,19 @@ function addService(req, res) {
 	});
 }
 
-function deleteService (req, res, next) {
+function updateService(req, res) {
+	Service.findByIdAndUpdate(req.body._id, {$set: req.body}, function (error, service){
+		if (error) {
+			res.send500('Error while searching for service.')
+		} else if (!service) {
+			res.send404('Service not found.')
+		} else {
+			res.send(service)
+		}
+	});
+}	
+
+function deleteService (req, res) {
 	Service.findByIdAndRemove(req.body.id, function(error) {
 		if (error) {
 			res.send500('Could not remove. Service may not exist, or some other error.');
@@ -81,7 +93,7 @@ function getMetadata (req, res) {
 	var results = {};
 	var servicesDone = 0;
 	Service.find(function(error, services){
-		services.forEach(function (service, index) {
+		services.forEach(function (service) {
 			Request.count({service_code: service.service_code, status:'open'}, function(error, openCount) {
 				results[service.service_code] = {};
 				results[service.service_code].openCount = openCount;

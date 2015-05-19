@@ -1,14 +1,14 @@
 'use strict';
-var React        = require('react');
-var Reactable    = require('reactable');
-var Table        = require('Table.jsx');
-var styles       = require('styles');
-var api          = require('server-api');
-var ToggleButton = require('ToggleButton.jsx');
-var Checkbox     = require('Checkbox.jsx');
-var Input        = require('Input.jsx');
-var _            = require('_');
-var formatDate   = require('utils').formatDate;
+var React         = require('react');
+var Reactable     = require('reactable');
+var EditableTable = require('EditableTable.jsx');
+var styles        = require('styles');
+var api           = require('server-api');
+var ToggleButton  = require('ToggleButton.jsx');
+var Checkbox      = require('Checkbox.jsx');
+var Input         = require('Input.jsx');
+var _             = require('_');
+var formatDate    = require('utils').formatDate;
 
 // TODO: if something is submitted on the same day it can be out of order
 var RequestHistoryTable = React.createClass({
@@ -103,7 +103,7 @@ var RequestHistoryTable = React.createClass({
                 ref='open'/>
                 <button onClick={this.submitForm} type="submit" className="btn btn-primary">Submit</button>
             </div>
-        	<Table 
+        	<EditableTable 
             sortOptions={sortOptions}
     	    defaultSort={defaultSort}  
             data={this.state.history}

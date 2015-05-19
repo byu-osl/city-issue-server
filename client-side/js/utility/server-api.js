@@ -60,7 +60,9 @@ api.getRequest = function (id, cb, thisArg){
 }
 
 api.getRequests = function(options, cb, thisArg) {
-	if (typeof options === 'function') {thisArg = cb; cb = options; options = {}; }
+	if (typeof options === 'function') {
+		thisArg = cb; cb = options; options = {}; 
+	}
 
 	if (isInCache('requests')) {
 		cb.call(thisArg, getFromCache('requests'));
@@ -94,6 +96,11 @@ api.addService = function(options, cb, thisArg) {
 		cb.call(thisArg, newService);
 		resetCacheItem('services');
 	});
+}
+
+api.updateService = function(data, cb) {
+	$.post(BASE_PATH + '/services/update', data, cb);
+	resetCacheItem('services');
 }
 
 api.getServices = function (cb, thisArg) {
