@@ -36,5 +36,5 @@ module.exports = {
 		modulesDirectories: ['components','utility','../node_modules']
 	},
 
-	devtool: 'source-map'
+	devtool: 'cheap-source-map'
 }

@@ -1,14 +1,17 @@
 'use strict';
-var React  = require('react');
+var React        = require('react');
 var ToggleButton = require('ToggleButton')
-var api = require('server-api');
-var FileInput = require('FileInput');
+var api          = require('server-api');
+var FileInput    = require('FileInput');
+var styles       = require('styles');
 
 var DocumentList = React.createClass({
 
 	getInitialState: function () {
 		return {
-			addingADocument: false
+			addingADocument: false,
+			// Just for initialization of this component
+			documentList: this.props.request.documents
 		}
 	},
 	
@@ -23,7 +26,9 @@ var DocumentList = React.createClass({
 			_id: this.props.request._id,
 			file: file
 		}, (documentList) => {
-
+			this.setState({
+				documentList: documentList
+			});
 		});
 	},
 
@@ -38,14 +43,39 @@ var DocumentList = React.createClass({
 	        			onClick={this.toggleAdding}
 	        		/>
         		</h3>
-        		<FileInput
-        			label='File'
-        			onChange={this.fileAdded}
-        		/>
+        		<div style={styles.visibleIf(this.state.addingADocument)}>
+	        		<FileInput
+	        			label='File'
+	        			onChange={this.fileAdded}
+	        		/>
+        		</div>
+        		<ul style={{paddingLeft:0}}>
+        			{this.state.documentList.map(this.renderListItem)}
+        		</ul>
         	</div>
-
         );
-    }
+    },
+
+    renderListItem: function (document) {
+    	var imgStyle = styles.mix({
+    		width: '100%'
+    	}, styles.visibleIf(['jpg','png'].indexOf(document.filetype) > -1));
+
+
+    	return (
+    		<li 
+    			style={{
+    				listStyleType: 'none',
+    				marginBottom:15
+    			}}
+    		>
+    			<a href={document.path}>
+    				{document.name}
+	    			<img style={imgStyle} src={document.path}></img>
+    			</a>
+    		</li>
+    	)
+    },
 });
 
 module.exports = DocumentList;

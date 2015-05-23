@@ -11,7 +11,7 @@ var requestSchema = new Schema({
     contact_method: String,     // 
     description: String,        // description of the request
     device_id: String,          // unique ID of the device that submitted the request
-    documents: [String],
+    documents: [{name: String, filetype: String, path: String}],
     email: String,              // of the submitter
     expected_datetime: Date,    // when it's expected to be fulfilled
     history: [{date: Date, description: String}],

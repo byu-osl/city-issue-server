@@ -67,7 +67,7 @@ for (var i = 0; i < 90; i++) {
     var service = getService();
     new Request({
         history: getHistory(),
-        lat: getLat(),
+        lat: getLat(), 
         long: getLong(),
         service_code: service.code,
         service_name: service.name,
@@ -75,10 +75,14 @@ for (var i = 0; i < 90; i++) {
         media_url: 'http://lorempixel.com/300/300/city',
         status: getStatus(),
         requested_datetime: getRandomDate(new Date('2015/02/08'), new Date())
-    }).save(log.bind(i));
+    }).save(log.bind(null, i));
 }
 
-function log () {
+setTimeout(function (){
+    process.exit();
+}, 500);
+
+function log (i) {
     console.log(i, 'done')
 }
 

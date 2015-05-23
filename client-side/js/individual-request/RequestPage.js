@@ -51,13 +51,13 @@ var RequestPage = React.createClass({
         		<h1>{request.service_name} <span className='small'>{date}</span></h1>
         	</div>
             <div className='row'>
-                <span style={statusStyle}>status: <span style={{color:statusColor}}>{status}</span></span>
+                <span style={statusStyle}>status: <span style={{color:statusColor}}>{status }</span></span>
             </div>       
             <div className='row'>
-                <div className='col-md-6'>
+                <div className='col-md-8'>
                     <RequestHistoryTable setRequest={this.setRequest} ref='table'></RequestHistoryTable>
                 </div>
-                <div className='col-md-6'>
+                <div className='col-md-4'>
                     <DocumentList request={this.state.request} />
                 </div>
             </div>

@@ -18,6 +18,8 @@ app.connection = mongoose.connection;
 app.connection.on('error', handleDBError);
 
 app.use(express.static(path.join(__dirname, 'client-side')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 app.use(require('./utility/multipart-parser'));
 app.use(bodyParser.urlencoded({type: 'application/x-www-form-urlencoded', extended: true}));
 

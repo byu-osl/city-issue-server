@@ -10,7 +10,7 @@ router.post('/', addHistoryEntry);
 function addHistoryEntry(req, res) {
 	Request.findById(req.body._id, function(error, request){
 		if (request) {
-			request.history.push({date: req.body.date, description: req.body.description});
+			request.history.push({date: new Date(), description: req.body.description});
 			request.markModified('history');
 			if (request.contact_method === 'email') {
 				// sendEmail(request, some callback);
@@ -20,7 +20,6 @@ function addHistoryEntry(req, res) {
 					console.log('error', error);
 					res.send500('Error saving the request')
 				} else {
-					console.log('request', request);
 					res.send(request.history);
 				}
 			});

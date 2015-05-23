@@ -13,7 +13,7 @@ var EditableTable = React.createClass({
 			editable:        true,
 			editableColumns: [],
 			filterBy:        null,
-			itemsPerPage:    100,
+			itemsPerPage:    false,
 			transform:       null,
 			onRowClick:      null,
 			onRowSave:       function(){}
@@ -61,13 +61,15 @@ var EditableTable = React.createClass({
     render: function() {
         return (
         	<div className='table-responsive'>
-	        	<Table className = 'table-hover table'
-        		filterable       = {this.props.filterBy}
-        		sortable         = {this.props.sortOptions}
-        		defaultSort      = {this.props.defaultSort}
-        		itemsPerPage     = {this.props.itemsPerPage}
-        		ref='table'>
-	        	{this.props.data.map(this.renderRow)}
+	        	<Table 
+	        		className    = 'table-hover table'
+	        		filterable   = {this.props.filterBy}
+	        		sortable     = {this.props.sortOptions}
+	        		defaultSort  = {this.props.defaultSort}
+	        		itemsPerPage = {this.props.itemsPerPage}
+	        		ref          = 'table'
+	        	>
+	        		{this.props.data.map(this.renderRow)}
 	        	</Table>
         	</div>
         );
@@ -86,7 +88,7 @@ var EditableTable = React.createClass({
 		});
 
     	if (this.props.editable) {
-			var editCell = <Td key={id+' '} column=' '>
+			var editCell = <Td key={Math.random()} column=' '>
 					<IconButton
 					iconStyle = {{color:rowBeingEdited? 'green' : 'black'}}
 					onClick   = {this.handleEditClick.bind(this, item)}
@@ -99,11 +101,11 @@ var EditableTable = React.createClass({
 
     	return (
     		<Tr 
-    		style   = {(this.props.onRowClick && !rowBeingEdited) ? {cursor: 'pointer'} : {}} 
-    		key     = {id}
-    		onClick = {rowBeingEdited? ()=>{} : this.handleRowClick.bind(this, id)}
-    		ref     = {id}>
-    			{cells}
+	    		style   = {(this.props.onRowClick && !rowBeingEdited) ? {cursor: 'pointer'} : {}} 
+	    		key     = {Math.random()}
+	    		onClick = {rowBeingEdited? ()=>{} : this.handleRowClick.bind(this, id)}
+	    		ref     = {id}>
+	    			{cells}
     		</Tr>
     	)
     },
@@ -114,7 +116,7 @@ var EditableTable = React.createClass({
     	}
 
     	return (
-    		<Td key={key+id} column={key}>{value}</Td>
+    		<Td key={Math.random()} column={key}>{value}</Td>
     	)
     },
 
@@ -124,7 +126,7 @@ var EditableTable = React.createClass({
     	}
 
     	return (
-    		<Td key={key+id} column={key} value={value}>
+    		<Td key={Math.random()} column={key} value={value}>
     			<Input
     			data-ref={key}
     			initialValue={value}

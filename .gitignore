@@ -45,5 +45,6 @@ contextual\ inquiry.md
 "contextual inquiry.md"
 CI analysis.md
 contextual inquiry.md
-bundle.js
-bundle.js.map
+client-side/bundle.js
+client-side/bundle.js.map
+uploads

@@ -83,7 +83,7 @@ var RequestHistoryTable = React.createClass({
         var addRowStyle = styles.visibleIf(this.state.addingAnEntry)
 
         return (
-        <div className='container'>
+        <div className=''>
             <h3>History 
                 <ToggleButton
                     condition={this.state.addingAnEntry}

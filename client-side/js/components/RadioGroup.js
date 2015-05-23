@@ -39,7 +39,7 @@ var RadioGroup = React.createClass({
         );
     },
 
-    renderRadioButton: function (data) {
+    renderRadioButton: function (data, index) {
     	var labelStyle = {
     		fontWeight: '500'
     	}
@@ -59,7 +59,7 @@ var RadioGroup = React.createClass({
     	}
 
     	return (
-    		<div className="radio" style={{marginBottom:5, marginTop: 5}}>
+    		<div key={index} className="radio" style={{marginBottom:5, marginTop: 5}}>
     		    <label style={labelStyle}>
     		        <input 
     		        checked={checked} 
