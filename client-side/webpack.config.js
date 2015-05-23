@@ -6,7 +6,7 @@ module.exports = {
 	entry: [
 	  // 'webpack-dev-server/client?http://0.0.0.0:2999', // WebpackDevServer host and port
 	  // 'webpack/hot/only-dev-server',
-	  './App.jsx'
+	  './App.js'
 	],
 
 	output: {

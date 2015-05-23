@@ -4,6 +4,7 @@ var api = {};
 api.cache = {};
 var TEN_MINUTES = 1000 * 60 * 10;
 var BASE_PATH = 'http://localhost:3000';
+var _ = require('_');
 
 setInterval(function resetCache() {
 	api.cache = {};
@@ -85,6 +86,23 @@ api.addHistoryEntry = function (options, cb, thisArg) {
 	$.post(BASE_PATH + '/requests/addHistoryEntry', options, function postedHistory (newHistory) {
 		cb.call(thisArg, newHistory);
 	});
+}
+
+api.addDocument = function (data, cb){
+	// $.post(BASE_PATH + '/requests/addDocument', data, cb);
+	var formData = new FormData();
+
+	_.keys(data).forEach(key => {
+		formData.append(key, data[key]);
+	})
+
+	$.ajax({
+	    type: 'POST',
+	    url: BASE_PATH + '/requests/addDocument',
+	    data: formData,
+	    processData: false,
+	    contentType: false
+	}).done(cb);
 }
 
 ////////////////////////////////

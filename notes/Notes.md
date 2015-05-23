@@ -10,13 +10,12 @@
 - mark dalgleish
 - jsxstyle github repo
 - flux from facebook
+---------------------------------------------
+- should add search feature
+- admin could only be a small thing
+- add images/pdfs/word docs ?
 
 # Questions
-- 2.2 MB of JS?!
-- admin icons: differentiate between open/closed issues 
-- Do they need time of day on updates?
-- Prod db exploding with npm test, backups
-- There are so many service types that it will be hard to remember colors?
 
 
 # Changed since last time
@@ -24,10 +23,3 @@
 ------------------
 
 ## Home page
-- FAQ
-
-- [ ] flux
-- [ ] 
-
-- sadf
-- 

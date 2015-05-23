@@ -56,14 +56,18 @@ function addService(req, res) {
 		if (error) {
 			res.send500('Error while trying to save the service.');
 		}
-		
-		Service.findByIdAndUpdate(service._id, {$set:{service_code:service._id}}, function (error, service){
-			if (error) {
-				res.send500('Error while trying to save the service code.');
-			} else {
-				res.send(service);
-			}
-		});
+		console.log('service.service_code', service.service_code);
+		if (isUndefined(service.service_code)) {
+			Service.findByIdAndUpdate(service._id, {$set:{service_code:service._id}}, function (error, service){
+				if (error) {
+					res.send500('Error while trying to save the service code.');
+				} else {
+					res.send(service);
+				}
+			});
+		} else {
+			res.send(service)
+		}
 	});
 }
 

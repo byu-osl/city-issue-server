@@ -4,13 +4,13 @@ var express = require('express');
 var router  = express.Router();
 var Request = require('../models/request');
 var Service = require('../models/service');
-var historyHandler = require('./historyHandler');
 
 router.get('/:requestID.json', queryStatus);
 router.get('/', findRequests);
 router.post('/', validatePOSTParameters, saveRequest);
 router.post('/update', updateRequest);
-router.use('/addHistoryEntry', historyHandler);
+router.use('/addHistoryEntry', require('./historyHandler'));
+router.use('/addDocument', require('./documentHandler'));
 
 // GET /requests/:id.json
 // Returns a single response

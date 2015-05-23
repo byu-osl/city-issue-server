@@ -3,6 +3,7 @@
 global.isUndefined = function(thing) {
   return (typeof thing === 'undefined');
 }
+global.__rootDirname = __dirname;
 
 var app = require('./app');
 var debug = require('debug')('app:server');

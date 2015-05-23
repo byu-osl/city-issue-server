@@ -11,6 +11,7 @@ var requestSchema = new Schema({
     contact_method: String,     // 
     description: String,        // description of the request
     device_id: String,          // unique ID of the device that submitted the request
+    documents: [String],
     email: String,              // of the submitter
     expected_datetime: Date,    // when it's expected to be fulfilled
     history: [{date: Date, description: String}],
@@ -20,6 +21,7 @@ var requestSchema = new Schema({
     media_url: String,          // image/etc. associate with the request
     long: String,               // of the location
     phone_number: String,              // of the submitter
+    priority: {type: String, enum: ['high', 'medium', 'low']},
     requested_datetime: Date,   // time requested
     service_code: String,       // type of service needed
     service_name: String,       // type of service needed (human readable)

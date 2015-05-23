@@ -1,26 +1,24 @@
 'use strict';
-var express        = require('express');
-var path           = require('path');
-var bodyParser     = require('body-parser');
-var mongoose       = require('mongoose');
-var routes 		   = require('./routes');
+var express    = require('express');
+var path       = require('path');
+var bodyParser = require('body-parser');
+var mongoose   = require('mongoose');
+var routes     = require('./routes');
 
 var app = express();
 app.use(require('./utility/customizeResponse'));
 var dbPath = 'mongodb://localhost/city-issues'
-
 // Removing this line will drop the entire production database, so probably ought not do that.
 if (!isUndefined(global.TESTING_DB)) {
 	dbPath = global.TESTING_DB;
 }
-
-console.log("dbPath: " + dbPath);
 
 mongoose.connect(dbPath);
 app.connection = mongoose.connection;
 app.connection.on('error', handleDBError);
 
 app.use(express.static(path.join(__dirname, 'client-side')));
+app.use(require('./utility/multipart-parser'));
 app.use(bodyParser.urlencoded({type: 'application/x-www-form-urlencoded', extended: true}));
 
 app.use('/', 				  routes.indexHandler);
