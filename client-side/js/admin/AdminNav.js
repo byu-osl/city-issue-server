@@ -5,6 +5,8 @@ var Link           = Router.Link;
 var styles         = require('styles');
 var RequestFilters = require('./RequestFilters');
 
+// Navigation on the left hand side on /admin.
+
 var AdminNav = React.createClass({
 mixins: [Router.State],
 

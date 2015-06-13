@@ -8,7 +8,6 @@ var bcrypt = require('bcrypt');
 router.post('/', loginUser);
 
 function loginUser (req, res) {
-	// 10 rounds: ~10 hashes/sec. Duration doubles for every extra round.
 	User.findOne({email: req.body.email}, function userFound(err, user) {
 		if (err) {
 			res.send500('There was an error finding a user');

@@ -8,36 +8,9 @@ var DescriptionSection = require('./DescriptionSection');
 var ContactInfo        = require('./ContactInfo');
 var Router             = require('react-router' );
 var NavigationMixin    = Router.Navigation
-var loggedOutUser      = {
-    user: {
-        loggedIn: false
-    }
-}
  
 var RequestForm = React.createClass({
     mixins: [NavigationMixin],
-
-    getInitialState: function () {
-        return loggedOutUser;
-    },
-
-    componentWillMount: function authenticate() {
-        var token = localStorage.getItem('issueTrackerToken');
-        if (!token) {
-            this.setState(loggedOutUser);
-        } else {
-            api.authenticate(token, function (data) {
-                var user = this.state.user;
-                if (data.authenticated === false) {
-                    this.setState(loggedOutUser);
-                } else {
-                    _.assign(user, data);
-                    user.loggedIn = true;
-                    this.setState({user:user});
-                }
-            }, this);
-        }
-    },
 
     submitForm: function (event) {
         event.preventDefault()
@@ -108,10 +81,10 @@ var RequestForm = React.createClass({
                     <h1>Submit an Issue</h1>
                 </div>
                 <form className='request-form col-md-8' onSubmit={this.submitForm}>
-                    <LocationSection    user={this.state.user} ref='location'/>
-                    <DescriptionSection user={this.state.user} ref='description'/>
-                    <CategorySection    user={this.state.user} ref='category'/>
-                    <ContactInfo        user={this.state.user} ref='contactInfo'/>
+                    <LocationSection    ref='location'/>
+                    <DescriptionSection ref='description'/>
+                    <CategorySection    ref='category'/>
+                    <ContactInfo        ref='contactInfo'/>
                     <input type='submit' className='btn btn-fault'></input>
                 </form>
             </div>

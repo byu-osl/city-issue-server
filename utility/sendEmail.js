@@ -1,4 +1,8 @@
 'use strict';
+
+// not in use as of 6/16/15
+
+
 var config = require('../config');
 var nodemailer = require('nodemailer');
 var auth = {

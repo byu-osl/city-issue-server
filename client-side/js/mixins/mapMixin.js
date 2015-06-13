@@ -67,7 +67,7 @@ module.exports = {
 	},
 
 	filterMarker: function (marker, options) {
-		var allGood = true;
+		var keepTheMarker = true;
 
 		_.keys(options).forEach(function (option){
 			if (typeof options[option] === 'string') {
@@ -75,11 +75,11 @@ module.exports = {
 			}
 			
 			if (!_.contains(options[option], marker.request[option])) {
-				allGood = false
+				keepTheMarker = false
 			} 
 		});
 
-		if (!allGood) {
+		if (!keepTheMarker) {
 			marker.setMap(null)
 		} else {
 			marker.setMap(this.state.map)

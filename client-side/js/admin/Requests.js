@@ -40,6 +40,7 @@ var Requests = React.createClass({
 	},
 
 	rowClicked: function (id) {
+		// transitionTo comes from the navigation mixin.
 		this.transitionTo('/requests/' + id);
 	},
 

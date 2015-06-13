@@ -1,5 +1,8 @@
 'use strict';
 
+// makes all requests to the server, and caches the data it receives.
+// Uses the cache if the item is there.
+
 var api = {};
 api.cache = {};
 var TEN_MINUTES = 1000 * 60 * 10;

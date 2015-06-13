@@ -22,9 +22,9 @@ function validateUser (req, res, next) {
 
 function registerUser (req, res) {
 	// 10 rounds: ~10 hashes/sec. Duration doubles for every extra round.
-	bcrypt.hash(req.body.password, 10, function(err, hash) {
+	bcrypt.hash(req.body.password, 15, function(err, hash) {
 		req.body.passwordHash = hash;
-		req.body.role = 'normal';
+		req.body.role = 'admin';
 		var user = new User(req.body);
 
 		user.save(function userSaved (error, user, numberAffected){

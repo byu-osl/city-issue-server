@@ -1,5 +1,6 @@
 'use strict';
 // requests/addDocument
+// Used to associate documents with an issue request.
 
 var express    = require('express');
 var router     = express.Router();

@@ -28,6 +28,7 @@ var DescriptionSection = React.createClass({
         this.setState({description:event.target.value});
     },
 
+    // TODO: might break when pngs are uploaded.
     handleImage: function(event) {
         var file = event.target.files[0];
         var reader = new FileReader();

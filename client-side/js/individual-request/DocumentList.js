@@ -58,7 +58,8 @@ var DocumentList = React.createClass({
 
     renderListItem: function (document) {
     	var imgStyle = styles.mix({
-    		width: '100%'
+    		width: '100%',
+    		maxWidth: 400
     	}, styles.visibleIf(['jpg','png'].indexOf(document.filetype) > -1));
 
 
@@ -71,6 +72,7 @@ var DocumentList = React.createClass({
     		>
     			<a href={document.path}>
     				{document.name}
+    				<br/>
 	    			<img style={imgStyle} src={document.path}></img>
     			</a>
     		</li>

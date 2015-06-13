@@ -21,6 +21,9 @@ var AdminPage = React.createClass({
         });
     },
 
+    // RouteHandler is a part of React Router used for nested views. It becomes
+    // requests, services, or users.
+
     render: function() {
         return (
         	<div className=''>

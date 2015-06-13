@@ -5,7 +5,7 @@ var userSchema = new Schema({
     name: String,
     phone_number: String,
     password_hash: String,
-    role: String,
+    role: String, // admin, normal
     contact_method: String
 });
 

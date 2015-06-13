@@ -44,6 +44,7 @@ var RequestFilters = React.createClass({
 		this.triggerFilterChanged();
 	},
 
+	// Kind of hacky way to communicate to the map and the table.
 	triggerFilterChanged: function() {
 		var status = this.refs.status.value();
 		var selectedServices = this.state.selectedServices;
@@ -74,7 +75,6 @@ var RequestFilters = React.createClass({
 	},
 
 	componentWillReceiveProps: function () {
-		console.log('receiving props');
 		this.refreshServices();
 	},
 

@@ -62,6 +62,7 @@ var AdminMap = React.createClass({
 		)
 	},
 
+	// Info windows are the popups when you click on a marker.
 	renderInfoWindow: function (request) {
 		var imageStyle = styles.hiddenIf((isUndefined(request.media_url) || !request.media_url));
 

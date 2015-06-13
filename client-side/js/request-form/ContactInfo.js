@@ -42,7 +42,8 @@ var ContactInfo = React.createClass({
     },
 
 	render: function () {
-		var nameStyle, passwordStyle, emailStyle, phoneStyle, accountCreationStyle
+		var nameStyle, passwordStyle, emailStyle, phoneStyle, accountCreationStyle;
+		var user = window.issueTrackerUser;
 
 		passwordStyle = styles.visibleIf(this.state.creatingAccount === true && this.state.contactMethod !== 'none');
 		nameStyle     = styles.hiddenIf(this.state.contactMethod === 'none');
@@ -52,7 +53,7 @@ var ContactInfo = React.createClass({
 		if (this.state.contactMethod === 'none') {
 			accountCreationStyle = styles.hidden;
 		} else  {
-			accountCreationStyle = styles.hiddenIf(this.props.user.loggedIn);
+			accountCreationStyle = styles.hiddenIf(user.loggedIn);
 		}
 
 		var activeClass   = 'btn btn-primary active';
@@ -76,9 +77,9 @@ var ContactInfo = React.createClass({
 					data={buttonData}
 					onChange={this.methodChanged}
 				/>
-				<Input label='Name'  initialValue={this.props.user.name}  ref='name'  style={nameStyle}></Input>
-				<Input label='Email' initialValue={this.props.user.email} ref='email' style={emailStyle}/>
-				<Input label='Phone' initialValue={this.props.user.phone_number} ref='phone' style={phoneStyle}/>
+				<Input label='Name'  initialValue={user.name}  ref='name'  style={nameStyle}></Input>
+				<Input label='Email' initialValue={user.email} ref='email' style={emailStyle}/>
+				<Input label='Phone' initialValue={user.phone_number} ref='phone' style={phoneStyle}/>
 				<div style={accountCreationStyle} className='checkbox'>
                     <label>
                         <input type='checkbox' onChange={this.toggleAccountCreation}/> Create an account <span className="small">(save your information for the next time you submit an issue)</span>

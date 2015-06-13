@@ -33,10 +33,10 @@ var requestSchema = new Schema({
     zipcode: Number             // of the location
 });
 
-// Takes req.body as the parameter
+// Takes req.body as the parameter. Hasn't been tested as of 6/13/15
 requestSchema.statics.findRequests = function(params, callback){
     var requestsQuery = this.find();
-    var startDate     = params.start_date; //  lower bound for requested_datetime
+    var startDate     = params.start_date;   // lower bound for requested_datetime
     var endDate       = params.end_date;     // upper bound for requested_datetime
     var requestIDs    = params.service_request_id;
     var serviceCodes  = params.service_code;

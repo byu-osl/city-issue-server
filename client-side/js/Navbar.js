@@ -2,14 +2,31 @@
 
 var React  = require('react');
 var Router = require('react-router');
-var Link   = Router.Link;
+var {Link} = Router;
 var styles = require('styles');
 
 var Navbar = React.createClass({
 
+	toggleSignIn: function () {
+		if (window.issueTrackerUser.loggedIn) {
+			localStorage.setItem('issueTrackerToken', '');
+			window.issueTrackerUser = {};
+		}
+	},
+
     render: function() {
-        return (
-        	<div className="navbar navbar-default" role="navigation">
+    	var user = window.issueTrackerUser;
+
+   		if (user.role === 'admin') {
+   			var adminLink = (
+   				<li>
+   					<Link activeStyle={styles.bold} to="/admin/requests">Admin</Link>
+   				</li>
+   			)
+   		}
+
+	    return (
+	    	<div className="navbar navbar-default" role="navigation">
 		        <div className="container" style={{paddingLeft:10}}>
 		            <div className="navbar-header">
 		                <button 
@@ -34,10 +51,19 @@ var Navbar = React.createClass({
 		                    <li>
 		                    	<Link activeStyle={styles.bold} to="issue-submission">Submit an Issue</Link>
 		                    </li>
-		                    <li>
-		                    	<Link activeStyle={styles.bold} to="/admin/requests">Admin</Link>
-		                    </li>
+		                    {adminLink}
 		                </ul>
+		                <ul className="nav navbar-nav navbar-right">
+		                	<li>
+		    					<button 
+		    						onClick={this.toggleSignIn}
+		    						type="button" 
+		    						className="btn btn-default navbar-btn"
+		    					>
+		    						{user.loggedIn? 'Sign out' : 'Sign in'}
+		    					</button>
+		                	</li>
+                        </ul>
 		            </div>
 		        </div>
 		    </div>

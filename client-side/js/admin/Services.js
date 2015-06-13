@@ -19,7 +19,7 @@ var Services = React.createClass({
 		}
 	},
 
-	// TODO: dangerously similar to RequestHistoryTable
+	// TODO: similar to RequestHistoryTable
 	toggleAdding: function () {
 		var addingAService = !this.state.addingAService;
 		this.setState({addingAService: addingAService}, function (){

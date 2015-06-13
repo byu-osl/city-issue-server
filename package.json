@@ -39,6 +39,7 @@
     "react-router": "^0.13.3",
     "reactable": "^0.10.1",
     "reactify": "^1.0.0",
+    "reflux": "^0.2.7",
     "require-directory": "^2.1.0",
     "serve-favicon": "^2.2.0",
     "supertest": "^0.15.0"

@@ -2,6 +2,7 @@
 var React  = require('react');
 var styles = require('styles');
 
+// Used in the request form.
 var IconButton = React.createClass({
 	getDefaultProps: function () {
 		return {

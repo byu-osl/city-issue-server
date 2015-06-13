@@ -44,8 +44,6 @@ var RadioGroup = React.createClass({
     		fontWeight: '500'
     	}
 
-
-
     	var checked = false;
 
     	if (!isUndefined(this.state.value) && this.state.value === data.value) {

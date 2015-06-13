@@ -1,5 +1,6 @@
 'use strict';
 // requests/addHistoryEntry
+// Used to add history entries for an issue request.
 
 var express = require('express');
 var router  = express.Router();
