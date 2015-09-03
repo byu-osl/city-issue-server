@@ -24386,7 +24386,7 @@
 	var api = {};
 	api.cache = {};
 	var TEN_MINUTES = 1000 * 60 * 10;
-	var BASE_PATH = 'http://localhost:3000';
+	var BASE_PATH = '';
 	var _ = __webpack_require__(/*! _ */ 200);
 	
 	setInterval(function resetCache() {
@@ -24555,6 +24555,7 @@
 	
 	module.exports = api;
 
+
 /***/ },
 /* 203 */
 /*!*********************!*\
@@ -24604,7 +24605,6 @@
 	
 	    submitForm: function (event) {
 	        event.preventDefault();
-		console.log("got this far");
 	        var long; 
 	        var lat;
 	        var email         = this.refs.contactInfo.getEmail();
@@ -24614,7 +24614,6 @@
 	        var phoneNumber   = this.refs.contactInfo.getPhoneNumber();
 	
 	        if (!this.validateForm()) {
-		    console.log("did not validate");
 	            return;
 	        }
 	

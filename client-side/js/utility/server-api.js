@@ -6,7 +6,7 @@
 var api = {};
 api.cache = {};
 var TEN_MINUTES = 1000 * 60 * 10;
-var BASE_PATH = 'http://localhost:3000';
+var BASE_PATH = '';
 var _ = require('_');
 
 setInterval(function resetCache() {
