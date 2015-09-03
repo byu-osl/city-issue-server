@@ -13,7 +13,7 @@ var RequestForm = React.createClass({
     mixins: [NavigationMixin],
 
     submitForm: function (event) {
-        event.preventDefault()
+        event.preventDefault();
         var long; 
         var lat;
         var email         = this.refs.contactInfo.getEmail();
