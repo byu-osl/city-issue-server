@@ -1,4 +1,4 @@
-# City Issue Tracker
+# City Voice
 
 ![Issue tracker screenshot](https://raw.github.com/byu-osl/city-issue-server/master/notes/screenshot.png)
 
@@ -13,7 +13,7 @@
 
 ## Introduction
 
-The City Issue Tracker provides a way for citizens to submit issues (e.g. graffiti, a streetlight is out) and receive status updates from the city. It is written in JavaScript using <a href="https://nodejs.org/" target="_blank">Node</a>, [Express](http://expressjs.com/), [Mongoose](http://mongoosejs.com/index.html), and [React](http://facebook.github.io/react/). It implements (and augments) the [Open311 specification](http://wiki.open311.org/GeoReport_v2/), and is under the direction of [Daniel Zappala](https://github.com/zappala) of BYU. 
+City Voice provides a way for citizens to submit issues (e.g. graffiti, a streetlight is out) and receive status updates from the city. It is written in JavaScript using <a href="https://nodejs.org/" target="_blank">Node</a>, [Express](http://expressjs.com/), [Mongoose](http://mongoosejs.com/index.html), and [React](http://facebook.github.io/react/). It implements (and augments) the [Open311 specification](http://wiki.open311.org/GeoReport_v2/), and is under the direction of [Daniel Zappala](https://github.com/zappala) of BYU. 
 
 ### Features
 
@@ -57,9 +57,6 @@ Ranked by priority:
 - [ ] admin/users: add users, change roles
 - [ ] permissions server/client-side
 - [ ] sign in / sign out
-- [ ] 
-- [ ] 
-- [ ] 
 
 ## Overview
 
